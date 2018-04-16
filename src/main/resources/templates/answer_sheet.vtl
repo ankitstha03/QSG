@@ -1,0 +1,21 @@
+<p>
+  <a href="/exams/$exam.getId()/$set.getSet()" class="btn btn-primary">Back to Question Set</a>
+</p>
+
+<ol>
+#foreach ($i in $set.getCorrectIndices())
+
+  <li>
+    #if( $i == 0 )
+      (a)
+    #elseif( $i == 1 )
+      (b)
+    #elseif( $i == 2 )
+      (c)
+    #else
+      (d)
+    #end
+  </li>
+
+#end
+</ol>
