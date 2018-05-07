@@ -1,0 +1,74 @@
+<div class="panel panel-default">
+  <div class="panel-heading">Edit Question</div>
+  <div class="panel-body">
+    <div style="width: 1050px">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="just-txt-div">
+            <form action="/questions/$question.getId()/edit" method="post">
+
+              <input type="hidden" name="id" value="$question.getId()">
+
+              <!-- category -->
+              <div class="form-group">
+                <label for="category">Category:</label>
+                <select name="category" id="category" class="form-control" required>
+                  #foreach ($category in $categories)
+                    #if ($category.getId() == $question.getCategory().getId())
+                      <option value="$category.getId()" selected>$category.getName()</option>
+                    #else
+                      <option value="$category.getId()">$category.getName()</option>
+                    #end
+                  #end
+                </select>
+              </div>
+
+              <!-- question text -->
+              <div class="form-group">
+                <label for="question">Question:</label>
+                <textarea name="question" id="question" class="form-control" rows="5" required>$question.getText()</textarea>
+              </div>
+
+              <!-- correct answer -->
+              <div class="form-group">
+                <label for="answer1">Correct answer:</label>
+                <input type="text" name="answer1" id="answer1" class="form-control" required value="$question.getCorrectAnswer().getText()">
+              </div>
+
+              <!-- incorrect answers -->
+              <div class="form-group">
+                <label for="answer2">Incorrect answers:</label>
+                <div class="row">
+                  <div class="col-md-4">
+                    <input type="text" name="answer2" id="answer2" class="form-control" required value="$question.getIncorrectAnswers().get(0).getText()">
+                  </div>
+                  <div class="col-md-4">
+                    <input type="text" name="answer3" id="answer3" class="form-control" required value="$question.getIncorrectAnswers().get(1).getText()">
+                  </div>
+                  <div class="col-md-4">
+                    <input type="text" name="answer4" id="answer4" class="form-control" required value="$question.getIncorrectAnswers().get(2).getText()">
+                  </div>
+                </div>
+              </div>
+
+              <!-- difficulty -->
+              <div class="form-group">
+                <label for="difficulty">Difficulty:</label>
+                <select name="difficulty" id="difficulty" class="form-control" required>
+                  <option value="0" #if ($question.getDifficulty() == 0) selected #end>Easy</option>
+                  <option value="1" #if ($question.getDifficulty() == 1) selected #end>Moderate</option>
+                  <option value="2" #if ($question.getDifficulty() == 2) selected #end>Difficult</option>
+                </select>
+              </div>
+
+              <!-- submit -->
+              <button class="btn btn-primary" type="submit">Update Question</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -207,6 +207,24 @@ public class Question extends Timestamped {
         }
     }
 
+
+    /**
+     * Gets the list of answers for this question.
+     *
+     * @return List of Answer instances associated with this Question instance.
+     */
+    public List<Answer> getShuffledAnswers() {
+        try (Connection con = DB.sql2o.open();) {
+            String query = "SELECT * FROM answers WHERE questionId=:id";
+            List<Answer> answers= con.createQuery(query)
+                .bind(this)
+                .executeAndFetch(Answer.class);
+            Collections.shuffle(answers);
+            return answers;
+        }
+    }
+
+
     /**
      * Gets the correct answer of this question.
      *
@@ -269,6 +287,26 @@ public class Question extends Timestamped {
         orderedAnswers[(correctIndex+3) % 4] = incorrectAnswers.remove(0);
         return Arrays.asList(orderedAnswers);
     }
+
+
+    /**
+     * Gets the list of answers of this question, sorted in a particular order
+     * in the given question set. The correct index of every question in every
+     * set is stored in the database. This method uses that stored correct_index
+     * to sort the answers.
+     *
+     * @param set Question set where to look for order of answers.
+     *
+     * @return List of ordered Answer instances of this Question instance.
+     */
+    public List<Answer> getShuffledAnswers(Set set) {
+        ArrayList orderedAnswers=new ArrayList(getOrderedAnswers(set));
+        Collections.shuffle(orderedAnswers);
+        return orderedAnswers;
+    }
+
+
+
 
     /**
      * Adds an answer for this question.
