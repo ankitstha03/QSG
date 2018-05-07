@@ -17,7 +17,7 @@ public class App {
 
     /** Number of questions per page to show in question list page */
     public static final Integer QUESTIONS_PER_PAGE = 10;
-
+    public static String msg = "";
     public static void main(String[] args)
     {
         // The sets the folder in the 'resources' folder where the static files
@@ -88,14 +88,16 @@ public class App {
             String email = request.queryParams("email");
             String username = request.queryParams("username");
             String password = request.queryParams("password");
-
-            User u = new User(email, username, password, name).save();
-
+            User u = User.findByUsername(username);
             if (u == null) {
-                response.redirect("/register?m=Error");
+                User u2 = new User(email, username, password, name).save();
+                User u3 = User.findByUsername(username);
+                request.session().attribute("userId", u3.getId());
+                response.redirect("/admin");
             }
-
-            response.redirect("/login");
+            else{
+                response.redirect("/login?m=Username+Already+Used");
+            }
             return 0;
         });
 
@@ -103,12 +105,16 @@ public class App {
         // It is used to handle user login.
         // Added by Rojina Deuja
         get("/login", (request, response) -> {
+          if (request.session().attribute("userId") != null) {
+              response.redirect("/admin");
+          }
             Map<String,Object> model = new HashMap<String,Object>();
             model.put("template", "templates/login.vtl");
-            if(request.queryParams("m")==null){
+            model.put("title", "Login");
+            if(msg==""){
               model.put("message", "");
             }else{
-              model.put("message", request.queryParams("m"));
+              model.put("message", msg);
             }
             return new ModelAndView(model, layout_signinup);
         }, new VelocityTemplateEngine());
@@ -121,7 +127,8 @@ public class App {
             User u = User.findByUsername(username);
 
             if (u == null) {
-                response.redirect("/login?m=Username+Not+Found");
+                msg="Username not Found";
+                response.redirect("/login");
             }
 
             if (u.checkPassword(password)) {
@@ -129,7 +136,8 @@ public class App {
                 response.redirect("/admin");
             } else {
                 // TODO
-                response.redirect("/login?m=Login+Failed");
+                msg="Login Failed";
+                response.redirect("/login");
             }
 
             return 0;
@@ -239,8 +247,32 @@ public class App {
             model.put("question", question);
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
-
         // Question edit form handler.
+        post("/questions/add", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+
+          Integer categoryId = Integer.parseInt(request.queryParams("category"));
+          String question = request.queryParams("question");
+          String answer1 = request.queryParams("answer1");
+          String answer2 = request.queryParams("answer2");
+          String answer3 = request.queryParams("answer3");
+          String answer4 = request.queryParams("answer4");
+          Integer difficulty = Integer.parseInt(request.queryParams("difficulty"));
+
+          // userId is 0 = NULL for now
+          Question q = new Question(0, categoryId, question, difficulty).save();
+          Answer a;
+          a = new Answer(q, answer1, true).save();
+          a = new Answer(q, answer2, false).save();
+          a = new Answer(q, answer3, false).save();
+          a = new Answer(q, answer4, false).save();
+
+          response.redirect("/questions");
+          return 0;
+        });
+
         post("/questions/:qid/edit", (request, response) -> {
           if (request.session().attribute("userId") == null) {
               response.redirect("/login");
@@ -317,6 +349,29 @@ public class App {
             response.redirect("/categories");
             return "Success";
         });
+
+        get("/categories/:cId", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+            Category category = Category.findById(Integer.parseInt(request.params("cId")));
+            Integer page = 1;   // default page number
+            if (request.queryParams("page") != null) {
+                page = Integer.parseInt(request.queryParams("page"));
+            }
+            Integer start = (page - 1) * QUESTIONS_PER_PAGE;
+            List<Question> questions = Question.findByCategory(Integer.parseInt(request.params("cId")),start, QUESTIONS_PER_PAGE);
+            Map<String,Object> model = new HashMap<String,Object>();
+            model.put("template", "templates/question_list.vtl");
+
+
+            model.put("category", category);
+            model.put("questions", questions);
+            model.put("currentPage", page);
+            model.put("prevPage", page-1);
+            model.put("nextPage", page+1);
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
         // Part of Sushil Shakya ends here
 
 

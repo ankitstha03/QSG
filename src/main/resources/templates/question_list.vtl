@@ -1,5 +1,9 @@
+#if ($category)
+<h1>$category,getName()</h1>
+#else
 <h1>Questions</h1>
-
+#end
+<button><a href="/questions/add">Add Question</a></button>
 #if ($questions.size() > 0)
   #foreach ($q in $questions)
     <p>[$q.getId()] $q.getText()</p>
@@ -33,6 +37,10 @@ Page $currentPage
 
 <script type="text/javascript">
 window.onload = function() {
-  document.getElementById('questions').className = 'active';
+#if ($category)
+	document.getElementById('categories').className = 'active';
+#else
+	document.getElementById('questions').className = 'active';
+	#end
 };
 </script>>
