@@ -378,14 +378,14 @@ public class Question extends Timestamped {
      * @return Sliced List of Question instances in the database.
      */
     public static List<Question> limit(Integer startIndex, Integer size) {
-        try (Connection con = DB.sql2o.open()) {
+        try (Connection con = DB.sql2o.open();) {
             return con.createQuery("SELECT * FROM questions ORDER BY id DESC LIMIT :start, :size")
                 .addParameter("start", startIndex)
                 .addParameter("size", size)
                 .executeAndFetch(Question.class);
         }
     }
-	
+
 	public static List<Question> findByCategory(Integer categid, Integer startIndex, Integer size) {
         try (Connection con = DB.sql2o.open();) {
             return con.createQuery("SELECT * FROM questions WHERE categoryId=:categid ORDER BY id DESC LIMIT :start, :size")

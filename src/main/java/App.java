@@ -47,8 +47,12 @@ public class App {
           if (request.session().attribute("userId") == null) {
               response.redirect("/login");
           }
+
             Map<String,Object> model = new HashMap<String,Object>();
             model.put("template", "templates/admin.vtl");
+            model.put("titlepage", "Admin-LIS QSG");
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
@@ -57,20 +61,27 @@ public class App {
         //
         // For example, if we want to display "404 NOT FOUND" message, we should
         // redirect to '/message?m=404+NOT+FOUND'
-        get("/message", (request, response) -> {
-            Map<String,Object> model = new HashMap<String,Object>();
-            model.put("template", "templates/message.vtl");
-            model.put("message", request.queryParams("m"));
-            return new ModelAndView(model, layout);
-        }, new VelocityTemplateEngine());
+        // get("/message", (request, response) -> {
+        //     Map<String,Object> model = new HashMap<String,Object>();
+        //     model.put("template", "templates/message.vtl");
+        //     model.put("message", request.queryParams("m"));
+        //     return new ModelAndView(model, layout);
+        // }, new VelocityTemplateEngine());
 
         // The registration form.
         // NOTE: This is only for development phase. In
         // production, any user would need to be added by an admin.
         // Self-registration should not be allowed in production environment.
         get("/register", (request, response) -> {
+            List<User> us=User.all();
+            for(User user:us){
+              if(user.isAdmin()){
+                response.redirect("/login");
+              }
+            }
             Map<String,Object> model = new HashMap<String,Object>();
             model.put("template", "templates/register.vtl");
+            model.put("show", 1);
             if(request.queryParams("m")==null){
               model.put("message", "");
             }else{
@@ -84,19 +95,25 @@ public class App {
         // NOTE: Again, self-registration is only for development
         // phase!
         post("/register", (request, response) -> {
+          List<User> us=User.all();
+          for(User user:us){
+            if(user.isAdmin()){
+              response.redirect("/login");
+            }
+          }
             String name = request.queryParams("name");
             String email = request.queryParams("email");
             String username = request.queryParams("username");
             String password = request.queryParams("password");
             User u = User.findByUsername(username);
             if (u == null) {
-                User u2 = new User(email, username, password, name).save();
+                User u2 = new User(email, username, password, name, 2).save();
                 User u3 = User.findByUsername(username);
                 request.session().attribute("userId", u3.getId());
                 response.redirect("/admin");
             }
             else{
-                response.redirect("/login?m=Username+Already+Used");
+                response.redirect("/register");
             }
             return 0;
         });
@@ -105,11 +122,19 @@ public class App {
         // It is used to handle user login.
         // Added by Rojina Deuja
         get("/login", (request, response) -> {
+          Integer show=1;
           if (request.session().attribute("userId") != null) {
               response.redirect("/admin");
           }
+          List<User> us=User.all();
+          for(User user:us){
+            if(user.isAdmin()){
+              show=0;
+            }
+          }
             Map<String,Object> model = new HashMap<String,Object>();
             model.put("template", "templates/login.vtl");
+            model.put("show", show);
             if(msg==""){
               model.put("message", "");
             }else{
@@ -176,6 +201,8 @@ public class App {
             List<Question> questions = Question.limit(start, QUESTIONS_PER_PAGE);
 
             model.put("questions", questions);
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
             model.put("currentPage", page);
             model.put("prevPage", page-1);
             model.put("nextPage", page+1);
@@ -190,6 +217,8 @@ public class App {
             Map<String,Object> model = new HashMap<String,Object>();
             model.put("template", "templates/question_add_form.vtl");
             model.put("titlepage", "Add Question-LIS QSG");
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
             model.put("categories", Category.all());
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
@@ -233,6 +262,20 @@ public class App {
             return 0;
         });
 
+        post("/users/:uid/delete", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+          if (!User.findById(request.session().attribute("userId")).isAdmin()) {
+                response.redirect("/users");
+            }
+            Integer id = Integer.parseInt(request.params(":uid"));
+            User u = User.findById(id);
+            u.delete();
+            response.redirect("/users");
+            return 0;
+        });
+
         // Question edit form.
         get("/questions/:qid/edit", (request, response) -> {
           if (request.session().attribute("userId") == null) {
@@ -245,10 +288,36 @@ public class App {
             model.put("template", "templates/question_edit_form.vtl");
             model.put("titlepage", "Edit Question-LIS QSG");
             model.put("categories", Category.all());
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
             model.put("question", question);
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
         // Question edit form handler.
+
+        get("/users/:uid/edit", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+
+            User user = User
+                .findById(Integer.parseInt(request.params(":uid")));
+
+            Map<String,Object> model = new HashMap<String,Object>();
+            if (!User.findById(request.session().attribute("userId")).isAdmin()) {
+                  model.put("template", "templates/404.vtl");
+                  User defuser=User.findById(request.session().attribute("userId"));
+                  model.put("defuser",defuser);
+                  return new ModelAndView(model, layout);
+              }
+            model.put("template", "templates/user_edit_form.vtl");
+            model.put("titlepage", "Edit User-LIS QSG");
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
+            model.put("user",user);
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
         post("/questions/add", (request, response) -> {
           if (request.session().attribute("userId") == null) {
               response.redirect("/login");
@@ -323,6 +392,8 @@ public class App {
             Map<String,Object> model = new HashMap<String,Object>();Category.all();
             model.put("template", "templates/category_list.vtl");
             model.put("titlepage", "Categories-LIS QSG");
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
             model.put("categories", Category.all());
             // System.out.println(categories_list);
             return new ModelAndView(model, layout);
@@ -368,6 +439,8 @@ public class App {
             model.put("titlepage", category.getName()+"-LIS QSG");
             model.put("category", category);
             model.put("questions", questions);
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
             model.put("currentPage", page);
             model.put("prevPage", page-1);
             model.put("nextPage", page+1);
@@ -382,17 +455,23 @@ public class App {
               response.redirect("/login");
           }
             Map<String,Object> model = new HashMap<String,Object>();
+            if (!User.findById(request.session().attribute("userId")).isAdmin()) {
+                  model.put("template", "templates/404.vtl");
 
+                  User defuser=User.findById(request.session().attribute("userId"));
+                  model.put("defuser",defuser);
+
+                  return new ModelAndView(model, layout);
+              }
             // Get the current active user ID
             Integer userId = request.session().attribute("userId");
 
-            // If current active user is not admin, then throw 404 error
-            if (userId == null || !User.findById(userId).isAdmin()) {
-                model.put("template", "templates/404.vtl");
-                return new ModelAndView(model, layout);
-            }
+
 
             model.put("template", "templates/user_add_form.vtl");
+            model.put("titlepage", "Add User-LIS QSG");
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
@@ -402,15 +481,14 @@ public class App {
           if (request.session().attribute("userId") == null) {
               response.redirect("/login");
           }
+
             Map<String,Object> model = new HashMap<String,Object>();
 
             // Check if current active user is admin.
-            Integer userId = request.session().attribute("userId");
-            if (userId == null || !User.findById(userId).isAdmin()) {
-                model.put("template", "templates/404.vtl");
-                return new ModelAndView(model, layout);
-            }
-
+            if (!User.findById(request.session().attribute("userId")).isAdmin()) {
+                  model.put("template", "templates/404.vtl");
+                  return new ModelAndView(model, layout);
+              }
             Integer role = Integer.parseInt(request.queryParams("role"));
             String name = request.queryParams("name");
             String username = request.queryParams("username");
@@ -429,23 +507,64 @@ public class App {
 
             return 0;
         });
+        post("/users/:uid/edit", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
 
+            Map<String,Object> model = new HashMap<String,Object>();
+
+            // Check if current active user is admin.
+            if (!User.findById(request.session().attribute("userId")).isAdmin()) {
+                  model.put("template", "templates/404.vtl");
+                  return new ModelAndView(model, layout);
+              }
+            Integer role = Integer.parseInt(request.queryParams("role"));
+            String name = request.queryParams("name");
+            String username = request.queryParams("username");
+            String email = request.queryParams("email");
+            String password = request.queryParams("password");
+
+            try {
+                User user = User
+                  .findById(Integer.parseInt(request.params(":uid")));
+                user.setName(name);
+                user.setEmail(email);
+                user.setUsername(username);
+                user.setPassword(password);
+                user.setRole(role);
+                user.save();
+                response.redirect("");
+            } catch (Exception e) {
+                model.put("template", "templates/message.vtl");
+                model.put("message", "ERROR CREATING USER");
+                e.printStackTrace();
+                return new ModelAndView(model, layout);
+            }
+
+            return 0;
+        });
         // List of users. Only available for admin users.
         get("/users", (request, response) -> {
           if (request.session().attribute("userId") == null) {
               response.redirect("/login");
           }
+
+
             Map<String,Object> model = new HashMap<String,Object>();
-
-            // Check if current active user is admin.
-            Integer userId = request.session().attribute("userId");
-            if (userId == null || !User.findById(userId).isAdmin()) {
-                model.put("template", "templates/404.vtl");
-                return new ModelAndView(model, layout);
-            }
-
+            if (!User.findById(request.session().attribute("userId")).isAdmin()) {
+                  model.put("template", "templates/404.vtl");
+                  User defuser=User.findById(request.session().attribute("userId"));
+                  model.put("defuser",defuser);
+                  return new ModelAndView(model, layout);
+              }
+            // Check if current active user is admin
+            List<User> userss=User.all();
             model.put("template", "templates/user_list.vtl");
-            model.put("users", User.all());
+            model.put("users", userss);
+            model.put("titlepage", "Users-LIS QSG");
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
@@ -458,6 +577,8 @@ public class App {
             model.put("template", "templates/exam_list.vtl");
             model.put("titlepage", "Exams-LIS QSG");
             model.put("exams", Exam.all());
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
@@ -475,6 +596,8 @@ public class App {
             model.put("template", "templates/exam_add_form.vtl");
             model.put("titlepage", "Add Exam-LIS QSG");
             model.put("categories", Category.all());
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
@@ -628,6 +751,8 @@ public class App {
             model.put("template", "templates/exam_detail.vtl");
             model.put("titlepage", exa.getTitle()+"-LIS QSG");
             model.put("exam", Exam.findById(id));
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
@@ -664,6 +789,8 @@ public class App {
             model.put("template", "templates/question_set.vtl");
             model.put("titlepage", exam.getTitle()+"-LIS QSG");
             model.put("set", set);
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
             model.put("exam", exam);
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
@@ -684,9 +811,10 @@ public class App {
             model.put("template", "templates/answer_sheet.vtl");
             model.put("titlepage", exam.getTitle()+" Solution-LIS QSG");
             model.put("set", set);
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
             model.put("exam", exam);
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
-        //End of Aakash Part
     }
 }

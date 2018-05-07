@@ -1,5 +1,5 @@
 <p>
-  <a href="/exams/$exam.getId()/$set.getSet()" class="btn btn-primary">Back to Question Set</a>
+  <a href="/exams/$exam.getId()/$set.getSetNumber()" class="btn btn-primary">Back to Question Set</a>
 </p>
 
 <ol>
@@ -19,3 +19,8 @@
 
 #end
 </ol>
+<script type="text/javascript">
+window.onload = function() {
+  document.getElementById('exams').className = 'active';
+};
+</script>
