@@ -110,7 +110,6 @@ public class App {
           }
             Map<String,Object> model = new HashMap<String,Object>();
             model.put("template", "templates/login.vtl");
-            model.put("title", "Login");
             if(msg==""){
               model.put("message", "");
             }else{
@@ -168,7 +167,7 @@ public class App {
           }
             Map<String,Object> model = new HashMap<String,Object>();
             model.put("template", "templates/question_list.vtl");
-
+            model.put("titlepage", "Questions-LIS QSG");
             Integer page = 1;   // default page number
             if (request.queryParams("page") != null) {
                 page = Integer.parseInt(request.queryParams("page"));
@@ -190,6 +189,7 @@ public class App {
           }
             Map<String,Object> model = new HashMap<String,Object>();
             model.put("template", "templates/question_add_form.vtl");
+            model.put("titlepage", "Add Question-LIS QSG");
             model.put("categories", Category.all());
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
@@ -243,6 +243,7 @@ public class App {
 
             Map<String,Object> model = new HashMap<String,Object>();
             model.put("template", "templates/question_edit_form.vtl");
+            model.put("titlepage", "Edit Question-LIS QSG");
             model.put("categories", Category.all());
             model.put("question", question);
             return new ModelAndView(model, layout);
@@ -321,6 +322,7 @@ public class App {
           }
             Map<String,Object> model = new HashMap<String,Object>();Category.all();
             model.put("template", "templates/category_list.vtl");
+            model.put("titlepage", "Categories-LIS QSG");
             model.put("categories", Category.all());
             // System.out.println(categories_list);
             return new ModelAndView(model, layout);
@@ -363,8 +365,7 @@ public class App {
             List<Question> questions = Question.findByCategory(Integer.parseInt(request.params("cId")),start, QUESTIONS_PER_PAGE);
             Map<String,Object> model = new HashMap<String,Object>();
             model.put("template", "templates/question_list.vtl");
-
-
+            model.put("titlepage", category.getName()+"-LIS QSG");
             model.put("category", category);
             model.put("questions", questions);
             model.put("currentPage", page);
@@ -455,6 +456,7 @@ public class App {
           }
             Map<String,Object> model = new HashMap<String,Object>();
             model.put("template", "templates/exam_list.vtl");
+            model.put("titlepage", "Exams-LIS QSG");
             model.put("exams", Exam.all());
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
@@ -471,6 +473,7 @@ public class App {
             //     response.redirect("/message?m=ACCESS+DENIED");
             // }
             model.put("template", "templates/exam_add_form.vtl");
+            model.put("titlepage", "Add Exam-LIS QSG");
             model.put("categories", Category.all());
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
@@ -621,8 +624,9 @@ public class App {
             Map<String,Object> model = new HashMap<String,Object>();
 
             Integer id = Integer.parseInt(request.params("id"));
-
+            Exam exa=Exam.findById(id);
             model.put("template", "templates/exam_detail.vtl");
+            model.put("titlepage", exa.getTitle()+"-LIS QSG");
             model.put("exam", Exam.findById(id));
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
@@ -658,6 +662,7 @@ public class App {
             Set set = exam.getSets().get(setNumber-1);
 
             model.put("template", "templates/question_set.vtl");
+            model.put("titlepage", exam.getTitle()+"-LIS QSG");
             model.put("set", set);
             model.put("exam", exam);
             return new ModelAndView(model, layout);
@@ -677,6 +682,7 @@ public class App {
             Set set = exam.getSets().get(setNumber-1);
 
             model.put("template", "templates/answer_sheet.vtl");
+            model.put("titlepage", exam.getTitle()+" Solution-LIS QSG");
             model.put("set", set);
             model.put("exam", exam);
             return new ModelAndView(model, layout);
