@@ -302,7 +302,21 @@ ul#filters {
 /* =============================================================
   MEDIA QUERIES 
  ============================================================ */
-
+@media print
+      {
+          
+          .watermark {
+        display: inline;
+        position: fixed !important;
+        opacity: 0.25;
+        font-size: 3em;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+        top:700x;
+        right:5px;
+    }
+      }
 
 @media (min-width: 740px) and (max-width: 1040px) {
     .carousel-caption h2 {
