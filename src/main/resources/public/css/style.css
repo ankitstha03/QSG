@@ -304,6 +304,9 @@ ul#filters {
  ============================================================ */
 @media print
       {
+	.no-print .no-print* {
+	display: none;
+	}
           
           .watermark {
         display: inline;

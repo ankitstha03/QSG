@@ -2,6 +2,8 @@
   <a href="/exams/$exam.getId()" class="btn btn-primary">Back to Exam</a>
 
   <a href="/exams/$exam.getId()/$set.getSetNumber()/solution" class="btn btn-primary">Answer Sheet</a>
+
+<a onclick="myfunction()" class="btn btn-primary">Print</a>
 </p>
 
 <ol>
@@ -24,4 +26,7 @@
 window.onload = function() {
   document.getElementById('exams').className = 'active';
 };
+myfunction(function() {
+	windows.print();
+});
 </script>
