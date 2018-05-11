@@ -27,7 +27,7 @@
 #if ($categories.size() > 0)
   <div class="row">
   #foreach ($c in $categories)
-    <div class="col-md-3">[$velocityCount] $c.getName()
+    <div class="col-md-3">[$velocityCount] <a href="/categories/$c.getId()">$c.getName()</a>
       <form id="$c.getName()" method="post" action="/categories/$c.getId()/delete">
         <a href="javascript:{}" onclick="document.getElementById('$c.getName()').submit(); return false;">Delete</a>
       </form>
