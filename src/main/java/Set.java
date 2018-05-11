@@ -178,12 +178,13 @@ public class Set extends Timestamped {
      *
      * @return List of correct answer indices.
      */
-    public List<Integer> getCorrectIndices() {
+    public List<String> getCorrectIndices() {
         try (Connection con = DB.sql2o.open();) {
-            String sql = "SELECT correctIndex FROM sets_questions WHERE setId=:id ORDER BY questionNumber ASC";
+            String sql = "SELECT text FROM sets_questions AS a JOIN answers AS b WHERE a.questionId=b.questionId AND " +
+                "setId=1 ORDER BY questionNumber ASC";
             return con.createQuery(sql)
                     .bind(this)
-                    .executeAndFetch(Integer.class);
+                    .executeAndFetch(String.class);
         }
     }
 
