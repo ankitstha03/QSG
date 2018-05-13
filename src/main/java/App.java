@@ -568,6 +568,50 @@ public class App {
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
+        get("/users/add", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+            Map<String,Object> model = new HashMap<String,Object>();
+            Integer userId = request.session().attribute("userId");
+            // if (userId == null || !User.findById(userId).isExaminer()) {
+            //     response.redirect("/message?m=ACCESS+DENIED");
+            // }
+            model.put("template", "templates/user_add_form.vtl");
+            model.put("titlepage", "Add User");
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+         get("/users/:id", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+            Map<String,Object> model = new HashMap<String,Object>();
+
+            Integer id = Integer.parseInt(request.params("id"));
+            User usr=User.findById(id);
+            model.put("template", "templates/profile.vtl");
+            model.put("titlepage", usr.getName()+"'s Profile");
+            model.put("user", User.findById(id));
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+        // Exam delete handler. Also deletes all associated sets and
+        // set-question relations.
+        post("/exams/:id/delete", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+            Integer id = Integer.parseInt(request.params("id"));
+            Exam exam = Exam.findById(id);
+            exam.delete();
+            response.redirect("/exams");
+            return 0;
+        });
         // List of exams.
         get("/exams", (request, response) -> {
           if (request.session().attribute("userId") == null) {

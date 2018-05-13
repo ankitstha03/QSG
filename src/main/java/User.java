@@ -150,6 +150,17 @@ public class User extends Timestamped {
         return (this.role == ROLE_EXAMINER || this.role == ROLE_ADMIN);
     }
 
+    public String getRoleTitle(){
+      if(this.role == ROLE_ADMIN){
+        return "Admin";
+      }
+      else if(this.role == ROLE_OPERATOR){
+        return "Operator";
+      }
+      else{
+        return "Examiner";
+      }
+    }
     public Integer getRole() {
         return this.role;
     }

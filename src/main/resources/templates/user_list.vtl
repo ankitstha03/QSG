@@ -1,5 +1,6 @@
 <h1>Users</h1>
-<button><a href="/users/add">Add User</a></button>
+ <a href="/users/add" class="btn btn-primary">Add User</a>
+
 <table border="1">
   <thead>
     <tr>
@@ -14,9 +15,9 @@
     #foreach ($user in $users)
       <tr>
         <td>$user.getName()</td>
-        <td>$user.getUsername()</td>
+        <td><a href="/users/$user.getId()">$user.getUsername()</a></td>
         <td>$user.getEmail()</td>
-        <td>$user.getRole()</td>
+        <td>$user.getRoleTitle()</td>
 		<td><form action="/users/$user.getId()/delete" method="post" class="form-inline">
       <button type="submit" class="btn btn-danger">Delete</button>
       <a href="/users/$user.getId()/edit" class="btn btn-primary">Edit</a>
