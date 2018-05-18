@@ -15,14 +15,83 @@
     <link href="/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE  -->
     <link href="/css/style.css" rel="stylesheet" />
+      <link href="/css/layout.css" rel="stylesheet" />
     <!-- GOOGLE FONTS  -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css' />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css' />
+
 <title>$titlepage</title>
 </head>
-  <body>
+  <body class="sidebar-is-expanded">
     <section class="menu-section">
+      <header class="l-header">
+        <div class="l-header__inner clearfix">
+          <div class="c-header-icon js-hamburger">
+            <div class="hamburger-toggle"><span class="bar-top"></span><span class="bar-mid"></span><span class="bar-bot"></span></div>
+          </div>
+
+          <div class="section-to-print" style="margin-top:0px">
+              <a class="navbar-brand no-print" href="http://www.lisnepal.com.np/">
+          <img src="/img/logo_LIS1.gif" style= "margin-top: -20px;"/>
+      </a>
+      </div>
+          <div id="menu-top" class="header-icons-group">
+
+            <div class="c-header-icon logout"><a href="/logout"><i class="fa fa-power-off"></i></a></div>
+          </div>
+        </div>
+      </header>
+      <div class="l-sidebar">
+        <div class="logo">
+       <div class="logo__txt">A</div>
+        </div>
+        <div class="l-sidebar__content">
+          <nav class="c-menu js-menu">
+            <ul class="u-list">
+              <div class="menu">
+              <li class="c-menu__item is-active" data-toggle="tooltip" title="Dashboard">
+                <a class="" href="/admin" id="dashboard ">
+                <div class="c-menu__item__inner"><i class="fa fa-file-text-o"></i>
+                  <div class="c-menu-item__title"  ><span>Dashboard</span></div>
+                </div>
+              </a>
+              </li>
+              <li class="c-menu__item has-submenu" data-toggle="tooltip" title="Categories">
+                <a class="" href="/categories" id="categories">
+                <div class="c-menu__item__inner" ><i  class="fa fa-list-alt"></i>
+                  <div class="c-menu-item__title"><span>Categories</span></div>
+                </div>
+              </a>
+              </li>
+              <li class="c-menu__item has-submenu" data-toggle="tooltip" title="Exams">
+                <a class="" href="/exams" id="exams">
+                <div class="c-menu__item__inner" ><i class="fa fa-file"></i>
+                  <div class="c-menu-item__title" ><span>Exams</span></div>
+                </div>
+              </a>
+              </li>
+              <li class="c-menu__item has-submenu" data-toggle="tooltip" title="Questions">
+                <a class="" href="/questions" id="questions">
+                <div class="c-menu__item__inner"><i  class="fa fa-question"></i>
+                  <div class="c-menu-item__title"><span>Questions</span></div>
+                </div>
+              </a>
+              </li>
+#if($defuser.isAdmin())
+        <li class="c-menu__item has-submenu" data-toggle="tooltip" title="Users">
+          <a class="" href="/users" id="users">
+          <div class="c-menu__item__inner" ><i  class="fa fa-users"></i>
+            <div class="c-menu-item__title">  <span>Users</span></div>
+          </div>
+        </a>
+        </li>
+        #end
+      </div>
+            </ul>
+          </nav>
+        </div>
+      </div>
         <div class="container">
             <div class="row ">
                 <div class="col-md-12">
@@ -32,16 +101,14 @@
                     <img src="/img/logo_LIS1.gif" />
                 </a>
                 </div>
-                        <ul id="menu-top" class="nav navbar-nav navbar-right">
-                            <li><a href="/logout">Logout</a></li>
-                        </ul>
+
                     </div>
                 </div>
 
             </div>
         </div>
     </section>
-     <!-- MENU SECTION END-->
+     <!-- MENU SECTION END
 <div class="container1 no-print">
 <div class="row">
 <div class="wrapper">
@@ -72,7 +139,8 @@
 
                 </ul>
             </div>
-    <div class="content">
+            -->
+    <div class="content "  style="overflow-y: scroll;">
       <div class="inner-content"  style="overflow-y: scroll; height:600px;" >
              #parse( $template )
       </div>
@@ -91,7 +159,7 @@
      <script src="/js/bootstrap.js"></script>
      <!--DASHBOARD SCRIPTS PLUGIN-->
     <script src="/js/admin.js"></script>
-    
+<script src="/js/layout.js"></script>
     <script src="/js/print.js"></script>
       </body>
 </html>

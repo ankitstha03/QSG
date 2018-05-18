@@ -5,8 +5,8 @@ import mysql.connector
 
 CATEGORIES = [
     'animals',
-    'geography',
-    'history',
+
+
     'music',
     'sports',
 ]
@@ -44,7 +44,7 @@ def load():
         category_id = cursor.lastrowid
 
         filename = 'Question_set_csv/{}_question_set.csv'.format(category)
-        with open(filename, 'r',encoding="utf-8") as csvfile:
+        with open(filename, 'r',encoding="utf8") as csvfile:
             reader = csv.reader(csvfile, quotechar='"', skipinitialspace=True)
             for row in reader:
                 difficulty = int(row[0])

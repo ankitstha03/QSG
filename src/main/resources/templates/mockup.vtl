@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <!-- BOOTSTRAP CORE STYLE  -->
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <!-- DASHBOARD STYLE  -->
+    <link href="/css/admin.css" rel="stylesheet" />
+    <link href="/css/base.css" rel="stylesheet" />
+    <!-- FONT AWESOME STYLE  -->
+    <link href="/css/font-awesome.css" rel="stylesheet" />
+    <!-- CUSTOM STYLE  -->
+    <link href="/css/style.css" rel="stylesheet" />
+    <link href="/css/layout.css" rel="stylesheet" />
+
+    <!-- GOOGLE FONTS  -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css' />
+<title>$titlepage</title>
+
+<body class="sidebar-is-reduced">
+  <header class="l-header">
+    <div class="l-header__inner clearfix">
+      <div class="c-header-icon js-hamburger">
+        <div class="hamburger-toggle"><span class="bar-top"></span><span class="bar-mid"></span><span class="bar-bot"></span></div>
+      </div>
+      <div class="c-header-icon has-dropdown"><span class="c-badge c-badge--header-icon animated shake">12</span><i class="fa fa-bell"></i>
+        <div class="c-dropdown c-dropdown--notifications">
+          <div class="c-dropdown__header"></div>
+          <div class="c-dropdown__content"></div>
+        </div>
+      </div>
+      <div class="c-search">
+        <input class="c-search__input u-input" placeholder="Search..." type="text"/>
+      </div>
+      <div id="menu-top" class="header-icons-group">
+        <div class="c-header-icon logout"><i href="/logout" class="fa fa-power-off"></i></div>
+      </div>
+    </div>
+  </header>
+  <div class="l-sidebar">
+    <div class="logo">
+    <div class="watermark">
+        <a class="navbar-brand" href="http://www.lisnepal.com.np/">
+    <img src="/img/logo_LIS1.gif" />
+</a>
+</div>
+    </div>
+    <div class="l-sidebar__content">
+      <nav class="c-menu js-menu">
+        <ul class="u-list">
+          <li class="c-menu__item is-active" data-toggle="tooltip" title="Proposals">
+            <div class="c-menu__item__inner"><i class="fa fa-file-text-o"></i>
+              <div class="c-menu-item__title" id="dashboard " ><span>Dashboard</span></div>
+            </div>
+          </li>
+          <li class="c-menu__item has-submenu" data-toggle="tooltip" title="History">
+            <div class="c-menu__item__inner" id="categories"><i href="/categories" class="fa fa-history"></i>
+              <div class="c-menu-item__title"><span>Categories</span></div>
+            </div>
+          </li>
+          <li class="c-menu__item has-submenu" data-toggle="tooltip" title="Accounts">
+            <div class="c-menu__item__inner" id="exams"><i href="/exams" class="fa fa-address-book-o"></i>
+              <div class="c-menu-item__title" ><span>Exams</span></div>
+            </div>
+          </li>
+          <li class="c-menu__item has-submenu" data-toggle="tooltip" title="Settings">
+            <div class="c-menu__item__inner" id="questions"><i href="/questions" class="fa fa-cogs"></i>
+              <div class="c-menu-item__title"><span>Questions</span></div>
+            </div>
+          </li>
+    #if($defuser.isAdmin())
+
+    <li class="c-menu__item has-submenu" data-toggle="tooltip" title="Settings">
+      <div class="c-menu__item__inner" id="users"><i href="/usrs" class="fa fa-cogs"></i>
+        <div class="c-menu-item__title"><span>Users</span></div>
+      </div>
+    </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="inner-content"  style="overflow-y: scroll; height:600px;" >
+           #parse( $template )
+    </div>
+  </div>
+
+
+</div>
+</div>
+</div>
+
+
+
+   <!--CORE SCRIPTS PLUGIN-->
+  <script src="/js/jquery-1.11.1.min.js"></script>
+   <!--BOOTSTRAP SCRIPTS PLUGIN-->
+   <script src="/js/bootstrap.js"></script>
+   <!--DASHBOARD SCRIPTS PLUGIN-->
+  <script src="/js/admin.js"></script>
+<script src="/js/layout.js"></script>
+  <script src="/js/print.js"></script>
+
+</body>
+</html>

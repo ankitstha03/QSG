@@ -11,13 +11,14 @@
 	  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Montserrat:300,400,700'>
       <link rel="stylesheet" href="css/styleflip.css">
     <link href="/css/style.css" rel="stylesheet" />
+<link href="/css/layout.css" rel="stylesheet" />
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
-  
+
       <style>
-   
+
 
 
 .login {
@@ -134,6 +135,54 @@
   border-bottom-width: 4px;
 }
 
+body {
+	width: 100wh;
+	height: 90vh;
+	color: #fff;
+	background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+	background-size: 400% 400%;
+	-webkit-animation: Gradient 15s ease infinite;
+	-moz-animation: Gradient 15s ease infinite;
+	animation: Gradient 15s ease infinite;
+}
+
+@-webkit-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@-moz-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
@@ -142,38 +191,39 @@
 
 <body style="height:100%; width:100%; overflow:hidden;">
 <section class="menu-section">
-        <div class="container">
-            <div class="row ">
-                <div class="col-md-12">
-                    <div class="navbar-collapse collapse ">
-                        <a class="navbar-brand" href="http://www.lisnepal.com.np/">
+  <header class="l-header">
+    <div class="l-header__inner clearfix">
 
-                    <img src="/img/logo_LIS1.gif" />
-                </a>
-                        <ul id="menu-top" class="nav navbar-nav navbar-right">
 
-                             <li><a href="/login">Login</a></li>
-							 #if($show==1)
-							 <li><a href="/register">Add Admin</a></li>
-							 #end
-                        </ul>
-                    </div>
-                </div>
+      <div class="section-to-print" style="margin-top:0px">
+          <a class="navbar-brand no-print" href="http://www.lisnepal.com.np/">
+      <img src="/img/logo_LIS1.gif" style= "margin-top: -20px;"/>
+  </a>
+  #if($show==1)
+  <a href="/register">Add Admin</a>
+  #end
+  </div>
 
-            </div>
-        </div>
+  <div id="menu-top" class="header-icons-group">
+
+    <div class="c-header-icon logout"><a href="/login"><i class="fa fa-sign-in"></i></a></div>
+  </div>
+      </div>
+    </div>
+  </header>
+
     </section>
-	<h1 style="text-align:center;"> Question Set Generator</h1>
-								
+	<h1 style="text-align:center; color:white"> Question Set Generator</h1>
+
   <div class="wrapper">
+
   <h4 style="text-align:center;"><a>$message</a></h4>
          #parse( $template )
       </div>
 
 
     <script  src="js/index.js"></script>
-
-
+<script src="/js/layout.js"></script>
 
 
 </body>
