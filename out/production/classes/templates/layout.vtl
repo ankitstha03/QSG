@@ -19,7 +19,7 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css' />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css' />
-<title>LIS QSG</title>
+<title>$titlepage</title>
 </head>
   <body>
     <section class="menu-section">
@@ -27,9 +27,11 @@
             <div class="row ">
                 <div class="col-md-12">
                     <div class="navbar-collapse collapse ">
+                    <div class="watermark">
                         <a class="navbar-brand" href="http://www.lisnepal.com.np/">
                     <img src="/img/logo_LIS1.gif" />
                 </a>
+                </div>
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
                             <li><a href="/logout">Logout</a></li>
                         </ul>
@@ -40,7 +42,7 @@
         </div>
     </section>
      <!-- MENU SECTION END-->
-<div class="container1">
+<div class="container1 no-print">
 <div class="row">
 <div class="wrapper">
 <div class="side-bar">
@@ -56,17 +58,16 @@
                             <a class="" href="/categories" id="categories">Categories<span class="glyphicon glyphicon-heart pull-right"></span></a>
                         </li>
                         <li>
-                            <a class="" href="/exams" id="interview">Exams<span class="glyphicon glyphicon-heart pull-right"></span></a>
+                            <a class="" href="/exams" id="exams">Exams<span class="glyphicon glyphicon-heart pull-right"></span></a>
                         </li>
                         <li>
                             <a class="" href="/questions" id="questions">Questions<span class="glyphicon glyphicon-star pull-right"></span></a>
                         </li>
+						#if($defuser.isAdmin())
                         <li>
-                            <a class="" href="#" id="sets">Set<span class="glyphicon glyphicon-heart pull-right"></span></a>
+                            <a class="" href="/users" id="users">Users <span class="glyphicon glyphicon-user pull-right"></span></a>
                         </li>
-                        <li>
-                            <a class="" href="#" id="users">Users <span class="glyphicon glyphicon-user pull-right"></span></a>
-                        </li>
+						#end
                     </div>
 
                 </ul>
@@ -90,5 +91,7 @@
      <script src="/js/bootstrap.js"></script>
      <!--DASHBOARD SCRIPTS PLUGIN-->
     <script src="/js/admin.js"></script>
+    
+    <script src="/js/print.js"></script>
       </body>
 </html>
