@@ -1,10 +1,12 @@
+<link href="/css/form.css" rel="stylesheet" />
 #if ($category)
 <h1>$category,getName()</h1>
 #else
 <h1>Questions</h1>
 #end
-<button><a href="/questions/add">Add Question</a></button>
+<button class="btn btn-primary"><a href="/questions/add">Add Question</a></button>
 #if ($questions.size() > 0)
+<div class="card">
   #foreach ($q in $questions)
     <p>[$q.getId()] $q.getText()</p>
 
@@ -24,6 +26,7 @@
     </ul>
   #end
 #else
+</div>
   <p>No questions</p>
 #end
 
