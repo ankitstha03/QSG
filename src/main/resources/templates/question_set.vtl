@@ -1,13 +1,14 @@
-
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
 <p>
   <a href="/exams/$exam.getId()" class="btn btn-primary">Back to Exam</a>
 
   <a href="/exams/$exam.getId()/$set.getSetNumber()/solution" class="btn btn-primary">Answer Sheet</a>
 
   <a onclick="myFunction()" class="btn btn-primary">Print Set</a>
-
+<a id="cmd" class="btn btn-primary">Download PDF</a>
 </p>
-<div class="section-to-print1"  style="overflow-y: scroll;">
+<div class="section-to-print1" id="content"  style="overflow-y: scroll;">
 <ol>
 #foreach ($q in $set.getQuestions())
 
@@ -32,3 +33,18 @@ window.onload = function() {
   document.getElementById('exams').className = 'active';
 };
 </script>
+<script type="text/javascript">
+var doc = new jsPDF();
+var specialElementHandlers = {
+    '#editor': function (element, renderer) {
+        return true;
+    }
+};
+
+$('#cmd').click(function () {
+    doc.fromHTML($('#content').html(), 15, 15, {
+        'width': 170,
+            'elementHandlers': specialElementHandlers
+    });
+    doc.save('Questionset.pdf');
+});</script>

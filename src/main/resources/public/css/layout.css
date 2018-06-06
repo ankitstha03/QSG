@@ -83,12 +83,12 @@ body {
     -moz-transition: all ease 0.5s;
     -webkit-transition: all ease 0.5s;
     -ms-transition: all ease 0.5s;
-    margin-bottom: 35px;
+    margin: 35px;
     border-radius: 0px;
     position: relative;
     border: 0;
     display: inline-block;
-    width: 100%;
+    width: 50%;
 }
 .pad { 
     padding-top:10px;
