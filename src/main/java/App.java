@@ -731,9 +731,7 @@ public class App {
                 Integer test = i / countSelected;
                 if (test == 0) {
                     set1Questions.add(q);
-                } else if (test == 1) {
                     set2Questions.add(q);
-                } else if (test == 2) {
                     set3Questions.add(q);
                 }
             }
@@ -743,9 +741,7 @@ public class App {
                 Integer test = i / countOther1;
                 if (test == 0) {
                     set1Questions.add(q);
-                } else if (test == 1) {
                     set2Questions.add(q);
-                } else if (test == 2) {
                     set3Questions.add(q);
                 }
             }
@@ -755,9 +751,7 @@ public class App {
                 Integer test = i / countOther2;
                 if (test == 0) {
                     set1Questions.add(q);
-                } else if (test == 1) {
                     set2Questions.add(q);
-                } else if (test == 2) {
                     set3Questions.add(q);
                 }
             }
