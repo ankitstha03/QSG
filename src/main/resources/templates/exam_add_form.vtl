@@ -1,55 +1,58 @@
 <link href="/css/form.css" rel="stylesheet" />
-<div class="panel panel-default" style="margin-left:10px;">
+<div class="panel panel-default">
   <div class="panel-heading">Add Exam</div>
 
-
   <div class="panel-body">
-    <div style="width: 1050px">
-    <h1> Add Exam</h1>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="just-txt-div">
-  <form role="form" action="/exams" method="post">
+<div style="width: 1050px">
 
-<div class="form-group">
-    <label for="title">
+<div class="row">
+    <div class="col-md-6">
+
+<h1>Add Exam</h1>
+
+<div>
+  <form action="/exams" method="post">
+
+    <p>
+    <label >
       Exam title:</label>
       <input type="text" class="form-control" name="title" required>
+    </p>
 
-</div>
-<div class="form-group">
-    <label for="time">
+    <p>
+    <label >
       Exam time:</label>
       <input type="datetime-local" class="form-control" name="time" required>
+    </p>
 
-</div>
-<div class="form-group">
-    <label for="duration">
+    <p>
+    <label >
       Exam duration (in minutes):</label>
       <input type="number" class="form-control" name="duration" min="15" max="180" required>
+    </p>
 
-</div>
-<div class="form-group">
-    <label for="difficulty">
+<p>
+    <label >
       Exam difficulty:</label>
-      <select name="difficulty" class="form-control" required>
+      <select name="difficulty" class="form-control primary" required>
         <option value="0">Easy</option>
         <option value="1" selected>Medium</option>
         <option value="2">Hard</option>
       </select>
+  </p>
 
-</div>
-<div class="form-group">
-<label for="category">Category:</label>
-<select name="category" id="category" class="form-control" required>
-  <option value="" selected disabled>--- SELECT A CATEGORY ---</option>
-  #foreach ($category in $categories)
-  <option value="$category.getId()">$category.getName()</option>
-  #end
-</select>
-</div>
+  <p>
+    <label>  Categories:</label>
+      <select name="categories" class="form-control" multiple required>
+      <option value="" selected disabled>--- SELECT A CATEGORY ---</option>
+      #foreach ($category in $categories)
+      <option value="$category.getId()">$category.getName()</option>
+      #end
+      </select>
+</p>
+
     <p>
-      <button class="btn btn-primary" type="submit">Add Exam</button>
+      <button type="submit " class="btn btn-primary">Add Exam</button>
     </p>
 
   </form>
@@ -59,9 +62,3 @@
 </div>
 </div>
 </div>
-</div>
-<script type="text/javascript">
-window.onload = function() {
-  document.getElementById('exams').className = 'active';
-};
-</script>

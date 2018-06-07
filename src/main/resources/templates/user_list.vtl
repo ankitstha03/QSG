@@ -1,5 +1,7 @@
 <h1>Users</h1>
-<button class="btn btn-primary"><a href="/users/add">Add User</a></button>
+<button class="btn btn-primary"><a href="/users/add" style="color:white">Add User</a></button>
+<br>
+<br>
 <table class="example-table" border="1">
   <thead>
     <tr>
@@ -18,8 +20,8 @@
         <td>$user.getEmail()</td>
         <td>$user.getRoleTitle()</td>
 		<td><form action="/users/$user.getId()/delete" method="post" class="form-inline">
-      <button type="submit" class="btn btn-danger">Delete</button>
-      <a href="/users/$user.getId()/edit" class="btn btn-primary">Edit</a>
+      <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+      <a href="/users/$user.getId()/edit" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
     </form></td>
       </tr>
     #end
