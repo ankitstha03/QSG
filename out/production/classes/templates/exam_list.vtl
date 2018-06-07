@@ -8,7 +8,9 @@
 
 #if ($exams.size() > 0)
 
-<table border="1" cellpadding="5">
+
+
+<table class="example-table" border="1" cellpadding="5">
   <thead>
     <tr>
       <th>Date and Time</th>
@@ -27,7 +29,7 @@
         <td>$exam.getDuration()</td>
         <td>
           <form action="/exams/$exam.getId()/delete" method="post">
-            <button type="submit" class="btn btn-danger">Delete</button>
+            <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
           </form>
         </td>
       </tr>
@@ -40,3 +42,8 @@
 <p>No exams created yet.</p>
 
 #end
+<script type="text/javascript">
+window.onload = function() {
+  document.getElementById('exams').className = 'active';
+};
+</script>

@@ -737,10 +737,17 @@ public class App {
             for (Integer i = 0; i < questionsSelected.size(); i++) {
                 Question q = questionsSelected.get(i);
                 Integer test = i / countSelected;
+<<<<<<< HEAD
                 for(Integer j = 0;j<setNumber;j++){
                   if (test == j) {
                     setList.get(j).add(q);
                   }
+=======
+                if (test == 0) {
+                    set1Questions.add(q);
+                    set2Questions.add(q);
+                    set3Questions.add(q);
+>>>>>>> e9536d489ae4280c6a5e3ab6cf25bb06967f0056
                 }
                 
             }
@@ -748,20 +755,34 @@ public class App {
             for (Integer i = 0; i < questionsOther1.size(); i++) {
                 Question q = questionsOther1.get(i);
                 Integer test = i / countOther1;
+<<<<<<< HEAD
                 for(Integer j = 0;j<setNumber;j++){
                   if (test == j) {
                     setList.get(j).add(q);
                   }
+=======
+                if (test == 0) {
+                    set1Questions.add(q);
+                    set2Questions.add(q);
+                    set3Questions.add(q);
+>>>>>>> e9536d489ae4280c6a5e3ab6cf25bb06967f0056
                 }
             }
 
             for (Integer i = 0; i < questionsOther2.size(); i++) {
                 Question q = questionsOther2.get(i);
                 Integer test = i / countOther2;
+<<<<<<< HEAD
                 for(Integer j = 0;j<setNumber;j++){
                   if (test == j) {
                     setList.get(j).add(q);
                   }
+=======
+                if (test == 0) {
+                    set1Questions.add(q);
+                    set2Questions.add(q);
+                    set3Questions.add(q);
+>>>>>>> e9536d489ae4280c6a5e3ab6cf25bb06967f0056
                 }
             }
 

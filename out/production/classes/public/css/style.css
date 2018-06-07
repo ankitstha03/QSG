@@ -208,6 +208,48 @@ min-height: 300px;
     border:10px double #00948A;
      max-height:200px;
 }
+
+.nav {
+    left:50%;
+
+}
+.nav>li>a:hover, .nav>li>a:focus, .nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
+    background:#fff;
+}
+.dropdown {
+    background:#fff;
+  
+    width:300px;
+}
+.dropdown-menu>li>a {
+    color:#428bca;
+}
+.dropdown ul.dropdown-menu {
+    border-radius:4px;
+    box-shadow:none;
+    margin-top:20px;
+    width:300px;
+}
+.dropdown ul.dropdown-menu:before {
+    content: "";
+    border-bottom: 10px solid #fff;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    position: absolute;
+    top: -10px;
+    right: 16px;
+    z-index: 10;
+}
+.dropdown ul.dropdown-menu:after {
+    content: "";
+    border-bottom: 12px solid #ccc;
+    border-right: 12px solid transparent;
+    border-left: 12px solid transparent;
+    position: absolute;
+    top: -12px;
+    right: 14px;
+    z-index: 9;
+}
 /*==========================================
    GALLERY/ PORTFOLIO STYLES
     =====================================================*/
@@ -302,6 +344,79 @@ ul#filters {
 /* =============================================================
   MEDIA QUERIES 
  ============================================================ */
+@media print
+      {
+        body * {
+    visibility: hidden;
+  }
+  .section-to-print, .section-to-print * {
+    visibility: visible;
+  }
+  .section-to-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+   .section-to-print1, .section-to-print1 * {
+    visibility: visible;
+  }
+  .section-to-print1 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-top:50px;
+  }
+
+  .no-print {
+    visibility: hidden;
+  }
+          .watermark {
+
+        opacity: 0.35;
+
+    }
+      }
+      
+      
+.example-table {
+font-family: sans-serif;
+-webkit-font-smoothing: antialiased;
+font-size: 115%;
+width: auto;
+overflow: auto;
+display: block;
+}
+.example-table th {
+background-color: rgb(112, 196, 105);
+font-weight: normal;
+color: white;
+padding: 20px 30px;
+text-align: center;
+}
+.example-table td {
+background-color: rgb(238, 238, 238);
+padding: 20px 30px;
+color: rgb(111, 111, 111);
+}
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
 
 
 @media (min-width: 740px) and (max-width: 1040px) {
