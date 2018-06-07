@@ -666,6 +666,7 @@ public class App {
                 timeString += ":00";
             }
             Integer duration = Integer.parseInt(request.queryParams("duration"));
+            Integer setNumber = Integer.parseInt(request.queryParams("SetNumber"));
             Integer difficulty = Integer.parseInt(request.queryParams("difficulty"));
             String[] categories = request.queryParamsValues("categories");
 
@@ -678,12 +679,13 @@ public class App {
             exam.setDifficulty(difficulty);
             exam.setUserId(userId);
             exam.save();
-
+            
+            Set[] sets = new Set[setNumber];
             // Create 3 sets.
-
-            Set set1 = new Set(exam, 1).save();  // 1st set of this exam
-            Set set2 = new Set(exam, 2).save();  // 2nd set of this exam
-            Set set3 = new Set(exam, 3).save();  // 3rd set of this exam
+            for(Integer i = 0;i<setNumber;i++){
+               sets[i] = new Set(exam, i).save();  
+            }
+           
 
             // Calculate question counts. We have assumed that each question is
             // allocated 3 minutes in average. Also, each set contains 50%
@@ -706,76 +708,85 @@ public class App {
                 questionsSelected = con.createQuery(query)
                         .addParameter("difficulty", difficulty)
                         .addParameter("categoryIds", String.join(",", categories))
-                        .addParameter("count", countSelected * 3)
+                        .addParameter("count", countSelected * setNumber)
                         .executeAndFetch(Question.class);
                 questionsOther1 = con.createQuery(query)
                         .addParameter("difficulty", (difficulty + 1) % 3)
                         .addParameter("categoryIds", String.join(",", categories))
-                        .addParameter("count", countOther1 * 3)
+                        .addParameter("count", countOther1 * setNumber)
                         .executeAndFetch(Question.class);
                 questionsOther2 = con.createQuery(query)
                         .addParameter("difficulty", (difficulty + 2) % 3)
                         .addParameter("categoryIds", String.join(",", categories))
-                        .addParameter("count", countOther2 * 3)
+                        .addParameter("count", countOther2 * setNumber)
                         .executeAndFetch(Question.class);
             }
 
             // separate the questions for each set
 
-            List<Question> set1Questions = new ArrayList<Question>();
-            List<Question> set2Questions = new ArrayList<Question>();
-            List<Question> set3Questions = new ArrayList<Question>();
+            // List<Question> set1Questions = new ArrayList<Question>();
+            // List<Question> set2Questions = new ArrayList<Question>();
+            // List<Question> set3Questions = new ArrayList<Question>();
+            List<List<Question>> setList = new ArrayList<List<Question>>();
+            for (int i = 0; i < setNumber; i++) {
+                List<Question> setQuestions = new ArrayList<>();
+                setList.add(setQuestions);
+            }
+            
 
             for (Integer i = 0; i < questionsSelected.size(); i++) {
                 Question q = questionsSelected.get(i);
                 Integer test = i / countSelected;
-                if (test == 0) {
-                    set1Questions.add(q);
-                } else if (test == 1) {
-                    set2Questions.add(q);
-                } else if (test == 2) {
-                    set3Questions.add(q);
+                for(Integer j = 0;j<setNumber;j++){
+                  if (test == j) {
+                    setList.get(j).add(q);
+                  }
                 }
+                
             }
 
             for (Integer i = 0; i < questionsOther1.size(); i++) {
                 Question q = questionsOther1.get(i);
                 Integer test = i / countOther1;
-                if (test == 0) {
-                    set1Questions.add(q);
-                } else if (test == 1) {
-                    set2Questions.add(q);
-                } else if (test == 2) {
-                    set3Questions.add(q);
+                for(Integer j = 0;j<setNumber;j++){
+                  if (test == j) {
+                    setList.get(j).add(q);
+                  }
                 }
             }
 
             for (Integer i = 0; i < questionsOther2.size(); i++) {
                 Question q = questionsOther2.get(i);
                 Integer test = i / countOther2;
-                if (test == 0) {
-                    set1Questions.add(q);
-                } else if (test == 1) {
-                    set2Questions.add(q);
-                } else if (test == 2) {
-                    set3Questions.add(q);
+                for(Integer j = 0;j<setNumber;j++){
+                  if (test == j) {
+                    setList.get(j).add(q);
+                  }
                 }
             }
 
+            for(Integer j = 0;j<setNumber;j++){
+                  assert setList.get(j).size() == countPerSet;
+                }
             // Check if all sets have correct question counts
-            assert set1Questions.size() == countPerSet;
-            assert set2Questions.size() == countPerSet;
-            assert set3Questions.size() == countPerSet;
+            // assert set1Questions.size() == countPerSet;
+            // assert set2Questions.size() == countPerSet;
+            // assert set3Questions.size() == countPerSet;
 
-            Collections.shuffle(set1Questions);
-            Collections.shuffle(set2Questions);
-            Collections.shuffle(set3Questions);
-
+            // Collections.shuffle(set1Questions);
+            // Collections.shuffle(set2Questions);
+            // Collections.shuffle(set3Questions);
+            for(Integer j = 0;j<setNumber;j++){
+                  Collections.shuffle(setList.get(j));
+                }
             Random random = new Random();
             for (Integer i = 1; i <= countPerSet; i++) {
-                set1.addQuestion(set1Questions.get(i-1), i, random.nextInt(4));
-                set2.addQuestion(set2Questions.get(i-1), i, random.nextInt(4));
-                set3.addQuestion(set3Questions.get(i-1), i, random.nextInt(4));
+                // set1.addQuestion(set1Questions.get(i-1), i, random.nextInt(4));
+                // set2.addQuestion(set2Questions.get(i-1), i, random.nextInt(4));
+                // set3.addQuestion(set3Questions.get(i-1), i, random.nextInt(4));
+                for(Integer j = 0;j<setNumber;j++){
+                  sets[j].addQuestion(setList.get(j).get(i-1), i, random.nextInt(4));
+                }
             }
 
             // Redirect to the newly generated exam sets page
@@ -822,13 +833,14 @@ public class App {
           }
             Map<String,Object> model = new HashMap<String,Object>();
             Integer examId = Integer.parseInt(request.params("id"));
+            Exam exam = Exam.findById(examId);
             // Validate set number. Must be one of {1,2,3}.
             Integer setNumber = Integer.parseInt(request.params("set"));
-            if (setNumber < 1 || setNumber > 3) {
+            if (setNumber < 0 || setNumber > exam.getSets().size()-1) {
                 response.redirect("/message?m=INVALID+SET+NUMBER");
             }
-            Exam exam = Exam.findById(examId);
-            Set set = exam.getSets().get(setNumber-1);
+            
+            Set set = exam.getSets().get(setNumber);
 
             model.put("template", "templates/question_set.vtl");
             model.put("titlepage", exam.getTitle()+"-LIS QSG");

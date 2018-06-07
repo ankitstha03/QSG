@@ -9,9 +9,9 @@
 <p>Difficulty = $exam.getDifficultyString()</p>
 
 <ul style=" list-style-type: none;">
-  <li><a href="/exams/$exam.getId()/1" class="btn btn-primary">Set 1</a></li><br>
-  <li><a href="/exams/$exam.getId()/2" class="btn btn-primary">Set 2</a></li><br>
-  <li><a href="/exams/$exam.getId()/3" class="btn btn-primary">Set 3</a></li>
+ 	#foreach ($set in $exam.getSets())
+  	<li><a href="/exams/$exam.getId()/$set.setNumber" class="btn btn-primary">Set $set.setNumber</a></li><br>
+  	#end
 </ul>
 </div>
 <script type="text/javascript">
