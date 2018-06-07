@@ -5,8 +5,8 @@ import mysql.connector
 
 CATEGORIES = [
     'animals',
-
-
+    'history',
+    'geography',
     'music',
     'sports',
 ]
@@ -15,6 +15,8 @@ DB_CONFIG = {
     'database': 'lis',
     'user': 'lis',
     'password': 'lis',
+    'use_unicode':'True',
+    'charset':'utf8mb4'
 }
 DB_TABLES = ['questions', 'answers', 'categories']
 
@@ -40,11 +42,12 @@ def load():
 
     for category in CATEGORIES:
         print("[INFO] Inserting category '{}'".format(category))
-        cursor.execute("INSERT INTO categories SET name = %s", (category.title(),))
+        cursor.execute("INSERT INTO categories SET name = %s",
+                       (category.title(), ))
         category_id = cursor.lastrowid
 
         filename = 'Question_set_csv/{}_question_set.csv'.format(category)
-        with open(filename, 'r',encoding="utf8") as csvfile:
+        with open(filename, 'r', encoding="utf-8") as csvfile:
             reader = csv.reader(csvfile, quotechar='"', skipinitialspace=True)
             for row in reader:
                 difficulty = int(row[0])
@@ -52,6 +55,7 @@ def load():
                 answers = [s.strip() for s in row[2:6]]
 
                 # insert the question
+                cursor.execute("SET names latin1;",)
                 cursor.execute(
                     "INSERT INTO questions (userId, categoryId, `text`, difficulty)"
                     " VALUES (%s, %s, %s, %s)",
@@ -59,8 +63,10 @@ def load():
                 question_id = cursor.lastrowid
 
                 # insert the answers
+                cursor.execute("SET names latin1;",)
                 for (index, answer) in enumerate(answers):
-                    assert len(answer) > 0, "[{}] {}".format(category, question)
+                    assert len(answer) > 0, "[{}] {}".format(
+                        category, question)
                     cursor.execute(
                         "INSERT INTO answers (questionId, `text`, isCorrect)"
                         " VALUES (%s, %s, %s)",

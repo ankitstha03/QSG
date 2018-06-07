@@ -1,3 +1,5 @@
+<link href="/css/form.css" rel="stylesheet" />
+<div class="card">
 <h1>$exam.getTitle()</h1>
 
 <p>Time = $exam.getTime()</p>
@@ -6,8 +8,14 @@
 
 <p>Difficulty = $exam.getDifficultyString()</p>
 
-<ul>
-  <li><a href="/exams/$exam.getId()/1" class="btn btn-primary">Set 1</a></li>
-  <li><a href="/exams/$exam.getId()/2" class="btn btn-primary">Set 2</a></li>
+<ul style=" list-style-type: none;">
+  <li><a href="/exams/$exam.getId()/1" class="btn btn-primary">Set 1</a></li><br>
+  <li><a href="/exams/$exam.getId()/2" class="btn btn-primary">Set 2</a></li><br>
   <li><a href="/exams/$exam.getId()/3" class="btn btn-primary">Set 3</a></li>
 </ul>
+</div>
+<script type="text/javascript">
+window.onload = function() {
+  document.getElementById('exams').className = 'active';
+};
+</script>

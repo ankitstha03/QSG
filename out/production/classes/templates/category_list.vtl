@@ -1,9 +1,15 @@
+<link href="/css/form.css" rel="stylesheet" />
+<style>
+a:hover {
+color: black;
+}
+</style>
 <div class="panel panel-default">
   <div class="panel-heading">Add Category</div>
   <div class="panel-body">
     <div style="width: 1050px">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
           <div class="just-txt-div">
             <form action="/categories" method="post">
 
@@ -27,11 +33,13 @@
 #if ($categories.size() > 0)
   <div class="row">
   #foreach ($c in $categories)
-    <div class="col-md-3">[$velocityCount] $c.getName()
+
+    <div class="col-md-2 card" style="margin:10px; text-align:center"> <a href="/categories/$c.getId()"><h1>$c.getName()</h1></a>
       <form id="$c.getName()" method="post" action="/categories/$c.getId()/delete">
-        <a href="javascript:{}" onclick="document.getElementById('$c.getName()').submit(); return false;">Delete</a>
+        <a href="javascript:{}" onclick="document.getElementById('$c.getName()').submit(); return false;" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
       </form>
     </div><!--col-->
+
   #end
   </div><!--row-->
 #else

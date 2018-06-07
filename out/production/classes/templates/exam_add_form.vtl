@@ -1,44 +1,64 @@
+<link href="/css/form.css" rel="stylesheet" />
+<div class="panel panel-default">
+  <div class="panel-heading">Add Exam</div>
+
+  <div class="panel-body">
+<div style="width: 1050px">
+
+<div class="row">
+    <div class="col-md-6">
+
 <h1>Add Exam</h1>
 
 <div>
-  <form class="" action="/exams" method="post">
+  <form action="/exams" method="post">
 
     <p>
-      Exam title:
-      <input type="text" name="title" required>
+    <label >
+      Exam title:</label>
+      <input type="text" class="form-control" name="title" required>
     </p>
 
     <p>
-      Exam time:
-      <input type="datetime-local" name="time" required>
+    <label >
+      Exam time:</label>
+      <input type="datetime-local" class="form-control" name="time" required>
     </p>
 
     <p>
-      Exam duration (in minutes):
-      <input type="number" name="duration" min="15" max="180" required>
+    <label >
+      Exam duration (in minutes):</label>
+      <input type="number" class="form-control" name="duration" min="15" max="180" required>
     </p>
 
-    <p>
-      Exam difficulty:
-      <select name="difficulty" required>
+<p>
+    <label >
+      Exam difficulty:</label>
+      <select name="difficulty" class="form-control primary" required>
         <option value="0">Easy</option>
         <option value="1" selected>Medium</option>
         <option value="2">Hard</option>
       </select>
-    </p>
+  </p>
 
-    <p>
-      Categories:
-      <select name="categories" multiple required>
-        #foreach ($c in $categories)
-          <option value="$c.getId()">$c.getName()</option>
-        #end
+  <p>
+    <label>  Categories:</label>
+      <select name="categories" class="form-control" multiple required>
+      <option value="" selected disabled>--- SELECT A CATEGORY ---</option>
+      #foreach ($category in $categories)
+      <option value="$category.getId()">$category.getName()</option>
+      #end
       </select>
-    </p>
+</p>
 
     <p>
-      <button type="submit">Add Exam</button>
+      <button type="submit " class="btn btn-primary">Add Exam</button>
     </p>
 
   </form>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
