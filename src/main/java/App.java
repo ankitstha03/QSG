@@ -44,15 +44,22 @@ public class App {
 
         // Admin dashboard. Currenlty, this page is not implemented.
         get("/admin", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+			if (request.session().attribute("userId") == null || request.session().attribute("userId") == "") {
+                response.redirect("/login");
+            }
 
-            Map<String,Object> model = new HashMap<String,Object>();
+			Map<String,Object> model = new HashMap<String,Object>();
+          if (request.session().attribute("userId") != null) {
+
             model.put("template", "templates/admin.vtl");
             model.put("titlepage", "Admin-LIS QSG");
             User defuser=User.findById(request.session().attribute("userId"));
             model.put("defuser",defuser);
+
+          }else{
+			response.redirect("/login");
+		  }
+
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
@@ -126,6 +133,7 @@ public class App {
           if (request.session().attribute("userId") != null) {
               response.redirect("/admin");
           }
+
           List<User> us=User.all();
           for(User user:us){
             if(user.isAdmin()){
@@ -172,12 +180,10 @@ public class App {
         // ease of implementation in the development phase.
 
         get("/logout", (request, response) -> {
-            if (request.session().attribute("userId") == null) {
-                response.redirect("/login");
-            } else {
+
                 request.session().removeAttribute("userId");
                 response.redirect("/login");
-            }
+
             return 0;
         });
         // End of Rojina part
@@ -209,6 +215,24 @@ public class App {
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
+
+        get("/log", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+            Map<String,Object> model = new HashMap<String,Object>();
+            model.put("template", "templates/question_log.vtl");
+            model.put("titlepage", "Log-LIS QSG");
+            List<Questionlog> crted = Questionlog.byAction("Created");
+            List<Questionlog> upted = Questionlog.byAction("Updated");
+            List<Questionlog> delted = Questionlog.byAction("Deleted");
+            model.put("crted", crted);
+            model.put("upted", upted);
+            model.put("delted", delted);
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
         // New question form.
         get("/questions/add", (request, response) -> {
           if (request.session().attribute("userId") == null) {
@@ -239,6 +263,9 @@ public class App {
 
             // userId is 0 = NULL for now
             Question q = new Question(0, categoryId, question, difficulty).save();
+            Integer userr=request.session().attribute("userId");
+            Integer quesid=q.getId();
+            Questionlog ql=new Questionlog(quesid, userr, "Created").save();
             Answer a;
             a = new Answer(q, answer1, true).save();
             a = new Answer(q, answer2, false).save();
@@ -256,8 +283,13 @@ public class App {
               response.redirect("/login");
           }
             Integer id = Integer.parseInt(request.params(":qid"));
+
             Question q = Question.findById(id);
             q.delete();
+            Integer userr=request.session().attribute("userId");
+            Integer quesid=q.getId();
+            Questionlog ql=new Questionlog(quesid, userr, "Deleted").save();
+
             response.redirect("/questions");
             return 0;
         });
@@ -333,6 +365,9 @@ public class App {
 
           // userId is 0 = NULL for now
           Question q = new Question(0, categoryId, question, difficulty).save();
+          Integer userr=request.session().attribute("userId");
+          Integer quesid=q.getId();
+          Questionlog ql=new Questionlog(quesid, userr, "Created").save();
           Answer a;
           a = new Answer(q, answer1, true).save();
           a = new Answer(q, answer2, false).save();
@@ -376,7 +411,9 @@ public class App {
             q.addAnswer(answer2, false);
             q.addAnswer(answer3, false);
             q.addAnswer(answer4, false);
-
+            Integer userr=request.session().attribute("userId");
+            Integer quesid=q.getId();
+            Questionlog ql=new Questionlog(quesid, userr, "Updated").save();
             response.redirect("/questions/" + q.getId() + "/edit");
             return 0;
         });
