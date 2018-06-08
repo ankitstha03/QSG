@@ -50,6 +50,10 @@ public class Set extends Timestamped {
         return this.setNumber;
     }
 
+    public char getSetName() {
+        char name = (char) (this.setNumber+65);
+        return name;
+    }
     // setters
 
     public Set setExamId(Integer id) {

@@ -10,7 +10,7 @@
 
 <ul style=" list-style-type: none;">
  	#foreach ($set in $exam.getSets())
-  	<li><a href="/exams/$exam.getId()/$set.setNumber" class="btn btn-primary">Set $set.setNumber</a></li><br>
+  	<li><a href="/exams/$exam.getId()/$set.setNumber" class="btn btn-primary">Set $set.setName</a></li><br>
   	#end
 </ul>
 </div>
