@@ -775,7 +775,7 @@ public class App {
                 Question q = questionsSelected.get(i);
                 Integer test = i / countSelected;
                 for(Integer j = 0;j<setNumber;j++){
-                  if (test == j) {
+                  if (test == 0) {
                     setList.get(j).add(q);
                   }
                 }
@@ -786,7 +786,7 @@ public class App {
                 Question q = questionsOther1.get(i);
                 Integer test = i / countOther1;
                 for(Integer j = 0;j<setNumber;j++){
-                  if (test == j) {
+                  if (test == 1) {
                     setList.get(j).add(q);
                   }
                 }
@@ -796,7 +796,7 @@ public class App {
                 Question q = questionsOther2.get(i);
                 Integer test = i / countOther2;
                 for(Integer j = 0;j<setNumber;j++){
-                  if (test == j) {
+                  if (test == 2) {
                     setList.get(j).add(q);
                   }
                 }

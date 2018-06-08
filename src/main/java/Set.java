@@ -89,6 +89,7 @@ public class Set extends Timestamped {
 
     /**
      * Inserts the Set instance in the database.
+     * Inserts the Set instance in the database.
      *
      * @return Saved instance.
      */
@@ -185,7 +186,7 @@ public class Set extends Timestamped {
     public List<String> getCorrectIndices() {
         try (Connection con = DB.sql2o.open();) {
             String sql = "SELECT text FROM sets_questions AS a JOIN answers AS b WHERE a.questionId=b.questionId AND " +
-                "setId=1 ORDER BY questionNumber ASC";
+                "setId= :id AND b.isCorrect=1 ORDER BY questionNumber ASC";
             return con.createQuery(sql)
                     .bind(this)
                     .executeAndFetch(String.class);

@@ -27,7 +27,8 @@ hs_err_pid*
 ### Gradle ###
 .gradle
 /build/
-.idea/workspace.xml
+.idea
+:x
 
 # Ignore Gradle GUI config
 gradle-app.setting

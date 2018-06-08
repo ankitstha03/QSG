@@ -1,0 +1,45 @@
+<h1>Question Log</h1>
+<div id="main">
+    <div class="column left">
+	<div class="card" style="position:fixed; background-color:#12cc45;">
+	<h1 style="text-align:center;">Created</h1>
+	</div>
+	<div style="margin-top:70px;">
+	#foreach ($crt in $crted)
+     <div class="card" style="background-color:white; padding:10px; margin-bottom:10px;">
+	 <p> $crt.getQuestion().getText()</p>
+	 <p style="font-size:12px;"> $crt.getAction() by $crt.getUser().getUsername()</p>
+	 <p style="font-size:12px;"> $crt.getAction() on $crt.getTime()</p>
+    </div>
+	#end
+	</div>
+	</div>
+    <div class="column center">
+	<div class="card" style="position:fixed; background-color:#2245cc;">
+	<h1 style="text-align:center;">Updated</h1>
+	</div>
+	<div style="margin-top:70px;">
+ #foreach ($upt in $upted)
+     <div class="card" style="background-color:white; padding:10px; margin-bottom:10px;">
+	 <p> $upt.getQuestion().getText()</p>
+	 <p style="font-size:12px;"> $upt.getAction() by $upt.getUser().getUsername()</p>
+	 <p style="font-size:12px;"> $upt.getAction() on $upt.getTime()</p>
+    </div>
+	#end
+    </div>
+	</div>
+    <div class="column right">
+	<div class="card" style="position:fixed; background-color:#cc3244;">
+	<h1 style="text-align:center;">Deleted</h1>
+	</div>
+	<div style="margin-top:70px;">
+ #foreach ($del in $delted)
+     <div class="card" style="background-color:white; padding:10px; margin-bottom:10px;">
+	 <p> $del.getQuestion().getText()</p>
+	 <p style="font-size:12px;"> $del.getAction() by $del.getUser().getUsername()</p>
+	 <p style="font-size:12px;"> $del.getAction() on $del.getTime()</p>
+    </div>
+	#end
+    </div>
+	</div>
+</div>
