@@ -18,6 +18,7 @@ var Dashboard = function () {
 		// }
 	};
 
+
 	var sidebarChangeWidth = function sidebarChangeWidth() {
 		var $menuItemsTitle = $("li .menu-item__title");
 
