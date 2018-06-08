@@ -63,9 +63,6 @@
 
     }
    
-myfunction(function() {
-windows.print();
-});
    
     $(document).ready(function () {
         mainApp.slide_fun();

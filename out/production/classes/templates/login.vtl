@@ -1,31 +1,14 @@
-
-
-   <div class="cols">
-			<div class="col" ontouchstart="this.classList.toggle('click');">
-				<div class="container2">
-					<div class="front" style="background-image: url(/img/log.jpg); text-align:center">
-						<div class="inner" >
-							<p>Log In</p>
-              <span>Already have an id?</span>
-						</div>
-					</div>
-					<div class="back">
-						<div class="inner">
-						  <form class="login" action="/login" method="post">
-							<p class="title">Log in</p>
-							<input type="text" name="username" id="username" placeholder="Username" autofocus required/>
-							<i class="fa fa-user"></i>
-							<input type="password" name="password" id="password" placeholder="Password" required />
-							<i class="fa fa-key"></i>
-
-							<button type="submit">
-							  <i class="spinner"></i>
-							  <span class="state">Log in</span>
-							</button>
-						  </form>
-						</div>
-					</div>
-				</div>
-			</div>
-
-	</div>
+  <form class="login" action="/login" method="post">
+    <p class="title">Log in</p>
+    <input type="text" name="username" id="username" placeholder="Username" autofocus required/>
+    <i class="fa fa-user"></i>
+    <input type="password" name="password" id="password" placeholder="Password" required />
+    <i class="fa fa-key"></i>
+    <a>$message</a>
+    <button type="submit">
+      <i class="spinner"></i>
+      <span class="state">Log in</span>
+    </button>
+  </form>
+	
+    

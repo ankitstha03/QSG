@@ -1,21 +1,12 @@
-<link href="/css/form.css" rel="stylesheet" />
-#if ($category)
-<h1>$category,getName()</h1>
-#else
 <h1>Questions</h1>
-#end
-<button class="btn btn-primary" ><a href="/questions/add" style="color:white">Add Question</a></button>
-<br>
-#if ($questions.size() > 0)
 
+#if ($questions.size() > 0)
   #foreach ($q in $questions)
-  <br>
-<div class="card">
     <p>[$q.getId()] $q.getText()</p>
 
     <form action="/questions/$q.getId()/delete" method="post" class="form-inline">
-      <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
-      <a href="/questions/$q.getId()/edit" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+      <button type="submit" class="btn btn-danger">Delete</button>
+      <a href="/questions/$q.getId()/edit" class="btn btn-primary">Edit</a>
     </form>
 
     <ul>
@@ -27,12 +18,8 @@
         #end
       #end
     </ul>
-  </div>
-
   #end
-
 #else
-
   <p>No questions</p>
 #end
 
@@ -46,10 +33,6 @@ Page $currentPage
 
 <script type="text/javascript">
 window.onload = function() {
-#if ($category)
-	document.getElementById('categories').className = 'active';
-#else
-	document.getElementById('questions').className = 'active';
-	#end
+  document.getElementById('questions').className = 'active';
 };
 </script>>

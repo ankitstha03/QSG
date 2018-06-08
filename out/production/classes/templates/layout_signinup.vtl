@@ -8,23 +8,49 @@
     <link href="/css/bootstrap.css" rel="stylesheet" />
 
     <!-- CUSTOM STYLE  -->
-	  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Montserrat:300,400,700'>
-      <link rel="stylesheet" href="css/styleflip.css">
     <link href="/css/style.css" rel="stylesheet" />
-<link href="/css/layout.css" rel="stylesheet" />
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
-
+  
       <style>
+      /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+      body {
+  font-family: "Open Sans", sans-serif;
+  height: 100vh;
+  background: url("img/yom.gif") 50% fixed;
+  background-size: cover;
+}
 
+@keyframes spinner {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(359deg);
+  }
+}
+* {
+  box-sizing: border-box;
+}
 
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+
+}
 
 .login {
   border-radius: 2px 2px 5px 5px;
   padding: 10px 20px 20px 20px;
-  max-width: 90%;
+  width: 90%;
+  max-width: 320px;
   background: #ffffff;
   position: relative;
   padding-bottom: 80px;
@@ -135,53 +161,19 @@
   border-bottom-width: 4px;
 }
 
-body {
-	width: 100wh;
-	height: 90vh;
-	color: #fff;
-	background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
-	background-size: 400% 400%;
-	-webkit-animation: Gradient 15s ease infinite;
-	-moz-animation: Gradient 15s ease infinite;
-	animation: Gradient 15s ease infinite;
+footer {
+  display: block;
+  padding-top: 50px;
+  text-align: center;
+  color: #ddd;
+  font-weight: normal;
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
+  font-size: 0.8em;
 }
-
-@-webkit-keyframes Gradient {
-	0% {
-		background-position: 0% 50%
-	}
-	50% {
-		background-position: 100% 50%
-	}
-	100% {
-		background-position: 0% 50%
-	}
+footer a, footer a:link {
+  color: #fff;
+  text-decoration: none;
 }
-
-@-moz-keyframes Gradient {
-	0% {
-		background-position: 0% 50%
-	}
-	50% {
-		background-position: 100% 50%
-	}
-	100% {
-		background-position: 0% 50%
-	}
-}
-
-@keyframes Gradient {
-	0% {
-		background-position: 0% 50%
-	}
-	50% {
-		background-position: 100% 50%
-	}
-	100% {
-		background-position: 0% 50%
-	}
-}
-
 
     </style>
 
@@ -189,41 +181,36 @@ body {
 
 </head>
 
-<body style="height:100%; width:100%; overflow:hidden;">
+<body style="height:100%; width:100%;">
 <section class="menu-section">
-  <header class="l-header">
-    <div class="l-header__inner clearfix">
+        <div class="container">
+            <div class="row ">
+                <div class="col-md-12">
+                    <div class="navbar-collapse collapse ">
+                        <a class="navbar-brand" href="http://www.lisnepal.com.np/">
 
+                    <img src="/img/logo_LIS1.gif" />
+                </a>
+                        <ul id="menu-top" class="nav navbar-nav navbar-right">
 
-      <div class="section-to-print" style="margin-top:0px">
-          <a class="navbar-brand no-print" href="http://www.lisnepal.com.np/">
-      <img src="/img/logo_LIS1.gif" style= "margin-top: -20px;"/>
-  </a>
-  #if($show==1)
-  <a href="/register">Add Admin</a>
-  #end
-  </div>
+                             <li><a href="/login">Login</a></li>
+                             <li><a href="/register">Register</a></li>
+                        </ul>
+                    </div>
+                </div>
 
-  <div id="menu-top" class="header-icons-group">
-
-    <div class="c-header-icon logout"><a href="/login"><i class="fa fa-sign-in"></i></a></div>
-  </div>
-      </div>
-    </div>
-  </header>
-
+            </div>
+        </div>
     </section>
-	<h1 style="text-align:center; color:white"> Question Set Generator</h1>
-
+	<h1 style="text-align:center; color:white;"> Question Set Generator</h1>
   <div class="wrapper">
-
-  <h4 style="text-align:center;"><a>$message</a></h4>
          #parse( $template )
       </div>
 
 
     <script  src="js/index.js"></script>
-<script src="/js/layout.js"></script>
+
+
 
 
 </body>
