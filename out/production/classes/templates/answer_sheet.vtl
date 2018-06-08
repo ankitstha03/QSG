@@ -1,9 +1,7 @@
 <p>
-
   <a href="/exams/$exam.getId()/$set.getSetNumber()" class="btn btn-primary">Back to Question Set</a>
-  <a onclick="myFunction()" value="Print" class="btn btn-primary">Print Set</a>
 </p>
-<div class="section-to-print1" id="content"  style="overflow-y: scroll;">
+
 <ol>
 #foreach ($i in $set.getCorrectIndices())
 
@@ -13,9 +11,3 @@
 
 #end
 </ol>
-</div>
-<script type="text/javascript">
-window.onload = function() {
-  document.getElementById('exams').className = 'active';
-};
-</script>

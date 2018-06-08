@@ -50,6 +50,10 @@ public class Set extends Timestamped {
         return this.setNumber;
     }
 
+    public char getSetName() {
+        char name = (char) (this.setNumber+65);
+        return name;
+    }
     // setters
 
     public Set setExamId(Integer id) {
@@ -181,7 +185,7 @@ public class Set extends Timestamped {
     public List<String> getCorrectIndices() {
         try (Connection con = DB.sql2o.open();) {
             String sql = "SELECT text FROM sets_questions AS a JOIN answers AS b WHERE a.questionId=b.questionId AND " +
-                "setId= :id AND b.isCorrect='1' ORDER BY questionNumber ASC";
+                "setId=1 ORDER BY questionNumber ASC";
             return con.createQuery(sql)
                     .bind(this)
                     .executeAndFetch(String.class);

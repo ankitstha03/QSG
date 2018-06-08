@@ -1,4 +1,3 @@
-"use strict";
 var working = false;
 $('.login').on('submit', function(e) {
   e.preventDefault();

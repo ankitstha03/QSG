@@ -49,7 +49,7 @@ public class Question extends Timestamped {
     }
 
     public Question(Integer userId, Integer categoryId, String text, Integer difficulty) {
-        this.setUserId(userId > 0? userId : null);
+        this.setUserId(userId > 0? 1 : null);
         this.setCategoryId(categoryId);
         this.setText(text);
         this.setDifficulty(difficulty);
@@ -155,11 +155,12 @@ public class Question extends Timestamped {
      */
     public void delete() {
         try (Connection con = DB.sql2o.open();) {
-            String query = "DELETE FROM questions WHERE id=:id";
+            String query = "UPDATE questions SET "
+                + "userId=1, categoryId=:categoryId, text=:text, "
+                + "difficulty=:difficulty WHERE id=:id";
             con.createQuery(query)
                 .bind(this)
                 .executeUpdate();
-            this.setId(null);
         }
     }
 
@@ -346,7 +347,7 @@ public class Question extends Timestamped {
      */
     public static List<Question> all() {
         try (Connection con = DB.sql2o.open();) {
-            String query = "SELECT * FROM questions ORDER BY id DESC";
+            String query = "SELECT * FROM questions WHERE userId IS NULL ORDER BY id DESC";
             return con.createQuery(query).executeAndFetch(Question.class);
         }
     }
@@ -360,7 +361,7 @@ public class Question extends Timestamped {
      */
     public static Question findById(Integer id) {
         try (Connection con = DB.sql2o.open();) {
-            String query = "SELECT * FROM questions WHERE id=:id";
+            String query = "SELECT * FROM questions WHERE id=:id AND userId IS NULL";
             return con.createQuery(query)
                 .addParameter("id", id)
                 .executeAndFetchFirst(Question.class);
@@ -379,7 +380,7 @@ public class Question extends Timestamped {
      */
     public static List<Question> limit(Integer startIndex, Integer size) {
         try (Connection con = DB.sql2o.open();) {
-            return con.createQuery("SELECT * FROM questions ORDER BY id DESC LIMIT :start, :size")
+            return con.createQuery("SELECT * FROM questions WHERE userId IS NULL ORDER BY id DESC LIMIT :start, :size")
                 .addParameter("start", startIndex)
                 .addParameter("size", size)
                 .executeAndFetch(Question.class);
@@ -388,7 +389,7 @@ public class Question extends Timestamped {
 
 	public static List<Question> findByCategory(Integer categid, Integer startIndex, Integer size) {
         try (Connection con = DB.sql2o.open();) {
-            return con.createQuery("SELECT * FROM questions WHERE categoryId=:categid ORDER BY id DESC LIMIT :start, :size")
+            return con.createQuery("SELECT * FROM questions WHERE categoryId=:categid AND userId IS NULL ORDER BY id DESC LIMIT :start, :size")
                 .addParameter("categid", categid)
                 .addParameter("start", startIndex)
                 .addParameter("size", size)
