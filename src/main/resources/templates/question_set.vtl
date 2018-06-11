@@ -9,6 +9,13 @@
    -moz-column-count: 2;
  }
 </style>
+<style media="screen" type="text/css">
+#watermark {display:none}
+</style>
+<style media="print" type="text/css">
+
+#watermark {position:absolute; left: 5px; top: 5px; height: 200px; width: 120px; z-index: 3; display:inline; filter:alpha(opacity=25); -moz-opacity: 25%}
+</style>
 <p>
   <a href="/exams/$exam.getId()" class="btn btn-primary">Back to Exam</a>
 
@@ -35,7 +42,7 @@
 #end
 
 </ol>
-
+<div id="watermark">YOMARI</div>
 <script type="text/javascript">
 window.onload = function() {
   document.getElementById('exams').className = 'active';

@@ -111,7 +111,7 @@ h1{
             transform: translateY(-50%) translateZ(60px) scale(0.94);
     top: 50%;
     position: absolute;
-    left: 5%;
+    
     width: 100%;
     padding: 2rem;
     -webkit-box-sizing: border-box;
