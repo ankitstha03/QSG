@@ -1,2 +1,82 @@
-Pannel without headinga test 2122134 aaasjh
-<h1>$user.getName()</h1>
+Greetings!!
+<h1>$defuser.getName()</h1>
+
+<link href="/css/form.css" rel="stylesheet" />
+<h1>Question Log</h1>
+<div id="main" style="margin-bottm:50px; margin-top:50px">
+  <div class="column left">
+    <div class="panel panel-default " style="width:100%; margin:0px">
+      <div class="panel-heading">Created</div>
+      <div class="panel-body" style="background-color:#4CAF50">
+
+
+	#foreach ($crt in $crted)
+     <div class="card " style="background-color:white; padding:10px; margin-bottom:10px;">
+	 <p> $crt.getQuestion().getText()</p>
+	 <p style="font-size:12px;"> $crt.getAction() by $crt.getUser().getUsername()</p>
+	 <p style="font-size:12px;"> $crt.getAction() on $crt.getTime()</p>
+    </div>
+	#end
+
+	</div>
+  </div>
+  </div>
+    <div class="column center">
+  <div class="panel panel-default " style="width:100%; margin:0px">
+    <div class="panel-heading">Updated</div>
+    <div class="panel-body" style="background-color:#3F51B5">
+
+ #foreach ($upt in $upted)
+     <div class="card " style="background-color:white; padding:10px; margin-bottom:10px;">
+	 <p> $upt.getQuestion().getText()</p>
+	 <p style="font-size:12px;"> $upt.getAction() by $upt.getUser().getUsername()</p>
+	 <p style="font-size:12px;"> $upt.getAction() on $upt.getTime()</p>
+    </div>
+	#end
+    </div>
+	</div>
+  </div>
+    <div class="column right">
+    <div class="panel panel-default " style="width:100%; margin:0px">
+      <div class="panel-heading">Deleted</div>
+      <div class="panel-body" style="background-color:#F44336">
+
+ #foreach ($del in $delted)
+     <div class="card" style="background-color:white; padding:10px; margin-bottom:10px;">
+	 <p> $del.getQuestion().getText()</p>
+	 <p style="font-size:12px;"> $del.getAction() by $del.getUser().getUsername()</p>
+	 <p style="font-size:12px;"> $del.getAction() on $del.getTime()</p>
+    </div>
+	#end
+    </div>
+	</div>
+  </div>
+</div>
+
+
+<h1>Categories</h1>
+#if ($categories.size() > 0)
+  <div class="row">
+  #foreach ($c in $categories)
+
+    <div class="col-md-2 card" style="margin:10px; text-align:center"> <a href="/categories/$c.getId()"><h1>$c.getName()</h1></a>
+      <form id="$c.getName()" method="post" action="/categories/$c.getId()/delete">
+        <a href="javascript:{}" onclick="document.getElementById('$c.getName()').submit(); return false;" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+      </form>
+    </div><!--col-->
+
+  #end
+  </div><!--row-->
+#else
+  <div class="row">
+    <div class="col-md-12">
+      <p>No categories</p>
+    </div>
+  </div><!--row-->
+#end
+
+<script type="text/javascript">
+window.onload = function() {
+  document.getElementById('categories').className = 'active';
+};
+</script>
