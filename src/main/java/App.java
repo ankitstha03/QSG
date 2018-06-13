@@ -47,14 +47,20 @@ public class App {
 			if (request.session().attribute("userId") == null || request.session().attribute("userId") == "") {
                 response.redirect("/login");
             }
-
-			Map<String,Object> model = new HashMap<String,Object>();
-          if (request.session().attribute("userId") != null) {
-
+            Map<String,Object> model = new HashMap<String,Object>();
+            if (request.session().attribute("userId") != null) {
             model.put("template", "templates/admin.vtl");
             model.put("titlepage", "Admin-LIS QSG");
+            List<Questionlog> crted = Questionlog.byAction("Created");
+            List<Questionlog> upted = Questionlog.byAction("Updated");
+            List<Questionlog> delted = Questionlog.byAction("Deleted");
+            model.put("crted", crted);
+            model.put("upted", upted);
+            model.put("delted", delted);
+            model.put("categories", Category.all());
             User defuser=User.findById(request.session().attribute("userId"));
             model.put("defuser",defuser);
+            return new ModelAndView(model, layout);
 
           }else{
 			response.redirect("/login");
@@ -716,13 +722,13 @@ public class App {
             exam.setDifficulty(difficulty);
             exam.setUserId(userId);
             exam.save();
-            
+
             Set[] sets = new Set[setNumber];
             // Create 3 sets.
             for(Integer i = 0;i<setNumber;i++){
-               sets[i] = new Set(exam, i).save();  
+               sets[i] = new Set(exam, i).save();
             }
-           
+
 
             // Calculate question counts. We have assumed that each question is
             // allocated 3 minutes in average. Also, each set contains 50%
@@ -769,7 +775,7 @@ public class App {
                 List<Question> setQuestions = new ArrayList<>();
                 setList.add(setQuestions);
             }
-            
+
 
             for (Integer i = 0; i < questionsSelected.size(); i++) {
                 Question q = questionsSelected.get(i);
@@ -779,7 +785,7 @@ public class App {
                     setList.get(j).add(q);
                   }
                 }
-                
+
             }
 
             for (Integer i = 0; i < questionsOther1.size(); i++) {
@@ -876,7 +882,7 @@ public class App {
             if (setNumber < 0 || setNumber > exam.getSets().size()-1) {
                 response.redirect("/message?m=INVALID+SET+NUMBER");
             }
-            
+
             Set set = exam.getSets().get(setNumber);
 
             model.put("template", "templates/question_set.vtl");

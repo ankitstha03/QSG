@@ -7,7 +7,7 @@
 
     100% Free To use For Personal And Commercial Use.
     IN EXCHANGE JUST GIVE US CREDITS AND TELL YOUR FRIENDS ABOUT US
-   
+
     ========================================================  */
 
 /* =============================================================
@@ -48,7 +48,7 @@ h1,h2,h4 {
  ============================================================ */
 
 .right-div {
-    float: right; 
+    float: right;
     padding: 20px;
     font-size:20px;
 }
@@ -79,7 +79,7 @@ border-color: rgba(155, 153, 153, 0.23);
 .navbar {
     min-height: 70px;
     margin-bottom: 0px;
-   
+
 }
 .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
     border-color:transparent;
@@ -108,7 +108,7 @@ border: 1px solid black;
         background-color:rgba(0, 0, 0, 0.65);
         max-width:440px;
         padding:15px 25px;
-        
+
 
 
     }
@@ -120,7 +120,7 @@ border: 1px solid black;
         background-color:rgba(0, 0, 0, 0.65);
         max-width:340px;
         padding:15px 25px;
-        
+
 
 
     }
@@ -131,13 +131,13 @@ border: 1px solid black;
     color:#fff;
     background:#00948A;
     padding-bottom:50px;
-    
+
 }
     .below-slideshow i {
         padding-bottom:15px;
     }
     .below-slideshow .txt-block {
-        
+
         padding-top:50px;
     }
      .below-slideshow h4 {
@@ -169,8 +169,8 @@ background-attachment: fixed;
         min-height:200px;
         background: rgba(15, 15, 15, 0.66);
         font-size:50px;
-        
-        
+
+
     }
     .vedio-style {
 border: 0px;
@@ -192,7 +192,7 @@ min-height: 300px;
     color:#fff;
     background:#00948A;
     padding-bottom:20px;
-    
+
 }
 .flexslider {
     -webkit-box-shadow: 0 0px 0px rgba(0,0,0,0);
@@ -218,7 +218,7 @@ min-height: 300px;
 }
 .dropdown {
     background:#fff;
-  
+
     width:300px;
 }
 .dropdown-menu>li>a {
@@ -255,8 +255,8 @@ min-height: 300px;
     =====================================================*/
 
 #port-folio {
-    padding-top: 80px; 
-    padding-bottom: 100px; 
+    padding-top: 80px;
+    padding-bottom: 100px;
 }
 .portfolio-item {
     border:15px double #00948A;
@@ -285,7 +285,7 @@ min-height: 300px;
   border-radius: 5px;
   -moz-border-radius:5px;
   -webkit-border-radius:5px;
- 
+
 }
 .portfolio-item .overlay .preview {
   position: relative;
@@ -334,15 +334,15 @@ ul#filters {
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
 		-o-box-sizing: border-box;
-		width: 100%;		
+		width: 100%;
         opacity:.2;
 		float:left;
 		overflow:hidden;
 	}
-	
+
 
 /* =============================================================
-  MEDIA QUERIES 
+  MEDIA QUERIES
  ============================================================ */
 @media print
       {
@@ -376,8 +376,8 @@ ul#filters {
 
     }
       }
-      
-      
+
+
 .example-table {
 font-family: sans-serif;
 -webkit-font-smoothing: antialiased;
@@ -394,7 +394,7 @@ padding: 20px 30px;
 text-align: center;
 }
 .example-table td {
-background-color: rgb(238, 238, 238);
+background-color: rgb(255, 255, 255);
 padding: 20px 30px;
 color: rgb(111, 111, 111);
 }
@@ -405,17 +405,17 @@ color: rgb(111, 111, 111);
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #f1f1f1;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888; 
+    background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
+    background: #555;
 }
 
 

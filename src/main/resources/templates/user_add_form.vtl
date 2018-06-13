@@ -1,39 +1,59 @@
-<h1>Add User</h1>
-
+<link href="/css/form.css" rel="stylesheet" />
+<div class="panel panel-default">
+  <div class="panel-heading">Add Users</div>
+  <div class="panel-body">
+    <div style="width: 1050px">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="just-txt-div">
 <form action="/users" method="post">
-  <p>
-    Role:
+
+    <div class="form-group">
+  <label for="category">  Role: </label>
     <select name="role">
       <option value="0" selected>Examiner</option>
       <option value="1">Operator</option>
       <option value="2">Admin</option>
     </select>
-  </p>
+  </div>
 
-  <p>
-    Name:
+  <div class="form-group">
+<label for="category">
+    Name: </label>
     <input type="text" name="name" required>
-  </p>
+  </div>
 
-  <p>
-    Username:
+  <div class="form-group">
+<label for="category">
+    Username:</label>
     <input type="text" name="username" required>
-  </p>
+  </div>
 
-  <p>
-    Email:
+  <div class="form-group">
+<label for="category">
+    Email:</label>
     <input type="email" name="email" required>
-  </p>
+  </div>
 
-  <p>
-    Password:
+  <div class="form-group">
+<label for="category">
+    Password:</label>
     <input type="password" name="password" required>
-  </p>
+  </div>
 
-  <p>
+  <div class="form-group">
+
     <button type="submit">Submit</button>
-  </p>
+</div>
 </form>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
 <script type="text/javascript">
 window.onload = function() {
   document.getElementById('users').className = 'active';

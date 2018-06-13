@@ -11,12 +11,9 @@
   #foreach ($q in $questions)
   <br>
 <div class="card">
+<div class="col-md-10">
     <p>[$q.getId()] $q.getText()</p>
 
-    <form action="/questions/$q.getId()/delete" method="post" class="form-inline">
-      <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
-      <a href="/questions/$q.getId()/edit" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
-    </form>
 
     <ul>
       #foreach ($a in $q.getAnswers())
@@ -27,6 +24,13 @@
         #end
       #end
     </ul>
+    </div>
+    <div class="col-md-2">
+        <form action="/questions/$q.getId()/delete" method="post" class="form-inline">
+          <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+          <a href="/questions/$q.getId()/edit" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+        </form>
+    </div>
   </div>
 
   #end
