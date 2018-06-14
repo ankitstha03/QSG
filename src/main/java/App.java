@@ -18,6 +18,7 @@ public class App {
     /** Number of questions per page to show in question list page */
     public static final Integer QUESTIONS_PER_PAGE = 10;
     public static String msg = "";
+    public static String msg2 = "";
     public static void main(String[] args)
     {
         // The sets the folder in the 'resources' folder where the static files
@@ -583,6 +584,62 @@ public class App {
                 model.put("message", "ERROR CREATING USER");
                 e.printStackTrace();
                 return new ModelAndView(model, layout);
+            }
+
+            return 0;
+        });
+
+        get("/change", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+            Map<String,Object> model = new HashMap<String,Object>();
+                  // Get the current active user ID
+            Integer userId = request.session().attribute("userId");
+
+
+
+            model.put("template", "templates/user_change_form.vtl");
+            model.put("titlepage", "Change Password-LIS QSG");
+            if(msg2==""){
+              model.put("message", "");
+            }else{
+              model.put("message", msg2);
+            }
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+
+		        post("/change", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+
+
+
+            // Check if current active user is admin
+            String oldpassword = request.queryParams("oldpassword");
+            String password = request.queryParams("password");
+
+            try {
+                User user=User.findById(request.session().attribute("userId"));
+				if(user.checkPassword(oldpassword)){
+					user.setPassword(password);
+          user.save();
+          response.redirect("/admin");
+				}
+        else{
+        msg2="Wrong password";
+        response.redirect("/change");
+      }
+
+            } catch (Exception e) {
+                msg2="Coudnt change password";
+                response.redirect("/change");
+                e.printStackTrace();
+                return 0;
             }
 
             return 0;

@@ -3,6 +3,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 import java.util.List;
 import java.util.Date;
 import org.sql2o.*;
+import java.text.SimpleDateFormat;
 
 
 /**
@@ -52,8 +53,9 @@ public class Exam extends Timestamped {
         return this.userId;
     }
 
-    public Timestamp getTime() {
-        return this.time;
+    public String getTime() {
+        String s = new SimpleDateFormat("MM/dd/yyyy HH:mm a").format(this.time);
+        return s;
     }
 
     public Integer getDuration() {
