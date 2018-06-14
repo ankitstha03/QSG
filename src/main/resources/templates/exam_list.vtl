@@ -26,7 +26,7 @@
         <td>$exam.getTime()</td>
         <td><a href="/exams/$exam.getId()">$exam.getTitle()</a></td>
         <td>$exam.getDifficultyString()</td>
-        <td>$exam.getDuration()</td>
+        <td>$exam.getDuration() minutes</td>
         <td>
           <form action="/exams/$exam.getId()/delete" method="post">
             <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>

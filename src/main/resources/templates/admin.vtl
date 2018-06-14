@@ -1,7 +1,9 @@
-Greetings!!
-<h1>$defuser.getName()</h1>
+
 
 <link href="/css/form.css" rel="stylesheet" />
+
+
+
 <h1>Question Log</h1>
 <div id="main" style="margin-bottm:50px; margin-top:50px">
   <div class="column left">
@@ -52,31 +54,3 @@ Greetings!!
 	</div>
   </div>
 </div>
-
-
-<h1>Categories</h1>
-#if ($categories.size() > 0)
-  <div class="row">
-  #foreach ($c in $categories)
-
-    <div class="col-md-2 card" style="margin:10px; text-align:center"> <a href="/categories/$c.getId()"><h1>$c.getName()</h1></a>
-      <form id="$c.getName()" method="post" action="/categories/$c.getId()/delete">
-        <a href="javascript:{}" onclick="document.getElementById('$c.getName()').submit(); return false;" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
-      </form>
-    </div><!--col-->
-
-  #end
-  </div><!--row-->
-#else
-  <div class="row">
-    <div class="col-md-12">
-      <p>No categories</p>
-    </div>
-  </div><!--row-->
-#end
-
-<script type="text/javascript">
-window.onload = function() {
-  document.getElementById('categories').className = 'active';
-};
-</script>
