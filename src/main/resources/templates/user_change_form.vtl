@@ -1,0 +1,24 @@
+<h1>Edit User</h1>
+ <h4 style="text-align:center;"><a>$message</a></h4>
+<form action="/change" method="post">
+ 
+
+  <p>
+    Current Password:
+    <input type="password" name="oldpassword" required>
+  </p>
+  
+    <p>
+    New Password:
+    <input type="password" name="password" required>
+  </p>
+
+  <p>
+    <button type="submit">Submit</button>
+  </p>
+</form>
+<script type="text/javascript">
+window.onload = function() {
+  document.getElementById('users').className = 'active';
+};
+</script>

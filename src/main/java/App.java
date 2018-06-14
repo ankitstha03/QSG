@@ -18,6 +18,7 @@ public class App {
     /** Number of questions per page to show in question list page */
     public static final Integer QUESTIONS_PER_PAGE = 10;
     public static String msg = "";
+    public static String msg2 = "";
     public static void main(String[] args)
     {
         // The sets the folder in the 'resources' folder where the static files
@@ -581,6 +582,62 @@ public class App {
 
             return 0;
         });
+
+        get("/change", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+            Map<String,Object> model = new HashMap<String,Object>();
+                  // Get the current active user ID
+            Integer userId = request.session().attribute("userId");
+
+
+
+            model.put("template", "templates/user_change_form.vtl");
+            model.put("titlepage", "Change Password-LIS QSG");
+            if(msg2==""){
+              model.put("message", "");
+            }else{
+              model.put("message", msg2);
+            }
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+
+		        post("/change", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+
+
+
+            // Check if current active user is admin
+            String oldpassword = request.queryParams("oldpassword");
+            String password = request.queryParams("password");
+
+            try {
+                User user=User.findById(request.session().attribute("userId"));
+				if(user.checkPassword(oldpassword)){
+					user.setPassword(password);
+          user.save();
+          response.redirect("/admin");
+				}
+        else{
+        msg2="Wrong password";
+        response.redirect("/change");
+      }
+
+            } catch (Exception e) {
+                msg2="Coudnt change password";
+                response.redirect("/change");
+                e.printStackTrace();
+                return 0;
+            }
+
+            return 0;
+        });
         // List of users. Only available for admin users.
         get("/users", (request, response) -> {
           if (request.session().attribute("userId") == null) {
@@ -716,13 +773,13 @@ public class App {
             exam.setDifficulty(difficulty);
             exam.setUserId(userId);
             exam.save();
-            
+
             Set[] sets = new Set[setNumber];
             // Create 3 sets.
             for(Integer i = 0;i<setNumber;i++){
-               sets[i] = new Set(exam, i).save();  
+               sets[i] = new Set(exam, i).save();
             }
-           
+
 
             // Calculate question counts. We have assumed that each question is
             // allocated 3 minutes in average. Also, each set contains 50%
@@ -769,7 +826,7 @@ public class App {
                 List<Question> setQuestions = new ArrayList<>();
                 setList.add(setQuestions);
             }
-            
+
 
             for (Integer i = 0; i < questionsSelected.size(); i++) {
                 Question q = questionsSelected.get(i);
@@ -779,7 +836,7 @@ public class App {
                     setList.get(j).add(q);
                   }
                 }
-                
+
             }
 
             for (Integer i = 0; i < questionsOther1.size(); i++) {
@@ -876,7 +933,7 @@ public class App {
             if (setNumber < 0 || setNumber > exam.getSets().size()-1) {
                 response.redirect("/message?m=INVALID+SET+NUMBER");
             }
-            
+
             Set set = exam.getSets().get(setNumber);
 
             model.put("template", "templates/question_set.vtl");
