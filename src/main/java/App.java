@@ -48,14 +48,20 @@ public class App {
 			if (request.session().attribute("userId") == null || request.session().attribute("userId") == "") {
                 response.redirect("/login");
             }
-
-			Map<String,Object> model = new HashMap<String,Object>();
-          if (request.session().attribute("userId") != null) {
-
+            Map<String,Object> model = new HashMap<String,Object>();
+            if (request.session().attribute("userId") != null) {
             model.put("template", "templates/admin.vtl");
             model.put("titlepage", "Admin-LIS QSG");
+            List<Questionlog> crted = Questionlog.byAction("Created");
+            List<Questionlog> upted = Questionlog.byAction("Updated");
+            List<Questionlog> delted = Questionlog.byAction("Deleted");
+            model.put("crted", crted);
+            model.put("upted", upted);
+            model.put("delted", delted);
+            model.put("categories", Category.all());
             User defuser=User.findById(request.session().attribute("userId"));
             model.put("defuser",defuser);
+            return new ModelAndView(model, layout);
 
           }else{
 			response.redirect("/login");
