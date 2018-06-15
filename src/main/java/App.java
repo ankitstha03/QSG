@@ -962,7 +962,7 @@ public class App {
             Integer examId = Integer.parseInt(request.params("id"));
             Integer setNumber = Integer.parseInt(request.params("set"));
             Exam exam = Exam.findById(examId);
-            Set set = exam.getSets().get(setNumber-1);
+            Set set = exam.getSets().get(setNumber);
 
             model.put("template", "templates/answer_sheet.vtl");
             model.put("titlepage", exam.getTitle()+" Solution-LIS QSG");
