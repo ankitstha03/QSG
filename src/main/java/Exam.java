@@ -53,7 +53,11 @@ public class Exam extends Timestamped {
         return this.userId;
     }
 
-    public String getTime() {
+    public Timestamp getTime() {
+        return this.time;
+    }
+
+    public String getTime2() {
         String s = new SimpleDateFormat("MM/dd/yyyy HH:mm a").format(this.time);
         return s;
     }

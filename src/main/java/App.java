@@ -578,7 +578,7 @@ public class App {
                 user.setPassword(password);
                 user.setRole(role);
                 user.save();
-                response.redirect("");
+                response.redirect("/users");
             } catch (Exception e) {
                 model.put("template", "templates/message.vtl");
                 model.put("message", "ERROR CREATING USER");
