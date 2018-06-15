@@ -398,6 +398,10 @@ background-color: rgb(255, 255, 255);
 padding: 20px 30px;
 color: rgb(111, 111, 111);
 }
+.example-table td  a:hover{
+color: rgb(0, 0, 0);
+
+}
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
@@ -417,7 +421,92 @@ color: rgb(111, 111, 111);
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+.btn#fox-popup-triger {
+  padding: 20px;
+  margin: 10px;
+  border: 1px solid #333;
+  width: 200px;
+  text-align: center;
+  background-color: #053;
+  color: #fff;
+}
+.btn#fox-popup-triger p {
+  margin: 0;
+  padding: 0;
+}
 
+.fox-popup-wrap {
+  display: none;
+  background-color: #006464;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+}
+
+.fox-close-btn {
+  width: 40px;
+  height: 40px;
+  background-color: #c80000;
+  position: fixed;
+  top: 10px;
+  right: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.fox-close-btn:hover {
+  background-color: #555;
+}
+.fox-close-btn .bar {
+  border-radius: 50%;
+  position: absolute;
+  top: 45%;
+  left: 10%;
+  width: 80%;
+  height: 4px;
+  background: #fff;
+}
+.fox-close-btn .bar:nth-child(1) {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+.fox-close-btn .bar:nth-child(2) {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+
+.fox-form-wrap {
+  position: absolute;
+  top: 10%;
+  right: 20%;
+  left: 20%;
+}
+.fox-form-wrap form {
+  max-width: 900px;
+  margin: auto;
+}
+.fox-form-wrap form p {
+  color: white;
+}
+.fox-form-wrap form label {
+  color: white;
+}
+.fox-form-wrap form .btn {
+  padding: 10px;
+}
+.fox-form-wrap form .btn:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+.fox-form-wrap p.info {
+  font-size: 1.1rem;
+  position: absolute;
+  bottom: -110px;
+  left: 0px;
+  color: #fff;
+}
 
 @media (min-width: 740px) and (max-width: 1040px) {
     .carousel-caption h2 {
