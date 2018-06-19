@@ -772,6 +772,11 @@ public class App {
             Integer setNumber = Integer.parseInt(request.queryParams("SetNumber"));
             Integer difficulty = Integer.parseInt(request.queryParams("difficulty"));
             String[] categories = request.queryParamsValues("categories");
+            Exam e = Exam.findByTitle(title);
+            if (e != null) {
+                response.redirect("/exams");
+                return 0;
+            }
 
             // create exam
 
