@@ -36,22 +36,24 @@ filter:alpha(opacity=10);-moz-opacity: 50%}
   <a onclick="myFunction()" value="Print" class="btn btn-primary">Print Set</a>
 <a id="cmd" class="btn btn-primary">Download PDF</a>
 </p>
-<div class="section-to-print1" id="content"  style="overflow-y: scroll;">
-<div id="watermark" align="center"><img id="water_img" src="/css/watermark.jpg" width="500"></div>
-<ol>
+
+
+<div class="section-to-print1" id="content"  style="margin-top:40px;overflow-y: scroll;">
+<div id="watermark" align="center"><img id="water_img" src="/css/watermark.jpg" width="400"></div>
+<ol type="a">
 #foreach ($q in $set.getQuestions())
 
-  <li>
+  <li style="margin-top:10px; margin-bottom:10px">
     $q.getText()
     #set($answers = $q.getShuffledAnswers($set))
-    <ol type="a">
+    <ul >
       <li>$answers.get(0).getText()</li>
       <li>$answers.get(1).getText()</li>
       <li>$answers.get(2).getText()</li>
       <li>$answers.get(3).getText()</li>
-    </ol>
+    </ul>
   </li>
-<br>
+
 #end
 
 </ol>
@@ -60,7 +62,7 @@ filter:alpha(opacity=10);-moz-opacity: 50%}
 window.onload = function() {
   document.getElementById('exams').className = 'active';
 };
-</script>
+ </script>
 <script type="text/javascript">
 var doc = new jsPDF();
 var specialElementHandlers = {
