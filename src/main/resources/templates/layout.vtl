@@ -12,6 +12,7 @@
     <!-- DASHBOARD STYLE  -->
     <link href="/css/admin.css" rel="stylesheet" />
     <link href="/css/base.css" rel="stylesheet" />
+
     <!-- FONT AWESOME STYLE  -->
     <link href="/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE  -->
@@ -58,7 +59,7 @@
           </div>
         </div>
       </header>
-      <div class="l-sidebar">
+      <div class="l-sidebar" style="position:fixed">
         <div class="logo">
        <div class="logo__txt">A</div>
         </div>
@@ -141,6 +142,7 @@
 <div class="wrapper">
 <div class="side-bar">
  <ul>
+
                     <li class="menu-head">
                         WELCOME ADMIN <a href="#" class="push_menu"><span class="glyphicon glyphicon-align-justify pull-right"></span></a>
                     </li>
@@ -168,8 +170,8 @@
             </div>
             -->
 
-    <div class="content "  style="overflow-y: scroll;">
-      <div class="inner-content"  style="overflow-y: scroll; height:600px;" >
+    <div class="content "  style="overflow-y: auto;">
+      <div class="inner-content"  style="overflow-y: auto; " >
              #parse( $template )
       </div>
     </div>
@@ -177,7 +179,8 @@
 
 
 
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/js/main.js"></script>
      <!--CORE SCRIPTS PLUGIN-->
     <script src="/js/jquery-1.11.1.min.js"></script>
      <!--BOOTSTRAP SCRIPTS PLUGIN-->

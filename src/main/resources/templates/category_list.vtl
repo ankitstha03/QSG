@@ -31,7 +31,7 @@ color: black;
 
 <h1>Categories</h1>
 #if ($categories.size() > 0)
-  <div class="row">
+  <div class="row" style="margin-right:45px;">
   #foreach ($c in $categories)
 
     <div class="col-md-2 card" style="margin:10px; text-align:center"> <a href="/categories/$c.getId()"><h1>$c.getName()</h1></a>
