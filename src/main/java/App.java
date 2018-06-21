@@ -301,6 +301,24 @@ public class App {
             return 0;
         });
 
+        post("/export/:eid/:sid", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+            Integer id = Integer.parseInt(request.params(":eid"));
+            Integer id2 = Integer.parseInt(request.params(":sid"));
+
+            Exam exa = Exam.findById(id);
+            Set set = Set.findById(id);
+
+            Integer userr=request.session().attribute("userId");
+            Exportlog ql=new Questionlog(id, id2, userr).save();
+
+            response.redirect("/exams/:eid/:sid");
+            return 0;
+        });
+
+
         post("/users/:uid/delete", (request, response) -> {
           if (request.session().attribute("userId") == null) {
               response.redirect("/login");
@@ -314,6 +332,8 @@ public class App {
             response.redirect("/users");
             return 0;
         });
+
+
 
         // Question edit form.
         get("/questions/:qid/edit", (request, response) -> {
