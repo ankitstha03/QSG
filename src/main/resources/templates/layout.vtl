@@ -12,13 +12,14 @@
     <!-- DASHBOARD STYLE  -->
     <link href="/css/admin.css" rel="stylesheet" />
     <link href="/css/base.css" rel="stylesheet" />
+
     <!-- FONT AWESOME STYLE  -->
     <link href="/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE  -->
 <link href="/css/log.css" rel="stylesheet" />
     <link href="/css/style.css" rel="stylesheet" />
       <link href="/css/layout.css" rel="stylesheet" />
-            <link href="/css/popup.css" rel="stylesheet" />
+
     <!-- GOOGLE FONTS  -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css' />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
@@ -58,7 +59,7 @@
           </div>
         </div>
       </header>
-      <div class="l-sidebar">
+      <div class="l-sidebar" style="position:fixed">
         <div class="logo">
        <div class="logo__txt">A</div>
         </div>
@@ -141,6 +142,7 @@
 <div class="wrapper">
 <div class="side-bar">
  <ul>
+
                     <li class="menu-head">
                         WELCOME ADMIN <a href="#" class="push_menu"><span class="glyphicon glyphicon-align-justify pull-right"></span></a>
                     </li>
@@ -168,20 +170,17 @@
             </div>
             -->
 
-    <div class="content "  style="overflow-y: scroll;">
-      <div class="inner-content"  style="overflow-y: scroll; height:600px;" >
+    <div class="content "  style="overflow-y: auto;">
+      <div class="inner-content"  style="overflow-y: auto; " >
              #parse( $template )
       </div>
     </div>
 
 
-</div>
-
-</div>
-</div>
 
 
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/js/main.js"></script>
      <!--CORE SCRIPTS PLUGIN-->
     <script src="/js/jquery-1.11.1.min.js"></script>
      <!--BOOTSTRAP SCRIPTS PLUGIN-->
@@ -190,6 +189,6 @@
     <script src="/js/admin.js"></script>
 <script src="/js/layout.js"></script>
     <script src="/js/print.js"></script>
-        <script src="/js/popup.js"></script>
+
       </body>
 </html>

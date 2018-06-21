@@ -238,4 +238,11 @@ public class Exam extends Timestamped {
                 .executeAndFetchFirst(Exam.class);
         }
     }
+    public static Exam findByTitle(String title) {
+        try (Connection con = DB.sql2o.open()) {
+            return con.createQuery("SELECT * FROM exams WHERE title=:title")
+                .addParameter("title", title)
+                .executeAndFetchFirst(Exam.class);
+        }
+    }
 }

@@ -1,12 +1,30 @@
-
 <link href="/css/form.css" rel="stylesheet" />
+
 #if ($category)
 <h1>$category.getName()</h1>
 #else
 <h1>Questions</h1>
 #end
+#if ($categories.size() > 0)
+  <div class="row">
+  #foreach ($c in $categories)
+
+    <div class="col-md-2 btn btn-small btn-danger" style="margin:10px; text-align:center; width:auto; height:auto"> <a href="/categories/$c.getId()"><h3 style="color:white; margin:0px;">$c.getName()</h3></a>
+
+    </div><!--col-->
+
+  #end
+  </div><!--row-->
+#else
+  <div class="row">
+    <div class="col-md-12">
+      <p>No categories</p>
+    </div>
+  </div><!--row-->
+#end
 <button class="btn btn-primary" ><a href="/questions/add" style="color:white">Add Question</a></button>
 <br>
+
 #if ($questions.size() > 0)
 
   #foreach ($q in $questions)
@@ -58,3 +76,9 @@ window.onload = function() {
 	#end
 };
 </script>>
+<link href="/css/form.css" rel="stylesheet" />
+<style>
+a: {
+color: white;
+}
+</style>

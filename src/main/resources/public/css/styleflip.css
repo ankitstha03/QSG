@@ -1,5 +1,5 @@
 *{
-  margin: 0;
+  margin: auto;
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -41,12 +41,12 @@ h1{
 }
 
 .container2{
-	  
+
   -webkit-transform-style: preserve-3d;
           transform-style: preserve-3d;
 	-webkit-perspective: 1000px;
 	        perspective: 1000px;
-			
+
 }
 
 .front,
@@ -84,7 +84,7 @@ h1{
     height: 100%;
     content: '';
     display: block;
-    opacity: .6;
+    opacity: .3;
     background-color: #000;
     -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
@@ -111,7 +111,7 @@ h1{
             transform: translateY(-50%) translateZ(60px) scale(0.94);
     top: 50%;
     position: absolute;
-    
+
     width: 100%;
     padding: 2rem;
     -webkit-box-sizing: border-box;

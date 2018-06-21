@@ -2,7 +2,7 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 .login-page {
-  width: 360px;
+  width: 1000px;
   padding: 8% 0 0;
   margin: auto;
   align: center;
@@ -102,7 +102,7 @@ body {
 }
 </style>
 
-<div class="login-page" style="text-align:center">
+<div class="login-page" style="text-align:center; overflow-x: hidden; overflow-y: hidden;">
   <div class="form">
   <h1>Edit User</h1>
  <h4 style="text-align:center;"><a>$message</a></h4>
@@ -110,8 +110,8 @@ body {
 
 
     <form class="login-form" action="/change" method="post">
-      <input type="password" name="oldpassword" placeholder="oldpassword" required>
-      <input type="password" name="password" placeholder="newpassword" required>
+      <input type="password" name="oldpassword" placeholder="Old password" required>
+      <input type="password" name="password" placeholder="New password" required>
     <button type="submit">Submit</button>
 
     </form>

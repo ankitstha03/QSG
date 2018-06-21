@@ -1,16 +1,17 @@
 
 
    <div class="cols">
-			<div class="col" ontouchstart="this.classList.toggle('click');">
+			<div class="col" ondoubleclick="this.classList.toggle('click');">
 				<div class="container2">
 					<div class="front" style="background-image: url(/img/log.jpg); text-align:center">
 						<div class="inner" >
 							<p>Log In</p>
               <span>Already have an id?</span>
+              <h4 style="text-align:center; ><a style="color:white"><b>$message</b></a></h4>
 						</div>
 					</div>
 					<div class="back">
-						<div class="inner">
+						<div class="inner" style="margin:auto">
 						  <form class="login" action="/login" method="post">
 							<p class="title">Log in</p>
 							<input type="text" name="username" id="username" placeholder="Username" autofocus required/>

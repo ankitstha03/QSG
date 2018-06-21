@@ -195,16 +195,16 @@ body {
     <div class="l-header__inner clearfix">
 
 
-      <div class="section-to-print" style="margin-top:0px">
+      <div class="section-to-print" style="margin-top:0px; margin-left:0px">
           <a class="navbar-brand no-print" href="http://www.lisnepal.com.np/">
-      <img src="/img/logo_LIS1.gif" style= "margin-top: -20px;"/>
+      <img src="/img/logo_LIS1.gif" style= "margin-top: -20px; "/>
   </a>
   #if($show==1)
   <a href="/register">Add Admin</a>
   #end
   </div>
 
-  <div id="menu-top" class="header-icons-group">
+  <div id="menu-top" class="header-icons-group" style="margin:0px">
 
     <div class="c-header-icon logout"><a href="/login"><i class="fa fa-sign-in"></i></a></div>
   </div>
@@ -217,7 +217,7 @@ body {
 
   <div class="wrapper">
 
-  <h4 style="text-align:center;"><a>$message</a></h4>
+  
          #parse( $template )
       </div>
 

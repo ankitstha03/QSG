@@ -212,11 +212,13 @@ public class App {
             }
             Integer start = (page - 1) * QUESTIONS_PER_PAGE;
             List<Question> questions = Question.limit(start, QUESTIONS_PER_PAGE);
+            List<Category> categories = Category.all();
 
             model.put("questions", questions);
             User defuser=User.findById(request.session().attribute("userId"));
             model.put("defuser",defuser);
             model.put("currentPage", page);
+            model.put("categories", categories);
             model.put("prevPage", page-1);
             model.put("nextPage", page+1);
             return new ModelAndView(model, layout);
@@ -502,6 +504,7 @@ public class App {
             model.put("template", "templates/question_list.vtl");
             model.put("titlepage", category.getName()+"-LIS QSG");
             model.put("category", category);
+            model.put("categories", Category.all());
             model.put("questions", questions);
             User defuser=User.findById(request.session().attribute("userId"));
             model.put("defuser",defuser);
@@ -789,6 +792,11 @@ public class App {
             Integer setNumber = Integer.parseInt(request.queryParams("SetNumber"));
             Integer difficulty = Integer.parseInt(request.queryParams("difficulty"));
             String[] categories = request.queryParamsValues("categories");
+            Exam e = Exam.findByTitle(title);
+            if (e != null) {
+                response.redirect("/exams");
+                return 0;
+            }
 
             // create exam
 
