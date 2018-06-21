@@ -4,12 +4,11 @@
 
 
 
-<h1>Log</h1>
-<div id="main" style="margin-bottm:50px; margin-top:50px">
+<div id="main">
   <div class="column left">
     <div class="panel panel-default " style="width:100%; margin:0px">
       <div class="panel-heading">Created</div>
-      <div class="panel-body" style="background-color:#4CAF50">
+      <div class="panel-body" style="background-color:#20bf6b">
 
 
 	#foreach ($crt in $crted)
@@ -25,8 +24,8 @@
   </div>
     <div class="column center">
   <div class="panel panel-default " style="width:100%; margin:0px">
-    <div class="panel-heading">Updated</div>
-    <div class="panel-body" style="background-color:#3F51B5">
+    <div class="panel-heading" >Updated</div>
+    <div class="panel-body" style="background-color:#3867d6">
 
  #foreach ($upt in $upted)
      <div class="card " style="background-color:white; padding:10px; margin-bottom:10px;">
@@ -41,7 +40,7 @@
     <div class="column right">
     <div class="panel panel-default " style="width:100%; margin:0px">
       <div class="panel-heading">Deleted</div>
-      <div class="panel-body" style="background-color:#F44336">
+      <div class="panel-body" style="background-color:#fc5c65">
 
  #foreach ($del in $delted)
      <div class="card" style="background-color:white; padding:10px; margin-bottom:10px;">
@@ -55,10 +54,10 @@
   </div>
 </div>
 
-<div class="column rightest">
+    <div class="column rightest">
     <div class="panel panel-default " style="width:100%; margin:0px">
       <div class="panel-heading">Exported</div>
-      <div class="panel-body" style="background-color:#F44336">
+      <div class="panel-body" style="background-color:#fd9644">
 
  #foreach ($exp in $export)
      <div class="card" style="background-color:white; padding:10px; margin-bottom:10px;">
@@ -71,4 +70,3 @@
 	</div>
   </div>
 </div>
-
