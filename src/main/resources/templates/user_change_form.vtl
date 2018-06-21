@@ -7,6 +7,12 @@
   margin: auto;
   align: center;
 }
+
+
+ul {
+  list-style-type: none;
+}
+
 .form {
   position: relative;
   z-index: 1;
@@ -112,8 +118,19 @@ body {
     <form class="login-form" action="/change" method="post">
       <input type="password" name="oldpassword" placeholder="Old password" required>
       <input type="password" name="password" placeholder="New password" required>
-    <button type="submit">Submit</button>
+    <button class=" cd-popup-trigger" style="padding:0" >Submit</button>
+    <div class="cd-popup" role="alert">
+      <div class="cd-popup-container">
 
+        <p>Are you sure you want to change your password?</p>
+        <ul class="cd-buttons" style="padding-left:0">
+          <li ><button type="submit" class="btn btn-danger" style="display: block; height: 60px; width:95%; line-height: 60px; text-transform: uppercase; color:#e74c3c; -webkit-transition: background-color 0.2s; -moz-transition: background-color 0.2s; transition: background-color 0.2s; margin:10px; padding:0px"><p style="color:white; padding:0; "><b>Yes</b></p></button></form></li>
+          <li><a href="/change" style="margin:10px" >No</a></li>
+        </ul>
+        <a href="#0" class="cd-popup-close img-replace"></a>
+
+      </div> <!-- cd-popup-container -->
+    </div> <!-- cd-popup -->
     </form>
   </div>
 </div>
