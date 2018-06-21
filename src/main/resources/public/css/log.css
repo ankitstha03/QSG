@@ -8,15 +8,21 @@
 .left {
 
     left: 15%;
-    width: 27%;
+    width: 20%;
 }
 .center {
 
-    left:44%;
-    width:27%; /* = width + 2 * padding of right column */
+    left:36%;
+    width:20%; /* = width + 2 * padding of right column */
 }
 .right {
 	
-    right: 1%;
-    width: 27%;
+    left: 57%;
+    width: 20%;
+}
+
+.rightest {
+	
+    right: 2%;
+    width: 20%;
 }

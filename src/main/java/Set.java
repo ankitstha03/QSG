@@ -46,6 +46,10 @@ public class Set extends Timestamped {
         return this.examId;
     }
 
+    public Integer getSetId() {
+        return this.id;
+    }
+
     public Integer getSetNumber() {
         return this.setNumber;
     }

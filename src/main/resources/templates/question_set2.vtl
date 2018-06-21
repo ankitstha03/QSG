@@ -31,9 +31,9 @@ filter:alpha(opacity=10);-moz-opacity: 50%}
 <p>
   <a href="/exams/$exam.getId()" class="btn btn-primary">Back to Exam</a>
 
-  <a href="/exams/$exam.getId()/$set.getSetNumber()/solution" class="btn btn-primary">Answer Sheet</a>
+  <a  href="/exams/$exam.getId()/$set.getSetNumber()/solution" class="btn btn-primary">Answer Sheet</a>
 
-  <a  href="/export/$exam.getId()/$set.getSetId()" value="Print" class="btn btn-primary">Print Set</a>
+  <a href="/export/$exam.getId()/$set.getSetId()" value="Print" class="btn btn-primary">Print Set</a>
 <a href="/export2/$exam.getId()/$set.getSetId()" id="cmd" class="btn btn-primary">Download PDF</a>
 </p>
 
@@ -60,6 +60,7 @@ filter:alpha(opacity=10);-moz-opacity: 50%}
 </div>
 <script type="text/javascript">
 window.onload = function() {
+	myFunction();
   document.getElementById('exams').className = 'active';
 };
  </script>
