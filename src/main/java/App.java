@@ -314,7 +314,7 @@ public class App {
             Set set = Set.findById(id);
 
             Integer userr=request.session().attribute("userId");
-            Exportlog ql=new Questionlog(id, id2, userr).save();
+            Exportlog ql=new Exportlog(id, id2, userr).save();
 
             response.redirect("/exams/:eid/:sid");
             return 0;
