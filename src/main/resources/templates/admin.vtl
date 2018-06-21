@@ -4,7 +4,7 @@
 
 
 
-<h1>Question Log</h1>
+<h1>Log</h1>
 <div id="main" style="margin-bottm:50px; margin-top:50px">
   <div class="column left">
     <div class="panel panel-default " style="width:100%; margin:0px">
@@ -54,3 +54,21 @@
 	</div>
   </div>
 </div>
+
+<div class="column rightest">
+    <div class="panel panel-default " style="width:100%; margin:0px">
+      <div class="panel-heading">Exported</div>
+      <div class="panel-body" style="background-color:#F44336">
+
+ #foreach ($exp in $export)
+     <div class="card" style="background-color:white; padding:10px; margin-bottom:10px;">
+	 <p>Exam: $exp.getExam().getTitle()- Set $exp.getSet().getSetName()</p>
+	 <p style="font-size:12px;"> Exported by $exp.getUser().getUsername()</p>
+	 <p style="font-size:12px;"> Exported on $exp.getTime()</p>
+    </div>
+	#end
+    </div>
+	</div>
+  </div>
+</div>
+

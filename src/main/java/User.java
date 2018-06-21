@@ -235,11 +235,13 @@ public class User extends Timestamped {
      */
     public void delete() {
         try (Connection con = DB.sql2o.open();) {
-            String query = "DELETE FROM users WHERE id=:id";
-            con.createQuery(query)
-                .bind(this)
-                .executeUpdate();
-            this.id = 0;
+          String query = "UPDATE Users SET "
+              + "email=:email, passwordHash=:passwordHash, "
+              + "username=:username, name=:name, role=3 "
+              + "WHERE id=:id";
+          con.createQuery(query)
+              .bind(this)
+              .executeUpdate();
         }
     }
 
@@ -280,7 +282,7 @@ public class User extends Timestamped {
      */
     public static List<User> all() {
         try (Connection con = DB.sql2o.open();) {
-            String query = "SELECT * FROM users";
+            String query = "SELECT * FROM users WHERE role NOT LIKE 3";
             return con.createQuery(query).executeAndFetch(User.class);
         }
     }
@@ -311,7 +313,7 @@ public class User extends Timestamped {
      */
     public static User findByUsername(String username) {
         try (Connection con = DB.sql2o.open()) {
-            return con.createQuery("SELECT * FROM users WHERE username=:username")
+            return con.createQuery("SELECT * FROM users WHERE username=:username AND role NOT LIKE 3")
                 .addParameter("username", username)
                 .executeAndFetchFirst(User.class);
         }

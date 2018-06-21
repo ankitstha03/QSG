@@ -55,9 +55,11 @@ public class App {
             List<Questionlog> crted = Questionlog.byAction("Created");
             List<Questionlog> upted = Questionlog.byAction("Updated");
             List<Questionlog> delted = Questionlog.byAction("Deleted");
+            List<Exportlog> export = Exportlog.all();
             model.put("crted", crted);
             model.put("upted", upted);
             model.put("delted", delted);
+            model.put("export", export);
             model.put("categories", Category.all());
             User defuser=User.findById(request.session().attribute("userId"));
             model.put("defuser",defuser);
@@ -235,9 +237,11 @@ public class App {
             List<Questionlog> crted = Questionlog.byAction("Created");
             List<Questionlog> upted = Questionlog.byAction("Updated");
             List<Questionlog> delted = Questionlog.byAction("Deleted");
+            List<Exportlog> export = Exportlog.all();
             model.put("crted", crted);
             model.put("upted", upted);
             model.put("delted", delted);
+            model.put("export", export);
             User defuser=User.findById(request.session().attribute("userId"));
             model.put("defuser",defuser);
             return new ModelAndView(model, layout);
@@ -303,6 +307,40 @@ public class App {
             return 0;
         });
 
+        get("/export/:eid/:sid", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+            Integer id = Integer.parseInt(request.params(":eid"));
+            Integer id2 = Integer.parseInt(request.params(":sid"));
+
+            Exam exa = Exam.findById(id);
+            Set set = Set.findById(id);
+
+            Integer userr=request.session().attribute("userId");
+            Exportlog ql=new Exportlog(id, id2, userr).save();
+
+            response.redirect("/exams/"+id+"/"+set.getSetNumber()+"/print");
+            return 0;
+        });
+
+        get("/export2/:eid/:sid", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+            Integer id = Integer.parseInt(request.params(":eid"));
+            Integer id2 = Integer.parseInt(request.params(":sid"));
+
+            Exam exa = Exam.findById(id);
+            Set set = Set.findById(id);
+
+            Integer userr=request.session().attribute("userId");
+            Exportlog ql=new Exportlog(id, id2, userr).save();
+
+            response.redirect("/exams/"+id+"/"+set.getSetNumber());
+            return 0;
+        });
+
         post("/users/:uid/delete", (request, response) -> {
           if (request.session().attribute("userId") == null) {
               response.redirect("/login");
@@ -316,6 +354,8 @@ public class App {
             response.redirect("/users");
             return 0;
         });
+
+
 
         // Question edit form.
         get("/questions/:qid/edit", (request, response) -> {
@@ -958,6 +998,32 @@ public class App {
             model.put("exam", exam);
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
+
+        get("/exams/:id/:set/print", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+            Map<String,Object> model = new HashMap<String,Object>();
+            Integer examId = Integer.parseInt(request.params("id"));
+            Exam exam = Exam.findById(examId);
+            // Validate set number. Must be one of {1,2,3}.
+            Integer setNumber = Integer.parseInt(request.params("set"));
+            if (setNumber < 0 || setNumber > exam.getSets().size()-1) {
+                response.redirect("/message?m=INVALID+SET+NUMBER");
+            }
+
+            Set set = exam.getSets().get(setNumber);
+
+            model.put("template", "templates/question_set2.vtl");
+            model.put("titlepage", exam.getTitle()+"-LIS QSG");
+            model.put("set", set);
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
+            model.put("exam", exam);
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+
 
         // Answer sheet for a particular set. It displays the question number
         // and its corresponding index of correct answer, for each question in
