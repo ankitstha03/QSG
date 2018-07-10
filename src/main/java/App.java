@@ -808,7 +808,7 @@ public class App {
             if (StringUtils.countMatches(timeString, ":") == 1) {
                 timeString += ":00";
             }
-            Integer duration = Integer.parseInt(request.queryParams("duration"));
+            Integer qNumber = Integer.parseInt(request.queryParams("qNumber"));
             Integer setNumber = Integer.parseInt(request.queryParams("SetNumber"));
             Integer difficulty = Integer.parseInt(request.queryParams("difficulty"));
             String[] categories = request.queryParamsValues("categories");
@@ -823,7 +823,7 @@ public class App {
             Exam exam = new Exam();
             exam.setTitle(title);
             exam.setTime(timeString);
-            exam.setDuration(duration);
+            exam.setDuration(qNumber);
             exam.setDifficulty(difficulty);
             exam.setUserId(userId);
             exam.save();
@@ -839,7 +839,7 @@ public class App {
             // allocated 3 minutes in average. Also, each set contains 50%
             // questions of the specified difficulty and 25% each of the other
             // two difficulty levels.
-            Integer countPerSet = duration / 3;
+            Integer countPerSet = qNumber;
             Integer countSelected = countPerSet / 2;
             Integer countOther1 = countPerSet / 4;
             Integer countOther2 = countPerSet - countSelected - countOther1;
