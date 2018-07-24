@@ -14,7 +14,9 @@ public class Category extends Timestamped {
 
     // variables
 
-    private String name;    // Name of category, should be unique
+
+    private String name;
+    private int deleted;    // Name of category, should be unique
 
     // constructors
 
@@ -86,9 +88,10 @@ public class Category extends Timestamped {
      */
     public void delete() {
         try (Connection con = DB.sql2o.open();) {
-            String query = "DELETE FROM categories WHERE id=:id";
+          String query = "UPDATE questions SET "
+              + "name=:name, "
+              + "deleted=1 WHERE id=:id";
             con.createQuery(query).bind(this).executeUpdate();
-            this.setId(null);
         }
     }
 
@@ -117,7 +120,7 @@ public class Category extends Timestamped {
      */
     public static List<Category> all() {
         try (Connection con = DB.sql2o.open();) {
-            String query = "SELECT * FROM categories ORDER BY name ASC";
+            String query = "SELECT * FROM categories WHERE deleted=0 ORDER BY name ASC";
             return con.createQuery(query).executeAndFetch(Category.class);
         }
     }

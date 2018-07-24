@@ -318,7 +318,7 @@ public class App {
             Set set = Set.findById(id);
 
             Integer userr=request.session().attribute("userId");
-            Exportlog ql=new Exportlog(id, id2, userr).save();
+            Exportlog ql=new Exportlog(id, userr, "Exported", id2).save();
 
             response.redirect("/exams/"+id+"/"+set.getSetNumber()+"/print");
             return 0;
@@ -335,7 +335,7 @@ public class App {
             Set set = Set.findById(id);
 
             Integer userr=request.session().attribute("userId");
-            Exportlog ql=new Exportlog(id, id2, userr).save();
+            Exportlog ql=new Exportlog(id, userr, "Exported", id2).save();
 
             response.redirect("/exams/"+id+"/"+set.getSetNumber());
             return 0;
@@ -493,6 +493,8 @@ public class App {
           }
             String category_name = request.queryParams("category_name");
             Category c = new Category(category_name).save();
+            Integer userr=request.session().attribute("userId");
+            Categorylog ql=new Categorylog(c.getId(), userr, "Created").save();
             response.redirect("/categories");
             return "Success";
         });
@@ -505,6 +507,8 @@ public class App {
           }
             Category category = Category.findById(Integer.parseInt(request.params(":cId")));
             category.delete();
+            Integer userr=request.session().attribute("userId");
+            Categorylog ql=new Categorylog(category.getId(), userr, "Created").save();
             response.redirect("/categories");
             return "Success";
         });
@@ -752,6 +756,8 @@ public class App {
             Integer id = Integer.parseInt(request.params("id"));
             Exam exam = Exam.findById(id);
             exam.delete();
+            Integer userr=request.session().attribute("userId");
+            Exportlog ql=new Exportlog(id, userr, "Deleted").save();
             response.redirect("/exams");
             return 0;
         });
@@ -827,7 +833,8 @@ public class App {
             exam.setDifficulty(difficulty);
             exam.setUserId(userId);
             exam.save();
-
+            Integer userr=request.session().attribute("userId");
+            Exportlog ql=new Exportlog(exam.getId(), userr, "Deleted").save();
             Set[] sets = new Set[setNumber];
             // Create 3 sets.
             for(Integer i = 0;i<setNumber;i++){
