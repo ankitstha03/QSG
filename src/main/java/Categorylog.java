@@ -18,41 +18,39 @@ import org.sql2o.*;
  * @see Answer
  * @see Category
  */
-public class Exportlog extends Timestamped {
+public class Categorylog extends Timestamped {
 
     // constants
 
-    private Integer examid;
-    private Integer setid;
+    private Integer categoryid;
+    private String actio;
     private Timestamp tim;
     private Integer userid;
-    private String actio;
 
     // constructors
 
-    public Exportlog(Integer examid2, Integer userid2, String action, Integer setid2=NULL) {
-        this.setExamId(examid2);
+    public Categorylog(Integer categoryid2, String actio, Integer userid2) {
+        this.setCategoryId(categoryid2);
         this.setTime(new Timestamp(new Date().getTime()));
         this.setUserId(userid2);
-        this.setSetId(setid2);
-        this.setAction(action);
+        this.setAction(actio);
     }
     // getters and setters
     public Integer getUserId() {
         return this.userid;
     }
 
-    public Exportlog setUserId(Integer id) {
+    public Categorylog setUserId(Integer id) {
         this.userid = id;
         return this;
     }
 
-    public Integer getExamId() {
-        return this.examid;
+    public Integer getCategoryId() {
+        return this.categoryid;
     }
 
-    public Exportlog setExamId(Integer id) {
-        this.examid = id;
+    public Categorylog setCategoryId(Integer id) {
+        this.categoryid = id;
         return this;
     }
 
@@ -60,17 +58,8 @@ public class Exportlog extends Timestamped {
         return this.actio;
     }
 
-    public Exportlog setAction(String action) {
+    public Categorylog setAction(String action) {
         this.actio = action;
-        return this;
-    }
-
-    public Integer getSetId() {
-        return this.setid;
-    }
-
-    public Exportlog setSetId(Integer id) {
-        this.setid = id;
         return this;
     }
 
@@ -79,12 +68,12 @@ public class Exportlog extends Timestamped {
         return this.tim;
     }
 
-    public Exportlog setTime(Timestamp time) {
+    public Categorylog setTime(Timestamp time) {
         this.tim = time;
         return this;
     }
 
-    public Exportlog setTime(String timeString) {
+    public Categorylog setTime(String timeString) {
         this.tim = Timestamp.valueOf(timeString);
         return this;
     }
@@ -93,16 +82,15 @@ public class Exportlog extends Timestamped {
     @Override
     public boolean equals(Object obj) {
         // If obj is not an instance of Question class, directly return false.
-        if (! (obj instanceof Exportlog)) {
+        if (! (obj instanceof Categorylog)) {
             return false;
         }
-        Exportlog exportlog = (Exportlog) obj;
-        return this.id.equals(exportlog.getId()) &&
-            this.userid.equals(exportlog.getUserId()) &&
-            this.examid.equals(exportlog.getExamId()) &&
-            this.tim.equals(exportlog.getTime()) &&
-            this.actio.equals(exportlog.getAction()) &&
-            this.setid.equals(exportlog.getSetId());
+        Categorylog categorylog = (Categorylog) obj;
+        return this.id.equals(categorylog.getId()) &&
+            this.userid.equals(categorylog.getUserId()) &&
+            this.categoryid.equals(categorylog.getCategoryId()) &&
+            this.tim.equals(categorylog.getTime()) &&
+            this.actio.equals(categorylog.getAction());
     }
 
     // methods
@@ -112,27 +100,27 @@ public class Exportlog extends Timestamped {
      *
      * @return Saved or updated instance.
      */
-    public Exportlog save() {
+    public Categorylog save() {
         try (Connection con = DB.sql2o.open();) {
             String query;
             if (this.id != null && this.id > 0) {
-                query = "UPDATE exportlog SET "
-                    + "userid=:userId, examid=:examId, "
-                    + "setid=:setId, actio=:action WHERE id=:id";
+                query = "UPDATE categorylog SET "
+                    + "userid=:userId, categoryid=:categoryId, "
+                    + "actio=:action WHERE id=:id";
                 con.createQuery(query)
                     .bind(this)
                     .executeUpdate();
             } else {
                 query = "INSERT INTO exportlog"
-                    + " (examid, userid, setid, actio)"
-                    + " VALUES (:examId, :userId, :setId, :action)";
+                    + " (categoryid, userid, actio)"
+                    + " VALUES (:categoryId, :userId, :action";
                     this.id = con.createQuery(query, true)
                                 .bind(this)
                                 .executeUpdate()
                                 .getKey(Integer.class);
 
             }
-            return Exportlog.findById(this.id);
+            return Categorylog.findById(this.id);
         }
     }
 
@@ -141,7 +129,7 @@ public class Exportlog extends Timestamped {
      */
     public void delete() {
         try (Connection con = DB.sql2o.open();) {
-            String query = "DELETE FROM exportlog WHERE id=:id";
+            String query = "DELETE FROM categorylog WHERE id=:id";
             con.createQuery(query)
                 .bind(this)
                 .executeUpdate();
@@ -170,40 +158,32 @@ public class Exportlog extends Timestamped {
      *
      * @return Category instance associated with this Question instance.
      */
-    public Exam getExam() {
+    public Category getCategory() {
         try (Connection con = DB.sql2o.open();) {
-            String query = "SELECT * FROM exams WHERE id=:examId";
+            String query = "SELECT * FROM categories WHERE id=:examId";
             return con.createQuery(query)
                     .bind(this)
-                    .executeAndFetchFirst(Exam.class);
+                    .executeAndFetchFirst(Category.class);
         }
     }
 
 
-    public Set getSet() {
+
+
+    public static List<Categorylog> all() {
         try (Connection con = DB.sql2o.open();) {
-            String query = "SELECT * FROM sets WHERE id=:setId";
-            return con.createQuery(query)
-                    .bind(this)
-                    .executeAndFetchFirst(Set.class);
+            String query = "SELECT * FROM categorylog ORDER BY id DESC";
+            return con.createQuery(query).executeAndFetch(Categorylog.class);
         }
     }
 
 
-    public static List<Exportlog> all() {
+    public static Categorylog findById(Integer id) {
         try (Connection con = DB.sql2o.open();) {
-            String query = "SELECT * FROM exportlog ORDER BY id DESC";
-            return con.createQuery(query).executeAndFetch(Exportlog.class);
-        }
-    }
-
-
-    public static Exportlog findById(Integer id) {
-        try (Connection con = DB.sql2o.open();) {
-            String query = "SELECT * FROM exportlog WHERE id=:id";
+            String query = "SELECT * FROM categorylog WHERE id=:id";
             return con.createQuery(query)
                 .addParameter("id", id)
-                .executeAndFetchFirst(Exportlog.class);
+                .executeAndFetchFirst(Categorylog.class);
         }
     }
 
