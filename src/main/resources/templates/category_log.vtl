@@ -35,7 +35,7 @@
 }
 </style>
 
-<h1>Question Log</h1>
+<h1>Category Log</h1>
 
 <div style="width:1000px">
 <div style="width:30%">
@@ -44,7 +44,7 @@
 <table id="myTable" style="background:#fff">
   <tr class="header" style="background:#54a0ff; ">
     <th style="width:8%; color: white">S.No.</th>
-    <th style="width:22%; color: white">Question</th>
+    <th style="width:22%; color: white">Category</th>
     <th style="width:10%; color: white">Action</th>
     <th style="width:20%; color: white">User</th>
     <th style="width:20%; color: white">Date</th>
@@ -52,7 +52,7 @@
  #foreach ($exp in $export)
   <tr>
   <td>$exp.getId()</td>
-    <td>$exp.getQuestion().getText()</td>
+    <td>$exp.getCategory().getName()</td>
     <td ><p style="background:#1dd1a1; color:white">$exp.getAction()</p></td>
     <td>$exp.getUser().getUsername()</td>
     <td>$exp.getTime()</td>

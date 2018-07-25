@@ -1,0 +1,68 @@
+<link href="/css/form.css" rel="stylesheet" />
+
+<div id="main">
+  <div class="column left">
+    <div class="panel panel-default " style="width:100%; margin:0px">
+      <div class="panel-heading">Created</div>
+      <div class="panel-body" style="background-color:#20bf6b">
+
+
+	#foreach ($crt in $crted)
+     <div class="card " style="background-color:white; padding:10px; margin-bottom:10px;">
+	 <p> $crt.getQuestion().getText()</p>
+	 <p style="font-size:12px;"> $crt.getAction() by $crt.getUser().getUsername()</p>
+	 <p style="font-size:12px;"> $crt.getAction() on $crt.getTime()</p>
+    </div>
+	#end
+
+	</div>
+  </div>
+  </div>
+    <div class="column center">
+  <div class="panel panel-default " style="width:100%; margin:0px">
+    <div class="panel-heading" >Updated</div>
+    <div class="panel-body" style="background-color:#3867d6">
+
+ #foreach ($upt in $upted)
+     <div class="card " style="background-color:white; padding:10px; margin-bottom:10px;">
+	 <p> $upt.getQuestion().getText()</p>
+	 <p style="font-size:12px;"> $upt.getAction() by $upt.getUser().getUsername()</p>
+	 <p style="font-size:12px;"> $upt.getAction() on $upt.getTime()</p>
+    </div>
+	#end
+    </div>
+	</div>
+  </div>
+    <div class="column right">
+    <div class="panel panel-default " style="width:100%; margin:0px">
+      <div class="panel-heading">Deleted</div>
+      <div class="panel-body" style="background-color:#fc5c65">
+
+ #foreach ($del in $delted)
+     <div class="card" style="background-color:white; padding:10px; margin-bottom:10px;">
+	 <p> $del.getQuestion().getText()</p>
+	 <p style="font-size:12px;"> $del.getAction() by $del.getUser().getUsername()</p>
+	 <p style="font-size:12px;"> $del.getAction() on $del.getTime()</p>
+    </div>
+	#end
+    </div>
+	</div>
+  </div>
+</div>
+
+    <div class="column rightest">
+    <div class="panel panel-default " style="width:100%; margin:0px">
+      <div class="panel-heading">Exported</div>
+      <div class="panel-body" style="background-color:#fd9644">
+
+ #foreach ($exp in $export)
+     <div class="card" style="background-color:white; padding:10px; margin-bottom:10px;">
+	 <p>Exam: $exp.getExam().getTitle()- Set $exp.getSet().getSetName()</p>
+	 <p style="font-size:12px;"> Exported by $exp.getUser().getUsername()</p>
+	 <p style="font-size:12px;"> Exported on $exp.getTime()</p>
+    </div>
+	#end
+    </div>
+	</div>
+  </div>
+</div>

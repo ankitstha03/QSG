@@ -227,7 +227,7 @@ public class App {
         }, new VelocityTemplateEngine());
 
 
-        get("/log", (request, response) -> {
+        get("/examlog", (request, response) -> {
           if (request.session().attribute("userId") == null) {
               response.redirect("/login");
           }
@@ -235,14 +235,41 @@ public class App {
 
             model.put("template", "templates/export_log.vtl");
 
-            model.put("titlepage", "Log-LIS QSG");
-            List<Questionlog> crted = Questionlog.byAction("Created");
-            List<Questionlog> upted = Questionlog.byAction("Updated");
-            List<Questionlog> delted = Questionlog.byAction("Deleted");
+            model.put("titlepage", "Exam Log-LIS QSG");
             List<Exportlog> export = Exportlog.all();
-            model.put("crted", crted);
-            model.put("upted", upted);
-            model.put("delted", delted);
+            model.put("export", export);
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+        get("/questionlog", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+            Map<String,Object> model = new HashMap<String,Object>();
+
+            model.put("template", "templates/question_log.vtl");
+
+            model.put("titlepage", "Question Log-LIS QSG");
+            List<Questionlog> export = Questionlog.all();
+            model.put("export", export);
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+
+        get("/categorylog", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+            Map<String,Object> model = new HashMap<String,Object>();
+
+            model.put("template", "templates/category_log.vtl");
+
+            model.put("titlepage", "Log-LIS QSG");
+            List<Categorylog> export = Categorylog.all();
             model.put("export", export);
             User defuser=User.findById(request.session().attribute("userId"));
             model.put("defuser",defuser);
@@ -510,7 +537,7 @@ public class App {
             Category category = Category.findById(Integer.parseInt(request.params(":cId")));
             category.delete();
             Integer userr=request.session().attribute("userId");
-            Categorylog ql=new Categorylog(category.getId(), userr, "Created").save();
+            Categorylog ql=new Categorylog(category.getId(), userr, "Deleted").save();
             response.redirect("/categories");
             return "Success";
         });

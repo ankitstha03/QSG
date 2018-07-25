@@ -113,9 +113,9 @@ public class Categorylog extends Timestamped {
                     .bind(this)
                     .executeUpdate();
             } else {
-                query = "INSERT INTO exportlog"
+                query = "INSERT INTO categorylog"
                     + " (categoryid, userid, actio)"
-                    + " VALUES (:categoryId, :userId, :action";
+                    + " VALUES (:categoryId, :userId, :action)";
                     this.id = con.createQuery(query, true)
                                 .bind(this)
                                 .executeUpdate()
@@ -162,7 +162,7 @@ public class Categorylog extends Timestamped {
      */
     public Category getCategory() {
         try (Connection con = DB.sql2o.open();) {
-            String query = "SELECT * FROM categories WHERE id=:examId";
+            String query = "SELECT * FROM categories WHERE id=:categoryId";
             return con.createQuery(query)
                     .bind(this)
                     .executeAndFetchFirst(Category.class);

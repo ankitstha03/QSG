@@ -88,10 +88,14 @@ public class Category extends Timestamped {
      */
     public void delete() {
         try (Connection con = DB.sql2o.open();) {
-          String query = "UPDATE questions SET "
-              + "name=:name, "
-              + "deleted=1 WHERE id=:id";
+          String query = "UPDATE categories SET "
+              + "deleted=1 "
+              + "WHERE id=:id";
             con.createQuery(query).bind(this).executeUpdate();
+            List<Question> asd=this.getQuestions();
+            for (Question qe : asd) {
+              qe.delete();
+            }
         }
     }
 

@@ -180,7 +180,10 @@ public class Exam extends Timestamped {
               + "WHERE id=:id";
 
             con.createQuery(sql).bind(this).executeUpdate();
-            this.setId(0);
+            List<Set> asd=this.getSets();
+            for (Set se : asd) {
+              se.delete();
+            }
         }
     }
 
