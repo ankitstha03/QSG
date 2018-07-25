@@ -1,0 +1,16 @@
+<link href="/css/form.css" rel="stylesheet" />
+<div class="card">
+<h1><b>$user.getName() </b></h1>
+
+<p><b>Role</b> = $user.getRoleTitle()</p>
+
+<p><b>Username</b> = $user.getUsername() </p>
+
+<p><b>Email</b> = $user.getEmail()</p>
+</div>
+
+<script type="text/javascript">
+window.onload = function() {
+  document.getElementById('users').className = 'active';
+};
+</script>

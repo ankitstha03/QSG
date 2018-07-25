@@ -1,0 +1,21 @@
+<link href="/css/form.css" rel="stylesheet" />
+<div class="card">
+<h1>$exam.getTitle()</h1>
+
+<p>Time = $exam.getTime()</p>
+
+<p>Duration = $exam.getDuration() minutes</p>
+
+<p>Difficulty = $exam.getDifficultyString()</p>
+
+<ul style=" list-style-type: none;">
+ 	#foreach ($set in $exam.getSets())
+  	<li><a href="/exams/$exam.getId()/$set.setNumber" class="btn btn-primary">Set $set.setName</a></li><br>
+  	#end
+</ul>
+</div>
+<script type="text/javascript">
+window.onload = function() {
+  document.getElementById('exams').className = 'active';
+};
+</script>

@@ -1,0 +1,18 @@
+<p>
+  <a href="/exams/$exam.getId()/$set.getSetNumber()" class="btn btn-primary">Back to Question Set</a>
+</p>
+
+<ol>
+#foreach ($i in $set.getCorrectIndices())
+
+  <li>
+   $i
+  </li>
+
+#end
+</ol>
+<script type="text/javascript">
+window.onload = function() {
+  document.getElementById('exams').className = 'active';
+};
+</script>

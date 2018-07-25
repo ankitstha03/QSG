@@ -1,0 +1,80 @@
+<link rel="stylesheet" href="/css/print.css" type="text/css" media="print" />
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+<style type="text/css" media="print">
+  @page { size: landscape; }
+  #content{
+   column-count: 2;
+   -webkit-column-count: 2;
+   -moz-column-count: 2;
+ }
+</style>
+
+<style media="screen" type="text/css">
+#watermark {display:none}
+</style>
+<style media="print" type="text/css">
+
+
+    #watermark {
+    color:#D3D3D3;
+        font-size:120px;
+        transform:rotate(300deg);
+        -webkit-transform:rotate(300deg);
+position:fixed;
+z-index: -1;width:95%; height:95%;
+
+filter:alpha(opacity=10);-moz-opacity: 50%}
+#water_img{position:relative; top:40%; opacity:0.1; filter:alpha(opacity=10);}
+</style>
+
+<p>
+  <a href="/exams/$exam.getId()" class="btn btn-primary">Back to Exam</a>
+
+  <a href="/exams/$exam.getId()/$set.getSetNumber()/solution" class="btn btn-primary">Answer Sheet</a>
+
+  <a  href="/export/$exam.getId()/$set.getSetId()" value="Print" class="btn btn-primary">Print Set</a>
+<a href="/export2/$exam.getId()/$set.getSetId()" id="cmd" class="btn btn-primary">Download PDF</a>
+</p>
+
+
+<div class="section-to-print1" id="content"  style="margin-top:40px;overflow-y: scroll;">
+<div id="watermark" align="center"><img id="water_img" src="/css/watermark.jpg" width="400"></div>
+<ol type="a">
+#foreach ($q in $set.getQuestions())
+
+  <li style="margin-top:10px; margin-bottom:10px">
+    $q.getText()
+    #set($answers = $q.getShuffledAnswers($set))
+    <ul >
+      <li>$answers.get(0).getText()</li>
+      <li>$answers.get(1).getText()</li>
+      <li>$answers.get(2).getText()</li>
+      <li>$answers.get(3).getText()</li>
+    </ul>
+  </li>
+
+#end
+
+</ol>
+</div>
+<script type="text/javascript">
+window.onload = function() {
+  document.getElementById('exams').className = 'active';
+};
+ </script>
+<script type="text/javascript">
+var doc = new jsPDF();
+var specialElementHandlers = {
+    '#editor': function (element, renderer) {
+        return true;
+    }
+};
+
+$('#cmd').click(function () {
+    doc.fromHTML($('#content').html(), 25, 15, {
+        'width': 170,
+            'elementHandlers': specialElementHandlers
+    });
+    doc.save('Questionset.pdf');
+});</script>

@@ -1,0 +1,22 @@
+
+.column {
+    position: absolute;
+    top: 22%;
+    bottom: 0;
+    overflow-y: auto;
+}    
+.left {
+	background-color:#12cc45;
+    left: 15%;
+    width: 27%;
+}
+.center {
+	background-color:#2245cc;
+    left:44%;
+    width:27%; /* = width + 2 * padding of right column */
+}
+.right {
+	background-color:#cc3244;
+    right: 1%;
+    width: 27%;
+}
