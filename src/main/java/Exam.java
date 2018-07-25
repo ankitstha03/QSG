@@ -174,9 +174,11 @@ public class Exam extends Timestamped {
      */
     public void delete() {
         try (Connection con = DB.sql2o.open();) {
+
           String sql = "UPDATE exams SET "
               + "userId=1 "
               + "WHERE id=:id";
+
             con.createQuery(sql).bind(this).executeUpdate();
             this.setId(0);
         }
@@ -220,7 +222,9 @@ public class Exam extends Timestamped {
      */
     public static List<Exam> all() {
         try (Connection con = DB.sql2o.open();) {
+
             String sql = "SELECT * FROM exams WHERE userId!=1 ORDER BY id DESC";
+
             return con.createQuery(sql).executeAndFetch(Exam.class);
         }
     }

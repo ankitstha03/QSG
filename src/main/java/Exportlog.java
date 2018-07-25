@@ -30,6 +30,7 @@ public class Exportlog extends Timestamped {
 
     // constructors
 
+
     public Exportlog(Integer examid2, Integer userid2, String action, Integer setid2) {
         this.setExamId(examid2);
         this.setTime(new Timestamp(new Date().getTime()));
@@ -40,6 +41,7 @@ public class Exportlog extends Timestamped {
         else{
           this.setSetId(setid2);
         }
+
         this.setAction(action);
     }
     // getters and setters
@@ -194,6 +196,7 @@ public class Exportlog extends Timestamped {
         }
     }
 
+
     public char getSetName() {
       char name;
         if(this.setid==null){
@@ -204,6 +207,7 @@ public class Exportlog extends Timestamped {
         }
         return name;
     }
+
 
     public static List<Exportlog> all() {
         try (Connection con = DB.sql2o.open();) {

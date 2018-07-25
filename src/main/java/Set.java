@@ -55,6 +55,7 @@ public class Set extends Timestamped {
     }
 
     public char getSetName() {
+
       char name;
         if(this.id==null){
           name = (char) (45);
@@ -62,6 +63,7 @@ public class Set extends Timestamped {
         else{
           name = (char) (this.setNumber+65);
         }
+
         return name;
     }
     // setters

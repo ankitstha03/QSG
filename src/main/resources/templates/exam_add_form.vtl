@@ -1,9 +1,14 @@
 <link href="/css/form.css" rel="stylesheet" />
+<<<<<<< HEAD
 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css'>
 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css'>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js'></script>
 
+=======
+<link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+     <script src="/js/bootstrap-datetimepicker.min.js"></script>
+>>>>>>> 11d91fd7450e4138598736f74e631e1e87c73419
 <div class="panel panel-default">
   <div class="panel-heading">Add Exam</div>
 
@@ -26,6 +31,7 @@
 
 
                 <label >DateTime Picking</label>
+<<<<<<< HEAD
                 <div class="input-group datetimepicker">
     <input type="text" class="form-control" readonly>
     <span class="input-group-addon">
@@ -34,6 +40,15 @@
       <span class="fa fa-clock-o"></span>
     </span>
   </div>
+=======
+                <div id="datetimepicker1" class="input-append date">
+      <input data-format="dd/MM/yyyy hh:mm:ss" type="text"></input>
+      <span class="add-on">
+        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+        </i>
+      </span>
+    </div>
+>>>>>>> 11d91fd7450e4138598736f74e631e1e87c73419
 
 
     <p>
@@ -78,6 +93,7 @@
 </div>
 </div>
 
+<<<<<<< HEAD
 <script type="text/javascript">
 var defaults = {
 	calendarWeeks: true,
@@ -111,4 +127,13 @@ $(function() {
 	$('.timepicker').datetimepicker(optionsTime);
 	$('.datetimepicker').datetimepicker(optionsDatetime);
 });
+=======
+
+    <script type="text/javascript">
+      $(function() {
+        $('#datetimepicker1').datetimepicker({
+          language: 'pt-BR'
+        });
+      });
+>>>>>>> 11d91fd7450e4138598736f74e631e1e87c73419
     </script>
