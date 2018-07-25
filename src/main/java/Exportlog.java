@@ -30,11 +30,18 @@ public class Exportlog extends Timestamped {
 
     // constructors
 
-    public Exportlog(Integer examid2, Integer userid2, String action, Integer setid2=NULL) {
+
+    public Exportlog(Integer examid2, Integer userid2, String action, Integer setid2) {
         this.setExamId(examid2);
         this.setTime(new Timestamp(new Date().getTime()));
         this.setUserId(userid2);
-        this.setSetId(setid2);
+        if(action!="Exported"){
+          this.setSetId(null);
+        }
+        else{
+          this.setSetId(setid2);
+        }
+
         this.setAction(action);
     }
     // getters and setters
@@ -187,6 +194,18 @@ public class Exportlog extends Timestamped {
                     .bind(this)
                     .executeAndFetchFirst(Set.class);
         }
+    }
+
+
+    public char getSetName() {
+      char name;
+        if(this.setid==null){
+          name = (char) (45);
+        }
+        else{
+          name = this.getSet().getSetName();
+        }
+        return name;
     }
 
 

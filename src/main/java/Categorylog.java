@@ -29,7 +29,9 @@ public class Categorylog extends Timestamped {
 
     // constructors
 
-    public Categorylog(Integer categoryid2, String actio, Integer userid2) {
+
+    public Categorylog(Integer categoryid2, Integer userid2, String actio) {
+
         this.setCategoryId(categoryid2);
         this.setTime(new Timestamp(new Date().getTime()));
         this.setUserId(userid2);

@@ -232,7 +232,9 @@ public class App {
               response.redirect("/login");
           }
             Map<String,Object> model = new HashMap<String,Object>();
-            model.put("template", "templates/question_log.vtl");
+
+            model.put("template", "templates/export_log.vtl");
+
             model.put("titlepage", "Log-LIS QSG");
             List<Questionlog> crted = Questionlog.byAction("Created");
             List<Questionlog> upted = Questionlog.byAction("Updated");
@@ -757,7 +759,9 @@ public class App {
             Exam exam = Exam.findById(id);
             exam.delete();
             Integer userr=request.session().attribute("userId");
-            Exportlog ql=new Exportlog(id, userr, "Deleted").save();
+
+            Exportlog ql=new Exportlog(id, userr, "Deleted", 0).save();
+
             response.redirect("/exams");
             return 0;
         });
@@ -834,7 +838,9 @@ public class App {
             exam.setUserId(userId);
             exam.save();
             Integer userr=request.session().attribute("userId");
-            Exportlog ql=new Exportlog(exam.getId(), userr, "Deleted").save();
+
+            Exportlog ql=new Exportlog(exam.getId(), userr, "Created", 0).save();
+
             Set[] sets = new Set[setNumber];
             // Create 3 sets.
             for(Integer i = 0;i<setNumber;i++){
