@@ -18,7 +18,7 @@
   border-collapse: collapse;
   width: 300%;
   border: 1px solid #ddd;
-  font-size: 18px;
+  font-size: 12px;
 }
 
 #myTable th, #myTable td {
@@ -42,7 +42,7 @@
 <input type="text" id="myInput" onkeyup="myFunction2()" placeholder="Search for names.." title="Type in a name">
 
 <table id="myTable" style="background:#fff">
-  <tr class="header" style="background:#54a0ff; ">
+  <tr class="header" style="background:#10ac84; ">
     <th style="width:8%; color: white">S.No.</th>
     <th style="width:22%; color: white">Question</th>
     <th style="width:10%; color: white">Action</th>
@@ -53,12 +53,12 @@
   <tr>
   <td>$exp.getId()</td>
     <td>$exp.getQuestion().getText()</td>
-    <td ><p style="background:#1dd1a1; color:white">$exp.getAction()</p></td>
+    <td >$exp.getAction()</p></td>
     <td>$exp.getUser().getUsername()</td>
     <td>$exp.getTime()</td>
   </tr>
   #end
- 
+
 </table>
 </div>
 </div>
