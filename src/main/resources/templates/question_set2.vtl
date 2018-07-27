@@ -1,14 +1,8 @@
 <link rel="stylesheet" href="/css/print.css" type="text/css" media="print" />
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
-<style type="text/css" media="print">
+<script src='/js/jspdf.min.js'></script>
 
-  @page { size: landscape; }
-  #content{
-
-
- }
-</style>
 
 <style media="screen" type="text/css">
 #watermark {display:none}
@@ -37,12 +31,13 @@ filter:alpha(opacity=10);-moz-opacity: 50%}
   <a  href="/exams/$exam.getId()/$set.getSetNumber()/solution" class="btn btn-primary">Answer Sheet</a>
 
   <a href="/export/$exam.getId()/$set.getSetId()" value="Print" class="btn btn-primary">Print Set</a>
-<a href="/export2/$exam.getId()/$set.getSetId()" id="cmd" class="btn btn-primary">Download PDF</a>
+<a href="/export2/$exam.getId()/$set.getSetId()" onclick="generate()" class="btn btn-primary">Download PDF</a>
 </p>
 
 
 <div class="section-to-print1" id="content"  style="margin-top:40px;">
 <div id="watermark" align="center"><img id="water_img" src="/css/watermark.jpg" width="400"></div>
+<div id="html-2-pdfwrapper>
 <ol type="a">
 #foreach ($q in $set.getQuestions())
 
@@ -61,6 +56,7 @@ filter:alpha(opacity=10);-moz-opacity: 50%}
 
 </ol>
 </div>
+</div>
 <script type="text/javascript">
 window.onload = function() {
 	myFunction();
@@ -75,8 +71,8 @@ var specialElementHandlers = {
     }
 };
 
-$('#cmd').click(function () {
-    doc.fromHTML($('#content').html(), 25, 15, {
+$('#cmd1').click(function () {
+    doc.fromHTML($('#contentpdf').html(), 15, 15, {
         'width': 170,
             'elementHandlers': specialElementHandlers
     });

@@ -36,7 +36,7 @@ color: black;
 
     <div class="col-md-2 card" style="margin:10px; text-align:center"> <a href="/categories/$c.getId()"><h1>$c.getName()</h1></a>
       <form id="$c.getName()" method="post" action="/categories/$c.getId()/delete">
-        <a href="javascript:{}" onclick="document.getElementById('$c.getName()').submit(); return false;" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+        <a href="javascript:{}"  onclick="document.getElementById('$c.getName()').submit(); return false;" class="btn btn-danger "><span class="glyphicon glyphicon-trash"></span></a>
       </form>
     </div><!--col-->
 
