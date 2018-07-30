@@ -45,29 +45,29 @@ public class App {
 
         // Admin dashboard. Currenlty, this page is not implemented.
         get("/admin", (request, response) -> {
-			if (request.session().attribute("userId") == null || request.session().attribute("userId") == "") {
+            if (request.session().attribute("userId") == null || request.session().attribute("userId") == "") {
                 response.redirect("/login");
             }
             Map<String,Object> model = new HashMap<String,Object>();
             if (request.session().attribute("userId") != null) {
-            model.put("template", "templates/admin.vtl");
-            model.put("titlepage", "Admin-LIS QSG");
-            List<Questionlog> crted = Questionlog.byAction("Created");
-            List<Questionlog> upted = Questionlog.byAction("Updated");
-            List<Questionlog> delted = Questionlog.byAction("Deleted");
-            List<Exportlog> export = Exportlog.all();
-            model.put("crted", crted);
-            model.put("upted", upted);
-            model.put("delted", delted);
-            model.put("export", export);
-            model.put("categories", Category.all());
-            User defuser=User.findById(request.session().attribute("userId"));
-            model.put("defuser",defuser);
-            return new ModelAndView(model, layout);
+                model.put("template", "templates/admin.vtl");
+                model.put("titlepage", "Admin-LIS QSG");
+                List<Questionlog> crted = Questionlog.byAction("Created");
+                List<Questionlog> upted = Questionlog.byAction("Updated");
+                List<Questionlog> delted = Questionlog.byAction("Deleted");
+                List<Exportlog> export = Exportlog.all();
+                model.put("crted", crted);
+                model.put("upted", upted);
+                model.put("delted", delted);
+                model.put("export", export);
+                model.put("categories", Category.all());
+                User defuser=User.findById(request.session().attribute("userId"));
+                model.put("defuser",defuser);
+                return new ModelAndView(model, layout);
 
-          }else{
-			response.redirect("/login");
-		  }
+            }else{
+                response.redirect("/login");
+            }
 
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
@@ -91,17 +91,17 @@ public class App {
         get("/register", (request, response) -> {
             List<User> us=User.all();
             for(User user:us){
-              if(user.isAdmin()){
-                response.redirect("/login");
-              }
+                if(user.isAdmin()){
+                    response.redirect("/login");
+                }
             }
             Map<String,Object> model = new HashMap<String,Object>();
             model.put("template", "templates/register.vtl");
             model.put("show", 1);
             if(request.queryParams("m")==null){
-              model.put("message", "");
+                model.put("message", "");
             }else{
-              model.put("message", request.queryParams("m"));
+                model.put("message", request.queryParams("m"));
             }
             return new ModelAndView(model, layout_signinup);
         }, new VelocityTemplateEngine());
@@ -111,12 +111,12 @@ public class App {
         // NOTE: Again, self-registration is only for development
         // phase!
         post("/register", (request, response) -> {
-          List<User> us=User.all();
-          for(User user:us){
-            if(user.isAdmin()){
-              response.redirect("/login");
+            List<User> us=User.all();
+            for(User user:us){
+                if(user.isAdmin()){
+                    response.redirect("/login");
+                }
             }
-          }
             String name = request.queryParams("name");
             String email = request.queryParams("email");
             String username = request.queryParams("username");
@@ -138,24 +138,24 @@ public class App {
         // It is used to handle user login.
         // Added by Rojina Deuja
         get("/login", (request, response) -> {
-          Integer show=1;
-          if (request.session().attribute("userId") != null) {
-              response.redirect("/admin");
-          }
-
-          List<User> us=User.all();
-          for(User user:us){
-            if(user.isAdmin()){
-              show=0;
+            Integer show=1;
+            if (request.session().attribute("userId") != null) {
+                response.redirect("/admin");
             }
-          }
+
+            List<User> us=User.all();
+            for(User user:us){
+                if(user.isAdmin()){
+                    show=0;
+                }
+            }
             Map<String,Object> model = new HashMap<String,Object>();
             model.put("template", "templates/login.vtl");
             model.put("show", show);
             if(msg==""){
-              model.put("message", "");
+                model.put("message", "");
             }else{
-              model.put("message", msg);
+                model.put("message", msg);
             }
             return new ModelAndView(model, layout_signinup);
         }, new VelocityTemplateEngine());
@@ -190,8 +190,8 @@ public class App {
 
         get("/logout", (request, response) -> {
 
-                request.session().removeAttribute("userId");
-                response.redirect("/login");
+            request.session().removeAttribute("userId");
+            response.redirect("/login");
 
             return 0;
         });
@@ -202,9 +202,9 @@ public class App {
         // database.
         // Added by Manish Munikar
         get("/questions", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Map<String,Object> model = new HashMap<String,Object>();
             model.put("template", "templates/question_list.vtl");
             model.put("titlepage", "Questions-LIS QSG");
@@ -228,9 +228,9 @@ public class App {
 
 
         get("/examlog", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Map<String,Object> model = new HashMap<String,Object>();
 
             model.put("template", "templates/export_log.vtl");
@@ -244,9 +244,9 @@ public class App {
         }, new VelocityTemplateEngine());
 
         get("/questionlog", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Map<String,Object> model = new HashMap<String,Object>();
 
             model.put("template", "templates/question_log.vtl");
@@ -261,9 +261,9 @@ public class App {
 
 
         get("/categorylog", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Map<String,Object> model = new HashMap<String,Object>();
 
             model.put("template", "templates/category_log.vtl");
@@ -277,9 +277,9 @@ public class App {
         }, new VelocityTemplateEngine());
         // New question form.
         get("/questions/add", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Map<String,Object> model = new HashMap<String,Object>();
             model.put("template", "templates/question_add_form.vtl");
             model.put("titlepage", "Add Question-LIS QSG");
@@ -292,9 +292,9 @@ public class App {
         // New question form handler. Adds the new question in the database
         // and then redirects to question list page.
         post("/questions", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Integer categoryId = Integer.parseInt(request.queryParams("category"));
             String question = request.queryParams("question");
             String answer1 = request.queryParams("answer1");
@@ -321,9 +321,9 @@ public class App {
         // Question delete handler. Data modifiers (add, update, delete) should
         // should always be handled by POST method.
         post("/questions/:qid/delete", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Integer id = Integer.parseInt(request.params(":qid"));
 
             Question q = Question.findById(id);
@@ -337,9 +337,9 @@ public class App {
         });
 
         get("/export/:eid/:sid", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Integer id = Integer.parseInt(request.params(":eid"));
             Integer id2 = Integer.parseInt(request.params(":sid"));
 
@@ -354,9 +354,9 @@ public class App {
         });
 
         get("/export2/:eid/:sid", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Integer id = Integer.parseInt(request.params(":eid"));
             Integer id2 = Integer.parseInt(request.params(":sid"));
 
@@ -371,10 +371,10 @@ public class App {
         });
 
         post("/users/:uid/delete", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
-          if (!User.findById(request.session().attribute("userId")).isAdmin()) {
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
+            if (!User.findById(request.session().attribute("userId")).isAdmin()) {
                 response.redirect("/users");
             }
             Integer id = Integer.parseInt(request.params(":uid"));
@@ -388,9 +388,9 @@ public class App {
 
         // Question edit form.
         get("/questions/:qid/edit", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Question question = Question
                 .findById(Integer.parseInt(request.params(":qid")));
 
@@ -406,20 +406,20 @@ public class App {
         // Question edit form handler.
 
         get("/users/:uid/edit", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
 
             User user = User
                 .findById(Integer.parseInt(request.params(":uid")));
 
             Map<String,Object> model = new HashMap<String,Object>();
             if (!User.findById(request.session().attribute("userId")).isAdmin()) {
-                  model.put("template", "templates/404.vtl");
-                  User defuser=User.findById(request.session().attribute("userId"));
-                  model.put("defuser",defuser);
-                  return new ModelAndView(model, layout);
-              }
+                model.put("template", "templates/404.vtl");
+                User defuser=User.findById(request.session().attribute("userId"));
+                model.put("defuser",defuser);
+                return new ModelAndView(model, layout);
+            }
             model.put("template", "templates/user_edit_form.vtl");
             model.put("titlepage", "Edit User-LIS QSG");
             User defuser=User.findById(request.session().attribute("userId"));
@@ -429,37 +429,37 @@ public class App {
         }, new VelocityTemplateEngine());
 
         post("/questions/add", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
 
-          Integer categoryId = Integer.parseInt(request.queryParams("category"));
-          String question = request.queryParams("question");
-          String answer1 = request.queryParams("answer1");
-          String answer2 = request.queryParams("answer2");
-          String answer3 = request.queryParams("answer3");
-          String answer4 = request.queryParams("answer4");
-          Integer difficulty = Integer.parseInt(request.queryParams("difficulty"));
+            Integer categoryId = Integer.parseInt(request.queryParams("category"));
+            String question = request.queryParams("question");
+            String answer1 = request.queryParams("answer1");
+            String answer2 = request.queryParams("answer2");
+            String answer3 = request.queryParams("answer3");
+            String answer4 = request.queryParams("answer4");
+            Integer difficulty = Integer.parseInt(request.queryParams("difficulty"));
 
-          // userId is 0 = NULL for now
-          Question q = new Question(0, categoryId, question, difficulty).save();
-          Integer userr=request.session().attribute("userId");
-          Integer quesid=q.getId();
-          Questionlog ql=new Questionlog(quesid, userr, "Created").save();
-          Answer a;
-          a = new Answer(q, answer1, true).save();
-          a = new Answer(q, answer2, false).save();
-          a = new Answer(q, answer3, false).save();
-          a = new Answer(q, answer4, false).save();
+            // userId is 0 = NULL for now
+            Question q = new Question(0, categoryId, question, difficulty).save();
+            Integer userr=request.session().attribute("userId");
+            Integer quesid=q.getId();
+            Questionlog ql=new Questionlog(quesid, userr, "Created").save();
+            Answer a;
+            a = new Answer(q, answer1, true).save();
+            a = new Answer(q, answer2, false).save();
+            a = new Answer(q, answer3, false).save();
+            a = new Answer(q, answer4, false).save();
 
-          response.redirect("/questions");
-          return 0;
+            response.redirect("/questions");
+            return 0;
         });
 
         post("/questions/:qid/edit", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Question q = Question.findById(Integer.parseInt(request.params(":qid")));
 
             Integer categoryId = Integer.parseInt(request.queryParams("category"));
@@ -501,9 +501,9 @@ public class App {
         // Displays the list of catgories currently available in the database.
         // Added by Sushil Shakya
         get("/categories", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Map<String,Object> model = new HashMap<String,Object>();Category.all();
             model.put("template", "templates/category_list.vtl");
             model.put("titlepage", "Categories-LIS QSG");
@@ -517,9 +517,9 @@ public class App {
         // Category form handler. Saves the category in the database and
         // redirects to list of categories.
         post("/categories",(request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             String category_name = request.queryParams("category_name");
             Category c = new Category(category_name).save();
             Integer userr=request.session().attribute("userId");
@@ -531,9 +531,9 @@ public class App {
         // Category delete handler.
         // Can be used to delete the unwanted category from the database.
         post("/categories/:cId/delete", (request, response) ->{
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Category category = Category.findById(Integer.parseInt(request.params(":cId")));
             category.delete();
             Integer userr=request.session().attribute("userId");
@@ -543,9 +543,9 @@ public class App {
         });
 
         get("/categories/:cId", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Category category = Category.findById(Integer.parseInt(request.params("cId")));
             Integer page = 1;   // default page number
             if (request.queryParams("page") != null) {
@@ -571,18 +571,18 @@ public class App {
 
         // User add form. This should be only available for admin users.
         get("/users/add", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Map<String,Object> model = new HashMap<String,Object>();
             if (!User.findById(request.session().attribute("userId")).isAdmin()) {
-                  model.put("template", "templates/404.vtl");
+                model.put("template", "templates/404.vtl");
 
-                  User defuser=User.findById(request.session().attribute("userId"));
-                  model.put("defuser",defuser);
+                User defuser=User.findById(request.session().attribute("userId"));
+                model.put("defuser",defuser);
 
-                  return new ModelAndView(model, layout);
-              }
+                return new ModelAndView(model, layout);
+            }
             // Get the current active user ID
             Integer userId = request.session().attribute("userId");
 
@@ -598,17 +598,17 @@ public class App {
         // User add form handler. This is also available for admin users.
         // Added by Aakash Shrestha
         post("/users", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
 
             Map<String,Object> model = new HashMap<String,Object>();
 
             // Check if current active user is admin.
             if (!User.findById(request.session().attribute("userId")).isAdmin()) {
-                  model.put("template", "templates/404.vtl");
-                  return new ModelAndView(model, layout);
-              }
+                model.put("template", "templates/404.vtl");
+                return new ModelAndView(model, layout);
+            }
             Integer role = Integer.parseInt(request.queryParams("role"));
             String name = request.queryParams("name");
             String username = request.queryParams("username");
@@ -628,17 +628,17 @@ public class App {
             return 0;
         });
         post("/users/:uid/edit", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
 
             Map<String,Object> model = new HashMap<String,Object>();
 
             // Check if current active user is admin.
             if (!User.findById(request.session().attribute("userId")).isAdmin()) {
-                  model.put("template", "templates/404.vtl");
-                  return new ModelAndView(model, layout);
-              }
+                model.put("template", "templates/404.vtl");
+                return new ModelAndView(model, layout);
+            }
             Integer role = Integer.parseInt(request.queryParams("role"));
             String name = request.queryParams("name");
             String username = request.queryParams("username");
@@ -647,7 +647,7 @@ public class App {
 
             try {
                 User user = User
-                  .findById(Integer.parseInt(request.params(":uid")));
+                    .findById(Integer.parseInt(request.params(":uid")));
                 user.setName(name);
                 user.setEmail(email);
                 user.setUsername(username);
@@ -666,11 +666,11 @@ public class App {
         });
 
         get("/change", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Map<String,Object> model = new HashMap<String,Object>();
-                  // Get the current active user ID
+            // Get the current active user ID
             Integer userId = request.session().attribute("userId");
 
 
@@ -678,20 +678,19 @@ public class App {
             model.put("template", "templates/user_change_form.vtl");
             model.put("titlepage", "Change Password-LIS QSG");
             if(msg2==""){
-              model.put("message", "");
+                model.put("message", "");
             }else{
-              model.put("message", msg2);
+                model.put("message", msg2);
             }
             User defuser=User.findById(request.session().attribute("userId"));
             model.put("defuser",defuser);
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
-
-		        post("/change", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+        post("/change", (request, response) -> {
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
 
 
 
@@ -701,15 +700,15 @@ public class App {
 
             try {
                 User user=User.findById(request.session().attribute("userId"));
-				if(user.checkPassword(oldpassword)){
-					user.setPassword(password);
-          user.save();
-          response.redirect("/admin");
-				}
-        else{
-        msg2="Wrong password";
-        response.redirect("/change");
-      }
+                if(user.checkPassword(oldpassword)){
+                    user.setPassword(password);
+                    user.save();
+                    response.redirect("/admin");
+                }
+                else{
+                    msg2="Wrong password";
+                    response.redirect("/change");
+                }
 
             } catch (Exception e) {
                 msg2="Coudnt change password";
@@ -722,18 +721,18 @@ public class App {
         });
         // List of users. Only available for admin users.
         get("/users", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
 
 
             Map<String,Object> model = new HashMap<String,Object>();
             if (!User.findById(request.session().attribute("userId")).isAdmin()) {
-                  model.put("template", "templates/404.vtl");
-                  User defuser=User.findById(request.session().attribute("userId"));
-                  model.put("defuser",defuser);
-                  return new ModelAndView(model, layout);
-              }
+                model.put("template", "templates/404.vtl");
+                User defuser=User.findById(request.session().attribute("userId"));
+                model.put("defuser",defuser);
+                return new ModelAndView(model, layout);
+            }
             // Check if current active user is admin
             List<User> userss=User.all();
             model.put("template", "templates/user_list.vtl");
@@ -745,9 +744,9 @@ public class App {
         }, new VelocityTemplateEngine());
 
         get("/users/add", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Map<String,Object> model = new HashMap<String,Object>();
             Integer userId = request.session().attribute("userId");
             // if (userId == null || !User.findById(userId).isExaminer()) {
@@ -760,10 +759,10 @@ public class App {
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
-         get("/users/:id", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+        get("/users/:id", (request, response) -> {
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Map<String,Object> model = new HashMap<String,Object>();
 
             Integer id = Integer.parseInt(request.params("id"));
@@ -779,9 +778,9 @@ public class App {
         // Exam delete handler. Also deletes all associated sets and
         // set-question relations.
         post("/exams/:id/delete", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Integer id = Integer.parseInt(request.params("id"));
             Exam exam = Exam.findById(id);
             exam.delete();
@@ -794,9 +793,9 @@ public class App {
         });
         // List of exams.
         get("/exams", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Map<String,Object> model = new HashMap<String,Object>();
             model.put("template", "templates/exam_list.vtl");
             model.put("titlepage", "Exams-LIS QSG");
@@ -809,9 +808,9 @@ public class App {
         // New exam form.
         // NOTE: Should only be avaiable for Examiner users.
         get("/exams/add", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Map<String,Object> model = new HashMap<String,Object>();
             Integer userId = request.session().attribute("userId");
             // if (userId == null || !User.findById(userId).isExaminer()) {
@@ -825,15 +824,19 @@ public class App {
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
+        // New exam edit form.
+        // NOTE: Should only be avaiable for Examiner users.
+
+
         // Exam form handler. It not only creates an Exam instance, but also
         // creates 3 Set instances and also adds appropriate questions to those
         // sets automatically.
         //
         // NOTE: Should only be available for Examiner users.
         post("/exams", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Integer userId = request.session().attribute("userId");
             // if (userId == null || !User.findById(userId).isExaminer()) {
             //     response.redirect("/message?m=ACCESS+DENIED");
@@ -871,7 +874,7 @@ public class App {
             Set[] sets = new Set[setNumber];
             // Create 3 sets.
             for(Integer i = 0;i<setNumber;i++){
-               sets[i] = new Set(exam, i).save();
+                sets[i] = new Set(exam, i).save();
             }
 
 
@@ -894,21 +897,25 @@ public class App {
             List<Question> questionsOther2;
             try (Connection con = DB.sql2o.open();) {
                 questionsSelected = con.createQuery(query)
-                        .addParameter("difficulty", difficulty)
-                        .addParameter("categoryIds", String.join(",", categories))
-                        .addParameter("count", countSelected * setNumber)
-                        .executeAndFetch(Question.class);
+                    .addParameter("difficulty", difficulty)
+                    .addParameter("categoryIds", String.join(",", categories))
+                    .addParameter("count", countSelected * setNumber)
+                    .executeAndFetch(Question.class);
                 questionsOther1 = con.createQuery(query)
-                        .addParameter("difficulty", (difficulty + 1) % 3)
-                        .addParameter("categoryIds", String.join(",", categories))
-                        .addParameter("count", countOther1 * setNumber)
-                        .executeAndFetch(Question.class);
+                    .addParameter("difficulty", (difficulty + 1) % 3)
+                    .addParameter("categoryIds", String.join(",", categories))
+                    .addParameter("count", countOther1 * setNumber)
+                    .executeAndFetch(Question.class);
                 questionsOther2 = con.createQuery(query)
-                        .addParameter("difficulty", (difficulty + 2) % 3)
-                        .addParameter("categoryIds", String.join(",", categories))
-                        .addParameter("count", countOther2 * setNumber)
-                        .executeAndFetch(Question.class);
+                    .addParameter("difficulty", (difficulty + 2) % 3)
+                    .addParameter("categoryIds", String.join(",", categories))
+                    .addParameter("count", countOther2 * setNumber)
+                    .executeAndFetch(Question.class);
             }
+
+
+            //Display all the exams for given template
+
 
             // separate the questions for each set
 
@@ -926,9 +933,9 @@ public class App {
                 Question q = questionsSelected.get(i);
                 Integer test = i / countSelected;
                 for(Integer j = 0;j<setNumber;j++){
-                  if (test == 0) {
-                    setList.get(j).add(q);
-                  }
+                    if (test == 0) {
+                        setList.get(j).add(q);
+                    }
                 }
 
             }
@@ -937,9 +944,9 @@ public class App {
                 Question q = questionsOther1.get(i);
                 Integer test = i / countOther1;
                 for(Integer j = 0;j<setNumber;j++){
-                  if (test == 1) {
-                    setList.get(j).add(q);
-                  }
+                    if (test == 1) {
+                        setList.get(j).add(q);
+                    }
                 }
             }
 
@@ -947,15 +954,15 @@ public class App {
                 Question q = questionsOther2.get(i);
                 Integer test = i / countOther2;
                 for(Integer j = 0;j<setNumber;j++){
-                  if (test == 2) {
-                    setList.get(j).add(q);
-                  }
+                    if (test == 2) {
+                        setList.get(j).add(q);
+                    }
                 }
             }
 
             for(Integer j = 0;j<setNumber;j++){
-                  assert setList.get(j).size() == countPerSet;
-                }
+                assert setList.get(j).size() == countPerSet;
+            }
             // Check if all sets have correct question counts
             // assert set1Questions.size() == countPerSet;
             // assert set2Questions.size() == countPerSet;
@@ -965,15 +972,12 @@ public class App {
             // Collections.shuffle(set2Questions);
             // Collections.shuffle(set3Questions);
             for(Integer j = 0;j<setNumber;j++){
-                  Collections.shuffle(setList.get(j));
-                }
+                Collections.shuffle(setList.get(j));
+            }
             Random random = new Random();
-            for (Integer i = 1; i <= countPerSet; i++) {
-                // set1.addQuestion(set1Questions.get(i-1), i, random.nextInt(4));
-                // set2.addQuestion(set2Questions.get(i-1), i, random.nextInt(4));
-                // set3.addQuestion(set3Questions.get(i-1), i, random.nextInt(4));
+            for (Integer i = 1; i <= countPerSet+1; i++) {
                 for(Integer j = 0;j<setNumber;j++){
-                  sets[j].addQuestion(setList.get(j).get(i-1), i, random.nextInt(4));
+                    sets[j].addQuestion(setList.get(j).get(i-1), i, random.nextInt(4));
                 }
             }
 
@@ -984,9 +988,9 @@ public class App {
 
         // Exam detail page. Shows links to the 3 question sets.
         get("/exams/:id", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Map<String,Object> model = new HashMap<String,Object>();
 
             Integer id = Integer.parseInt(request.params("id"));
@@ -999,12 +1003,51 @@ public class App {
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
+        //Exam edit handler. Edits the exam sets.
+        //Added by Shailesh Mishra
+
+        get("/exams/:id/edit", (request, response) -> {
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
+            Map<String,Object> model = new HashMap<String,Object>();
+            Integer examId = Integer.parseInt(request.params("id"));
+            Exam exam = Exam.findById(examId);
+
+            Set set = exam.getSets().get(1);
+
+            model.put("template", "templates/exam_edit_form.vtl");
+            model.put("titlepage", exam.getTitle()+"-LIS QSG");
+            model.put("set", set);
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
+            model.put("exam", exam);
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+        //Question delete in set
+        // Added by Shailesh Mishra
+
+
+        post("/setquestion/:id/:qid/delete", (request, response) -> {
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
+            Integer q_id = Integer.parseInt(request.params(":qid"));
+            Integer id = Integer.parseInt(request.params(":id"));
+            Question q = Question.findById(q_id);
+            q.setQuestiondelete();
+            String delete = "/exams/"+id+"/edit";
+            response.redirect(delete);
+            return 0;
+        });
+
         // Exam delete handler. Also deletes all associated sets and
         // set-question relations.
         post("/exams/:id/delete", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Integer id = Integer.parseInt(request.params("id"));
             Exam exam = Exam.findById(id);
             exam.delete();
@@ -1016,9 +1059,10 @@ public class App {
         // question. The questions and answers have pre-defined order for a
         // specified set.
         get("/exams/:id/:set", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
+
             Map<String,Object> model = new HashMap<String,Object>();
             Integer examId = Integer.parseInt(request.params("id"));
             Exam exam = Exam.findById(examId);
@@ -1040,9 +1084,9 @@ public class App {
         }, new VelocityTemplateEngine());
 
         get("/exams/:id/:set/print", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Map<String,Object> model = new HashMap<String,Object>();
             Integer examId = Integer.parseInt(request.params("id"));
             Exam exam = Exam.findById(examId);
@@ -1063,15 +1107,13 @@ public class App {
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
-
-
         // Answer sheet for a particular set. It displays the question number
         // and its corresponding index of correct answer, for each question in
         // the set.
         get("/exams/:id/:set/solution", (request, response) -> {
-          if (request.session().attribute("userId") == null) {
-              response.redirect("/login");
-          }
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
             Map<String,Object> model = new HashMap<String,Object>();
             Integer examId = Integer.parseInt(request.params("id"));
             Integer setNumber = Integer.parseInt(request.params("set"));

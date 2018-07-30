@@ -1,45 +1,83 @@
+<style>
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myTable {
+  border-collapse: collapse;
+  width: 300%;
+  border: 1px solid #ddd;
+  font-size: 12px;
+}
+
+#myTable th, #myTable td {
+  text-align: center;
+  padding: 12px;
+}
+
+#myTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  background-color: #f1f1f1;
+}
+</style>
+
 <h1>Question Log</h1>
-<div id="main">
-    <div class="column left">
-	<div class="card" style="position:fixed; background-color:#12cc45;">
-	<h1 style="text-align:center;">Created</h1>
-	</div>
-	<div style="margin-top:70px;">
-	#foreach ($crt in $crted)
-     <div class="card" style="background-color:white; padding:10px; margin-bottom:10px;">
-	 <p> $crt.getQuestion().getText()</p>
-	 <p style="font-size:12px;"> $crt.getAction() by $crt.getUser().getUsername()</p>
-	 <p style="font-size:12px;"> $crt.getAction() on $crt.getTime()</p>
-    </div>
-	#end
-	</div>
-	</div>
-    <div class="column center">
-	<div class="card" style="position:fixed; background-color:#2245cc;">
-	<h1 style="text-align:center;">Updated</h1>
-	</div>
-	<div style="margin-top:70px;">
- #foreach ($upt in $upted)
-     <div class="card" style="background-color:white; padding:10px; margin-bottom:10px;">
-	 <p> $upt.getQuestion().getText()</p>
-	 <p style="font-size:12px;"> $upt.getAction() by $upt.getUser().getUsername()</p>
-	 <p style="font-size:12px;"> $upt.getAction() on $upt.getTime()</p>
-    </div>
-	#end
-    </div>
-	</div>
-    <div class="column right">
-	<div class="card" style="position:fixed; background-color:#cc3244;">
-	<h1 style="text-align:center;">Deleted</h1>
-	</div>
-	<div style="margin-top:70px;">
- #foreach ($del in $delted)
-     <div class="card" style="background-color:white; padding:10px; margin-bottom:10px;">
-	 <p> $del.getQuestion().getText()</p>
-	 <p style="font-size:12px;"> $del.getAction() by $del.getUser().getUsername()</p>
-	 <p style="font-size:12px;"> $del.getAction() on $del.getTime()</p>
-    </div>
-	#end
-    </div>
-	</div>
+
+<div style="width:1000px">
+<div style="width:30%">
+<input type="text" id="myInput" onkeyup="myFunction2()" placeholder="Search for names.." title="Type in a name">
+
+<table id="myTable" style="background:#fff">
+  <tr class="header" style="background:#10ac84; ">
+    <th style="width:8%; color: white">S.No.</th>
+    <th style="width:22%; color: white">Question</th>
+    <th style="width:10%; color: white">Action</th>
+    <th style="width:20%; color: white">User</th>
+    <th style="width:20%; color: white">Date</th>
+  </tr>
+ #foreach ($exp in $export)
+  <tr>
+  <td>$exp.getId()</td>
+    <td>$exp.getQuestion().getText()</td>
+    <td >$exp.getAction()</p></td>
+    <td>$exp.getUser().getUsername()</td>
+    <td>$exp.getTime()</td>
+  </tr>
+  #end
+
+</table>
 </div>
+</div>
+<script>
+function myFunction2() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>

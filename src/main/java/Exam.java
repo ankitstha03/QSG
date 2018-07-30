@@ -161,9 +161,9 @@ public class Exam extends Timestamped {
                     + " (userId, title, time, duration, difficulty) VALUES"
                     + " (:userId, :title, :time, :duration, :difficulty)";
                 this.id = con.createQuery(query, true)
-                            .bind(this)
-                            .executeUpdate()
-                            .getKey(Integer.class);
+                    .bind(this)
+                    .executeUpdate()
+                    .getKey(Integer.class);
             }
             return Exam.findById(this.id);
         }
@@ -175,15 +175,17 @@ public class Exam extends Timestamped {
     public void delete() {
         try (Connection con = DB.sql2o.open();) {
 
-          String sql = "UPDATE exams SET "
-              + "userId=1 "
-              + "WHERE id=:id";
+            String sql = "UPDATE exams SET "
+                + "userId=1 "
+                + "WHERE id=:id";
 
             con.createQuery(sql).bind(this).executeUpdate();
+
             //List<Set> asd=this.getSets();
             //for (Set se : asd) {
               //se.delete();
             //}
+
         }
     }
 
@@ -197,8 +199,8 @@ public class Exam extends Timestamped {
     public User getUser() {
         try (Connection con = DB.sql2o.open();) {
             return con.createQuery("SELECT * FROM users WHERE id=:userId")
-                    .bind(this)
-                    .executeAndFetchFirst(User.class);
+                .bind(this)
+                .executeAndFetchFirst(User.class);
         }
     }
 
@@ -210,7 +212,7 @@ public class Exam extends Timestamped {
     public List<Set> getSets() {
         try (Connection con = DB.sql2o.open();) {
             return con.createQuery("SELECT * FROM sets WHERE examId=:id"
-                                   + " ORDER BY setNumber ASC")
+                + " ORDER BY setNumber ASC")
                 .bind(this)
                 .executeAndFetch(Set.class);
         }
@@ -254,4 +256,18 @@ public class Exam extends Timestamped {
                 .executeAndFetchFirst(Exam.class);
         }
     }
+
+    //Get the list of questions in each Exam
+    public List<Question> getQuestions() {
+        try (Connection con = DB.sql2o.open();) {
+            String q = "SELECT DISTINCT a.text, a.id FROM questions as a, sets as s, exams as d, sets_questions as f " +
+                "WHERE " +
+                "a.id=f.questionID AND  f.setID = s.id AND s.examId = d.id AND d.id= :id";
+            return con.createQuery(q).bind(this).executeAndFetch(Question.class);
+        }
+    }
+
+
+
+
 }

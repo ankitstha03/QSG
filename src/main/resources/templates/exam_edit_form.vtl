@@ -1,0 +1,22 @@
+
+<div class="panel panel-default">
+  <div class="panel-heading">Edit Exam</div>
+
+  <div class="panel-body">
+<div style="width: 1050px">
+
+<div class="row">
+    <div class="col-md-6">
+
+<h1>Edit Exam</h1>
+<p>
+#foreach ($q in $exam.getQuestions())
+<p>
+  <li style="margin-top:10px; margin-bottom:10px">
+    $q.getText()
+  </li>
+          <form action="/setquestion/$exam.getId()/$q.getId()/delete" method="post" class="form-inline">
+            <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+          </form>
+</p>
+#end
