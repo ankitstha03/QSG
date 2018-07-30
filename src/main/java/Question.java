@@ -164,6 +164,14 @@ public class Question extends Timestamped {
         }
     }
 
+    public void setQuestiondelete() {
+        try (Connection con = DB.sql2o.open();) {
+            String query = "DELETE FROM sets_questions WHERE sets_questions.questionId=:id";
+            con.createQuery(query)
+                .bind(this)
+                .executeUpdate();
+        }
+    }
     // relations lookup
 
     /**

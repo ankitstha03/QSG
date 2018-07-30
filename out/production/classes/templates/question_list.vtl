@@ -1,22 +1,88 @@
+<style>
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myTable {
+  border-collapse: collapse;
+  width: 300%;
+  border: 1px solid #ddd;
+  font-size: 12px;
+}
+
+#myTable th, #myTable td {
+  text-align: left;
+  padding: 12px;
+}
+
+#myTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  background-color: #f1f1f1;
+}
+</style>
 <link href="/css/form.css" rel="stylesheet" />
+
 #if ($category)
 <h1>$category.getName()</h1>
 #else
 <h1>Questions</h1>
+
+#end
+#if ($categories.size() > 0)
+  <div class="row">
+  #foreach ($c in $categories)
+
+    <div class="col-md-2 btn btn-small btn-danger" style="margin:10px; text-align:center; width:auto; height:auto"> <a href="/categories/$c.getId()"><h3 style="color:white; margin:0px;">$c.getName()</h3></a>
+
+    </div><!--col-->
+
+  #end
+  </div><!--row-->
+#else
+  <div class="row">
+    <div class="col-md-12">
+      <p>No categories</p>
+    </div>
+  </div><!--row-->
 #end
 <button class="btn btn-primary" ><a href="/questions/add" style="color:white">Add Question</a></button>
+<hr>
+<input type="text" id="myInput" onkeyup="myFunction2()" placeholder="Search for names.." title="Type in a name">
 <br>
+<div style="width:1000px">
+<div style="width:30%">
+
 #if ($questions.size() > 0)
+<table id="myTable" style="background:#fff">
+  <tr class="header" style="background:#10ac84; ">
+  <th style="width:8%; color: white">S.no</th>
 
+    <th style="width:80%; color: white">Question</th>
+    <th style="width:12%; color: white">Action</th>
+
+  </tr>
   #foreach ($q in $questions)
-  <br>
-<div class="card">
-    <p>[$q.getId()] $q.getText()</p>
+  <tr>
+  <td>
+  <p>[$q.getId()]</p>
+  </td>
+<td>
+    <p> $q.getText()</p>
 
-    <form action="/questions/$q.getId()/delete" method="post" class="form-inline">
-      <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
-      <a href="/questions/$q.getId()/edit" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
-    </form>
 
     <ul>
       #foreach ($a in $q.getAnswers())
@@ -27,10 +93,17 @@
         #end
       #end
     </ul>
-  </div>
+    </td>
+    <td>
+        <form action="/questions/$q.getId()/delete" method="post" class="form-inline">
+          <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+          <a href="/questions/$q.getId()/edit" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+        </form>
+    </td>
+  </tr>
 
   #end
-
+</table>
 #else
 
   <p>No questions</p>
@@ -43,6 +116,8 @@
 
 Page $currentPage
 <a href="?page=$nextPage">Next</a>
+</div>
+</div>
 
 <script type="text/javascript">
 window.onload = function() {
@@ -52,4 +127,29 @@ window.onload = function() {
 	document.getElementById('questions').className = 'active';
 	#end
 };
-</script>>
+</script>
+<link href="/css/form.css" rel="stylesheet" />
+<style>
+a: {
+color: white;
+}
+</style>
+<script>
+function myFunction2() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
