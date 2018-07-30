@@ -200,7 +200,7 @@ public class Exportlog extends Timestamped {
     public char getSetName() {
       char name;
         if(this.setid==null){
-          name = '-';
+          name = (char) (45);
         }
         else{
           name = this.getSet().getSetName();
