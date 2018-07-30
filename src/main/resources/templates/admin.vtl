@@ -54,66 +54,39 @@
 <table id="myTable" style="background:#fff">
   <tr class="header" style="background:#10ac84; ">
 
-    <th style="width:8%; color: white">S.No.</th>
-    <th style="width:22%; color: white">Name</th>
-    <th style="width:20%; color: white">Set</th>
-    <th style="width:10%; color: white">Action</th>
+    <th style="width:8%; color: white">ID</th>
+    <th style="width:32%; color: white">Title</th>
+    <th style="width:25%; color: white">Action</th>
     <th style="width:20%; color: white">User</th>
     <th style="width:20%; color: white">Date</th>
   </tr>
+   #foreach ($exp in $export)
   <tr>
-  <td>1</td>
-    <td>Animal</td>
-    <td>B</td>
-    <td >Created</p></td>
-    <td>Ankit Baka</td>
-    <td>2018/7/24</td>
+    <td>$exp.getId()</td>
+    <td>$exp.getExam().getTitle()</td>
+    <td >$exp.getAction() $exp.getSetName()</p></td>
+    <td>$exp.getUser().getUsername()</td>
+    <td>$exp.getTime()</td>
   </tr>
+  #end
+  #foreach ($exp in $question)
   <tr>
-  <td>2</td>
-    <td>Birds</td>
-    <td>A</td>
-    <td >Deleted</p></td>
-    <td>Ankit Baka</td>
-    <td>2018/7/14</td>
+  <td>$exp.getId()</td>
+    <td>$exp.getQuestion().getText()</td>
+    <td >$exp.getAction() question</p></td>
+    <td>$exp.getUser().getUsername()</td>
+    <td>$exp.getTime()</td>
   </tr>
+  #end
+    #foreach ($exp in $category)
   <tr>
-  <td>3</td>
-    <td>Baka</td>
-    <td>A</td>
-    <td ><p style="background:#54a0ff; color:white">Updated</p></td>
-    <td>Ankit Baka</td>
-    <td>2018/7/4</td>
-
+<td>$exp.getId()</td>
+    <td>$exp.getCategory().getName()</td>
+    <td >$exp.getAction() category</p></td>
+    <td>$exp.getUser().getUsername()</td>
+    <td>$exp.getTime()</td>
   </tr>
-  <tr>
-  <td>2</td>
-    <td>Birds</td>
-    <td>A</td>
-    <td ><p style="background:#ff6b6b; color:white">Deleted</p></td>
-    <td>Ankit Baka</td>
-    <td>2018/7/14</td>
-
-  </tr>
-  <tr>
-  <td>2</td>
-    <td>Birds</td>
-    <td>A</td>
-    <td ><p style="background:#ff6b6b; color:white">Deleted</p></td>
-    <td>Ankit Baka</td>
-    <td>2018/7/14</td>
-
-  </tr>
-  <tr>
-  <td>2</td>
-    <td>Birds</td>
-    <td>A</td>
-    <td ><p style="background:#ff6b6b; color:white; align: center">Deleted</p></td>
-    <td>Ankit Baka</td>
-    <td>2018/7/14</td>
-
-  </tr>
-
+  #end
 </table>
 </div>
 </div>

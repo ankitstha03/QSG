@@ -178,6 +178,12 @@ public class Categorylog extends Timestamped {
             return con.createQuery(query).executeAndFetch(Categorylog.class);
         }
     }
+    public static List<Categorylog> recent() {
+        try (Connection con = DB.sql2o.open();) {
+            String query = "SELECT * FROM categorylog ORDER BY id DESC LIMIT 5";
+            return con.createQuery(query).executeAndFetch(Categorylog.class);
+        }
+    }
 
 
     public static Categorylog findById(Integer id) {

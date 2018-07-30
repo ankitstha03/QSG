@@ -215,6 +215,12 @@ public class Exportlog extends Timestamped {
             return con.createQuery(query).executeAndFetch(Exportlog.class);
         }
     }
+    public static List<Exportlog> recent() {
+        try (Connection con = DB.sql2o.open();) {
+            String query = "SELECT * FROM exportlog ORDER BY id DESC LIMIT 5";
+            return con.createQuery(query).executeAndFetch(Exportlog.class);
+        }
+    }
 
 
     public static Exportlog findById(Integer id) {

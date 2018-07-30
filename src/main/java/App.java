@@ -52,13 +52,11 @@ public class App {
             if (request.session().attribute("userId") != null) {
                 model.put("template", "templates/admin.vtl");
                 model.put("titlepage", "Admin-LIS QSG");
-                List<Questionlog> crted = Questionlog.byAction("Created");
-                List<Questionlog> upted = Questionlog.byAction("Updated");
-                List<Questionlog> delted = Questionlog.byAction("Deleted");
-                List<Exportlog> export = Exportlog.all();
-                model.put("crted", crted);
-                model.put("upted", upted);
-                model.put("delted", delted);
+                List<Questionlog> question = Questionlog.recent();
+                List<Exportlog> export = Exportlog.recent();
+                List<Categorylog> category = Categorylog.recent();
+                model.put("question", question);
+                model.put("category", category);
                 model.put("export", export);
                 model.put("categories", Category.all());
                 User defuser=User.findById(request.session().attribute("userId"));

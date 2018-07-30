@@ -176,6 +176,12 @@ public class Questionlog extends Timestamped {
             return con.createQuery(query).executeAndFetch(Questionlog.class);
         }
     }
+    public static List<Questionlog> recent() {
+        try (Connection con = DB.sql2o.open();) {
+            String query = "SELECT * FROM questionlog ORDER BY id DESC LIMIT 5";
+            return con.createQuery(query).executeAndFetch(Questionlog.class);
+        }
+    }
 
     public static List<Questionlog> byAction(String action) {
         try (Connection con = DB.sql2o.open();) {
