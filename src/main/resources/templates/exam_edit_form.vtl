@@ -10,6 +10,8 @@
 
 <h1>Edit Exam</h1>
 <p>
+  <a href="/exams/$exam.getId()" class="btn btn-primary">Back to Exam</a>
+ <a href="/exams/$exam.getId()/edit/add" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></a>
 #foreach ($q in $exam.getQuestions())
 <p>
   <li style="margin-top:10px; margin-bottom:10px">
@@ -18,5 +20,7 @@
           <form action="/setquestion/$exam.getId()/$q.getId()/delete" method="post" class="form-inline">
             <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
           </form>
+		  
+		  
 </p>
 #end

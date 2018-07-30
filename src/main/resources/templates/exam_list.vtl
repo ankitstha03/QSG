@@ -32,6 +32,7 @@ ul {
         <td>$exam.getDifficultyString()</td>
         <td>$exam.getDuration() minutes</td>
         <td>
+		<p>   <a href="/exams/$exam.getId()/edit" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a> </p>
           <form action="/exams/$exam.getId()/delete" method="post">
             <a href="#0" class=" cd-popup-trigger"><span class="glyphicon glyphicon-trash"></span></a>
             <div class="cd-popup" role="alert">

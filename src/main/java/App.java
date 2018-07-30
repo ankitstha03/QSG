@@ -1025,6 +1025,56 @@ public class App {
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
+        get("/exams/:id/edit/add", (request, response) -> {
+            if (request.session().attribute("userId") == null) {
+                response.redirect("/login");
+            }
+            Map<String,Object> model = new HashMap<String,Object>();
+            Integer examId = Integer.parseInt(request.params("id"));
+            Exam exam = Exam.findById(examId);
+
+            Set set = exam.getSets().get(1);
+            Integer page = 1;   // default page number
+            if (request.queryParams("page") != null) {
+                page = Integer.parseInt(request.queryParams("page"));
+            }
+            Integer start = (page - 1) * QUESTIONS_PER_PAGE;
+            List<Question> questions = Question.limit(start, QUESTIONS_PER_PAGE);
+
+
+            model.put("template", "templates/question_list2.vtl");
+            model.put("titlepage", exam.getTitle()+"-LIS QSG");
+            model.put("set", set);
+            model.put("questions", questions);
+            model.put("currentPage", page);
+            model.put("prevPage", page-1);
+            model.put("nextPage", page+1);
+            User defuser=User.findById(request.session().attribute("userId"));
+            model.put("defuser",defuser);
+            model.put("exam", exam);
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+
+        post("/exams/:id/edit/add/:qid", (request, response) -> {
+          if (request.session().attribute("userId") == null) {
+              response.redirect("/login");
+          }
+          Integer examId = Integer.parseInt(request.params("id"));
+          Exam exam = Exam.findById(examId);
+          Integer q_id = Integer.parseInt(request.params(":qid"));
+          Question q = Question.findById(q_id);
+          Integer userr=request.session().attribute("userId");
+          List<Set> sset= exam.getSets();
+          Random random = new Random();
+          for (Set se : sset) {
+            se.addQuestion(q, random.nextInt(10) , random.nextInt(4));
+          }
+          Exportlog ql=new Exportlog(exam.getId(), userr, "Edited", 0).save();
+          String edit = "/exams/"+examId+"/edit";
+          response.redirect(edit);
+          return 0;
+      });
         //Question delete in set
         // Added by Shailesh Mishra
 
@@ -1033,10 +1083,14 @@ public class App {
             if (request.session().attribute("userId") == null) {
                 response.redirect("/login");
             }
+            Integer examId = Integer.parseInt(request.params("id"));
+            Exam exam = Exam.findById(examId);
             Integer q_id = Integer.parseInt(request.params(":qid"));
             Integer id = Integer.parseInt(request.params(":id"));
             Question q = Question.findById(q_id);
+            Integer userr=request.session().attribute("userId");
             q.setQuestiondelete();
+            Exportlog ql=new Exportlog(exam.getId(), userr, "Edited", 0).save();
             String delete = "/exams/"+id+"/edit";
             response.redirect(delete);
             return 0;
@@ -1044,16 +1098,16 @@ public class App {
 
         // Exam delete handler. Also deletes all associated sets and
         // set-question relations.
-        post("/exams/:id/delete", (request, response) -> {
-            if (request.session().attribute("userId") == null) {
-                response.redirect("/login");
-            }
-            Integer id = Integer.parseInt(request.params("id"));
-            Exam exam = Exam.findById(id);
-            exam.delete();
-            response.redirect("/exams");
-            return 0;
-        });
+        // post("/exams/:id/delete", (request, response) -> {
+        //     if (request.session().attribute("userId") == null) {
+        //         response.redirect("/login");
+        //     }
+        //     Integer id = Integer.parseInt(request.params("id"));
+        //     Exam exam = Exam.findById(id);
+        //     exam.delete();
+        //     response.redirect("/exams");
+        //     return 0;
+        // });
 
         // Question set. Displays the list of questions and 4 options for each
         // question. The questions and answers have pre-defined order for a
